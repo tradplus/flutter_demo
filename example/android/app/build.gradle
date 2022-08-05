@@ -31,17 +31,9 @@ buildscript {
             dirs 'libs'
         }
 
-        if (isTestMode as int == 0) {
-            if (isWinsOrMac as int == 0) {
-                maven {
-                    url 'C://Users/Administrator/.m2/repository'
-                }
-            }else{
-                maven {
-                    url '/Users/caesar.qiu/.m2/repository'
-                }
-            }
-        }
+        google()
+        // TradPlus
+        mavenCentral()
 
     }
 

@@ -46,17 +46,18 @@ class AdConfiguration
       nativeSceneId = "2D064EC9EF4106";
     }else//android
        {
-      appId = "6640E7E3BDAC951B8F28D4C8C50E50B5";
-      nativeAdUnitId = "04D8F97E539A50D52E01BA0898135E02";
-      interstitialAdUnitId = "788E1FCB278B0D7E97282231154458B7";
-      rewardVideoAdUnitId = "702208A872E622C1729FC621025D4B1D";
-      splashAdUnitId = "BCB107DF38F83F9F1B83E849FD01A63E";
-      bannerAdUnitId = "E89A890466180B9215487530A8EB519F";
-      offerwallAdUnitId = "423EB7FF56537295851D3359633F0182";
-      bannerSceneId = "123";
-      interstitialSceneId = "345";//测试
-      rewardVideoSceneId = "567";//测试
-      nativeSceneId = "789";//测试
+      // 测试ID。正式上线需要替换
+      appId = "44273068BFF4D8A8AFF3D5B11CBA3ADE";
+      nativeAdUnitId = "DDBF26FBDA47FBE2765F1A089F1356BF";
+      interstitialAdUnitId = "E609A0A67AF53299F2176C3A7783C46D";
+      rewardVideoAdUnitId = "39DAC7EAC046676C5404004A311D1DB1";
+      splashAdUnitId = "D9118E91DD06DF6D322369455CAED618";
+      bannerAdUnitId = "A24091715B4FCD50C0F2039A5AF7C4BB";
+      offerwallAdUnitId = "0704BA87BDE496D391E5174CDD6B5E08";
+      bannerSceneId = "bannerSceneId";
+      interstitialSceneId = "interstitialSceneId";//测试
+      rewardVideoSceneId = "rewardVideoSceneId";//测试
+      nativeSceneId = "nativeSceneId";//测试
     }
   }
 }
