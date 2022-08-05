@@ -1,0 +1,518 @@
+PODS:
+  - AdColony (4.9.0)
+  - Ads-CN/APM (4.6.0.7):
+    - RangersAPM-Pangle/Crash (= 2.3.2-pangle)
+    - RangersAPM-Pangle/Global (= 2.3.2-pangle)
+    - RangersAPM-Pangle/SessionTracker (= 2.3.2-pangle)
+  - Ads-CN/BUAdSDK (4.6.0.7):
+    - Ads-CN/Domestic
+  - Ads-CN/BUFoundation (4.6.0.7):
+    - BURelyFoundation (= 0.0.1.58)
+  - Ads-CN/BURelyAdSDK (4.6.0.7)
+  - Ads-CN/CSJAdSDK (4.6.0.7):
+    - Ads-CN/BUFoundation
+  - Ads-CN/Domestic (4.6.0.7):
+    - Ads-CN/BUFoundation
+    - Ads-CN/CSJAdSDK
+  - Ads-CN/International (4.6.0.7):
+    - Ads-CN/APM
+    - Ads-CN/BUFoundation
+    - Ads-CN/BURelyAdSDK
+    - Ads-CN/PAGAdSDK
+  - Ads-CN/PAGAdSDK (4.6.0.7):
+    - Ads-CN/BUFoundation
+  - Alamofire (5.6.2)
+  - AppLovinSDK (11.4.3)
+  - BaiduMobAdSDK (4.881)
+  - BURelyFoundation (0.0.1.58):
+    - BURelyFoundation/HM (= 0.0.1.58)
+    - BURelyFoundation/NETWork (= 0.0.1.58)
+  - BURelyFoundation/HM (0.0.1.58)
+  - BURelyFoundation/NETWork (0.0.1.58)
+  - ChartboostHelium (2.11.0):
+    - ChartboostSDK (~> 8.5)
+  - ChartboostSDK (8.5.0.2)
+  - FBAudienceNetwork (6.11.2)
+  - Flutter (1.0.0)
+  - Fyber_Marketplace_SDK (8.1.5):
+    - Fyber_Marketplace_SDK/IASDKCore (= 8.1.5)
+  - Fyber_Marketplace_SDK/IASDKCore (8.1.5)
+  - GDTMobSDK (4.13.81):
+    - GDTMobSDK/GDTMobSDK (= 4.13.81)
+  - GDTMobSDK/GDTMobSDK (4.13.81)
+  - Google-Mobile-Ads-SDK (9.7.0):
+    - GoogleAppMeasurement (< 10.0, >= 7.0)
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleAppMeasurement (9.4.0):
+    - GoogleAppMeasurement/AdIdSupport (= 9.4.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/MethodSwizzler (~> 7.7)
+    - GoogleUtilities/Network (~> 7.7)
+    - "GoogleUtilities/NSData+zlib (~> 7.7)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (9.4.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 9.4.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/MethodSwizzler (~> 7.7)
+    - GoogleUtilities/Network (~> 7.7)
+    - "GoogleUtilities/NSData+zlib (~> 7.7)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (9.4.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/MethodSwizzler (~> 7.7)
+    - GoogleUtilities/Network (~> 7.7)
+    - "GoogleUtilities/NSData+zlib (~> 7.7)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleUserMessagingPlatform (2.0.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.7.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.7.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.7.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.7.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/Reachability (7.7.0):
+    - GoogleUtilities/Logger
+  - HyBid (2.14.0):
+    - HyBid/Banner (= 2.14.0)
+    - HyBid/Core (= 2.14.0)
+    - HyBid/FullScreen (= 2.14.0)
+    - HyBid/Native (= 2.14.0)
+    - HyBid/RewardedVideo (= 2.14.0)
+  - HyBid/Banner (2.14.0):
+    - HyBid/Core
+  - HyBid/Core (2.14.0)
+  - HyBid/FullScreen (2.14.0):
+    - HyBid/Core
+  - HyBid/Native (2.14.0):
+    - HyBid/Core
+  - HyBid/RewardedVideo (2.14.0):
+    - HyBid/Core
+  - InMobiSDK/Core (10.0.8)
+  - IronSourceSDK (7.2.3.1)
+  - KlevinAdSDK (2.9.0.216)
+  - KSAdSDK (3.3.27)
+  - MaioSDK (1.6.2)
+  - MintegralAdSDK (7.1.8.0):
+    - MintegralAdSDK/BannerAd (= 7.1.8.0)
+    - MintegralAdSDK/BidBannerAd (= 7.1.8.0)
+    - MintegralAdSDK/BidInterstitialVideoAd (= 7.1.8.0)
+    - MintegralAdSDK/BidNativeAd (= 7.1.8.0)
+    - MintegralAdSDK/BidNewInterstitialAd (= 7.1.8.0)
+    - MintegralAdSDK/BidRewardVideoAd (= 7.1.8.0)
+    - MintegralAdSDK/InterstitialVideoAd (= 7.1.8.0)
+    - MintegralAdSDK/NativeAd (= 7.1.8.0)
+    - MintegralAdSDK/NewInterstitialAd (= 7.1.8.0)
+    - MintegralAdSDK/RewardVideoAd (= 7.1.8.0)
+  - MintegralAdSDK/All (7.1.8.0):
+    - MintegralAdSDK/BannerAd
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/InterstitialAd
+    - MintegralAdSDK/InterstitialVideoAd
+    - MintegralAdSDK/NativeAd
+    - MintegralAdSDK/NativeAdvancedAd
+    - MintegralAdSDK/NewInterstitialAd
+    - MintegralAdSDK/RewardVideoAd
+    - MintegralAdSDK/SplashAd
+  - MintegralAdSDK/BannerAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/BidBannerAd (7.1.8.0):
+    - MintegralAdSDK/BannerAd
+    - MintegralAdSDK/BidNativeAd
+  - MintegralAdSDK/BidInterstitialVideoAd (7.1.8.0):
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/InterstitialVideoAd
+  - MintegralAdSDK/BidNativeAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/BidNewInterstitialAd (7.1.8.0):
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/NewInterstitialAd
+  - MintegralAdSDK/BidRewardVideoAd (7.1.8.0):
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/RewardVideoAd
+  - MintegralAdSDK/InterstitialAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/InterstitialVideoAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/NativeAd (7.1.8.0)
+  - MintegralAdSDK/NativeAdvancedAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/NewInterstitialAd (7.1.8.0):
+    - MintegralAdSDK/InterstitialVideoAd
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/RewardVideoAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/SplashAd (7.1.8.0):
+    - MintegralAdSDK/NativeAd
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - myTargetSDK (5.15.2):
+    - myTrackerSDK (~> 3.0.3)
+  - myTrackerSDK (3.0.6)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - OguryAds (3.1.0):
+    - OguryAds/OMID (= 3.1.0)
+    - OguryCore (= 1.2.0)
+  - OguryAds/OMID (3.1.0):
+    - OguryCore (= 1.2.0)
+  - OguryChoiceManager (4.0.1):
+    - OguryCore (= 1.2.0)
+  - OguryCore (1.2.0)
+  - OgurySdk (2.1.0):
+    - OguryCore (= 1.2.0)
+    - OgurySdk/OguryAds (= 2.1.0)
+    - OgurySdk/OguryChoiceManager (= 2.1.0)
+  - OgurySdk/OguryAds (2.1.0):
+    - OguryAds (= 3.1.0)
+    - OguryCore (= 1.2.0)
+  - OgurySdk/OguryChoiceManager (2.1.0):
+    - OguryChoiceManager (= 4.0.1)
+    - OguryCore (= 1.2.0)
+  - OneKit-Pangle/BaseKit (1.1.21-pangle)
+  - OneKit-Pangle/Database (1.1.21-pangle):
+    - OneKit-Pangle/Service
+  - OneKit-Pangle/Service (1.1.21-pangle)
+  - PromisesObjC (2.1.1)
+  - RangersAPM-Pangle/Core (2.3.2-pangle):
+    - OneKit-Pangle/BaseKit (= 1.1.21-pangle)
+  - RangersAPM-Pangle/Crash (2.3.2-pangle):
+    - RangersAPM-Pangle/Core
+    - RangersAPM-Pangle/HMD
+    - RangersAPM-Pangle/Public
+  - RangersAPM-Pangle/Global (2.3.2-pangle):
+    - RangersAPM-Pangle/Core
+    - RangersAPM-Pangle/Public
+  - RangersAPM-Pangle/HMD (2.3.2-pangle):
+    - OneKit-Pangle/Database (= 1.1.21-pangle)
+    - RangersAPM-Pangle/Core
+  - RangersAPM-Pangle/Public (2.3.2-pangle):
+    - RangersAPM-Pangle/Core
+  - RangersAPM-Pangle/SessionTracker (2.3.2-pangle):
+    - RangersAPM-Pangle/Core
+    - RangersAPM-Pangle/HMD
+    - RangersAPM-Pangle/Public
+  - SigmobAd-iOS (4.2.1):
+    - SigmobAd-iOS/WindSDK (= 4.2.1)
+  - SigmobAd-iOS/WindFoundation (4.2.1)
+  - SigmobAd-iOS/WindSDK (4.2.1):
+    - SigmobAd-iOS/WindFoundation
+  - smaato-ios-sdk (21.7.6):
+    - smaato-ios-sdk/Full (= 21.7.6)
+  - smaato-ios-sdk/Banner (21.7.6):
+    - smaato-ios-sdk/Modules/Banner
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/RichMedia
+  - smaato-ios-sdk/Full (21.7.6):
+    - smaato-ios-sdk/Banner
+    - smaato-ios-sdk/Interstitial
+    - smaato-ios-sdk/Native
+    - smaato-ios-sdk/Outstream
+    - smaato-ios-sdk/RewardedAds
+  - smaato-ios-sdk/Interstitial (21.7.6):
+    - smaato-ios-sdk/Modules/Interstitial
+    - smaato-ios-sdk/Modules/RichMedia
+    - smaato-ios-sdk/Modules/Video
+  - smaato-ios-sdk/Modules/Banner (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Core (21.7.6)
+  - smaato-ios-sdk/Modules/Interstitial (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Native (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/OpenMeasurement (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Outstream (21.7.6):
+    - smaato-ios-sdk/Modules/Banner
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/RichMedia
+  - smaato-ios-sdk/Modules/RewardedAds (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/RichMedia (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/OpenMeasurement
+  - smaato-ios-sdk/Modules/Video (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/OpenMeasurement
+  - smaato-ios-sdk/Native (21.7.6):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/Native
+  - smaato-ios-sdk/Outstream (21.7.6):
+    - smaato-ios-sdk/Modules/Outstream
+  - smaato-ios-sdk/RewardedAds (21.7.6):
+    - smaato-ios-sdk/Modules/RewardedAds
+    - smaato-ios-sdk/Modules/Video
+  - StartAppSDK (4.7.2)
+  - SuperAwesome (8.3.8):
+    - Moya (~> 14.0)
+    - SwiftyXMLParser (= 5.6.0)
+  - SwiftyXMLParser (5.6.0)
+  - TapjoySDK (12.10.0)
+  - tradplus_sdk (1.0.0):
+    - AdColony (= 4.9.0)
+    - Ads-CN/BUAdSDK (= 4.6.0.7)
+    - Ads-CN/International (= 4.6.0.7)
+    - AppLovinSDK (= 11.4.3)
+    - BaiduMobAdSDK (= 4.881)
+    - ChartboostHelium (= 2.11.0)
+    - ChartboostSDK (= 8.5.0.2)
+    - FBAudienceNetwork (= 6.11.2)
+    - Flutter
+    - Fyber_Marketplace_SDK (= 8.1.5)
+    - GDTMobSDK (= 4.13.81)
+    - Google-Mobile-Ads-SDK (= 9.7.0)
+    - HyBid (= 2.14.0)
+    - InMobiSDK/Core (= 10.0.8)
+    - IronSourceSDK (= 7.2.3.1)
+    - KlevinAdSDK (= 2.9.0.216)
+    - KSAdSDK (= 3.3.27)
+    - MaioSDK (= 1.6.2)
+    - MintegralAdSDK (= 7.1.8.0)
+    - MintegralAdSDK/All (= 7.1.8.0)
+    - myTargetSDK (= 5.15.2)
+    - OgurySdk (= 2.1.0)
+    - SigmobAd-iOS (= 4.2.1)
+    - smaato-ios-sdk (= 21.7.6)
+    - smaato-ios-sdk/Banner (= 21.7.6)
+    - smaato-ios-sdk/Interstitial (= 21.7.6)
+    - smaato-ios-sdk/RewardedAds (= 21.7.6)
+    - StartAppSDK (= 4.7.2)
+    - SuperAwesome (= 8.3.8)
+    - TapjoySDK (= 12.10.0)
+    - TradPlusAdSDK (= 7.9.0)
+    - TradPlusAdSDK/AdColonyAdapter (= 7.9.0)
+    - TradPlusAdSDK/AdMobAdapter (= 7.9.0)
+    - TradPlusAdSDK/AppLovinAdapter (= 7.9.0)
+    - TradPlusAdSDK/BaiduAdapter (= 7.9.0)
+    - TradPlusAdSDK/ChartboostAdapter (= 7.9.0)
+    - TradPlusAdSDK/FacebookAdapter (= 7.9.0)
+    - TradPlusAdSDK/FyberAdapter (= 7.9.0)
+    - TradPlusAdSDK/GDTMobAdapter (= 7.9.0)
+    - TradPlusAdSDK/GoogleAdManagerAdapter (= 7.9.0)
+    - TradPlusAdSDK/HeliumAdapter (= 7.9.0)
+    - TradPlusAdSDK/InMobiAdapter (= 7.9.0)
+    - TradPlusAdSDK/IronSourceAdapter (= 7.9.0)
+    - TradPlusAdSDK/KlevinAdapter (= 7.9.0)
+    - TradPlusAdSDK/KuaiShouAdapter (= 7.9.0)
+    - TradPlusAdSDK/MaioAdapter (= 7.9.0)
+    - TradPlusAdSDK/MintegralAdapter (= 7.9.0)
+    - TradPlusAdSDK/MyTargetAdapter (= 7.9.0)
+    - TradPlusAdSDK/OguryAdapter (= 7.9.0)
+    - TradPlusAdSDK/PangleAdapter (= 7.9.0)
+    - TradPlusAdSDK/SigmobAdapter (= 7.9.0)
+    - TradPlusAdSDK/SmaatoAdapter (= 7.9.0)
+    - TradPlusAdSDK/StartAppAdapter (= 7.9.0)
+    - TradPlusAdSDK/SuperAwesomeAdapter (= 7.9.0)
+    - TradPlusAdSDK/TapjoyAdapter (= 7.9.0)
+    - TradPlusAdSDK/TPCrossAdapter (= 7.9.0)
+    - TradPlusAdSDK/UnityAdapter (= 7.9.0)
+    - TradPlusAdSDK/VerveAdapter (= 7.9.0)
+    - TradPlusAdSDK/VungleAdapter (= 7.9.0)
+    - TradPlusAdSDK/YandexAdapter (= 7.9.0)
+    - TradPlusAdSDK/YouDaoAdapter (= 7.9.0)
+    - UnityAds (= 4.2.1)
+    - VungleSDK-iOS (= 6.11.0)
+    - YandexMobileAds (= 5.1.0)
+    - YDADSDK (= 2.16.12)
+  - TradPlusAdSDK (7.9.0):
+    - TradPlusAdSDK/TradPlusAds (= 7.9.0)
+  - TradPlusAdSDK/AdColonyAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/AdMobAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/AppLovinAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/BaiduAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/ChartboostAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/FacebookAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/FyberAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/GDTMobAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/GoogleAdManagerAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/HeliumAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/InMobiAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/IronSourceAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/KlevinAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/KuaiShouAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/MaioAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/MintegralAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/MyTargetAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/OguryAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/PangleAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/SigmobAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/SmaatoAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/StartAppAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/SuperAwesomeAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/TapjoyAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/TPCrossAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/TradPlusAds (7.9.0)
+  - TradPlusAdSDK/UnityAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/VerveAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/VungleAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/YandexAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - TradPlusAdSDK/YouDaoAdapter (7.9.0):
+    - TradPlusAdSDK/TradPlusAds
+  - UnityAds (4.2.1)
+  - VungleSDK-iOS (6.11.0)
+  - YandexMobileAds (5.1.0):
+    - YandexMobileAds/Static (= 5.1.0)
+  - YandexMobileAds/Static (5.1.0):
+    - YandexMobileMetrica (< 5.0.0, >= 4.0.0)
+  - YandexMobileMetrica (4.2.0):
+    - YandexMobileMetrica/Static (= 4.2.0)
+  - YandexMobileMetrica/Static (4.2.0):
+    - YandexMobileMetrica/Static/Core (= 4.2.0)
+    - YandexMobileMetrica/Static/Crashes (= 4.2.0)
+  - YandexMobileMetrica/Static/Core (4.2.0)
+  - YandexMobileMetrica/Static/Crashes (4.2.0):
+    - YandexMobileMetrica/Static/Core
+  - YDADSDK (2.16.12)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - tradplus_sdk (from `.symlinks/plugins/tradplus_sdk/ios`)
+
+SPEC REPOS:
+  trunk:
+    - AdColony
+    - Ads-CN
+    - Alamofire
+    - AppLovinSDK
+    - BaiduMobAdSDK
+    - BURelyFoundation
+    - ChartboostHelium
+    - ChartboostSDK
+    - FBAudienceNetwork
+    - Fyber_Marketplace_SDK
+    - GDTMobSDK
+    - Google-Mobile-Ads-SDK
+    - GoogleAppMeasurement
+    - GoogleUserMessagingPlatform
+    - GoogleUtilities
+    - HyBid
+    - InMobiSDK
+    - IronSourceSDK
+    - KlevinAdSDK
+    - KSAdSDK
+    - MaioSDK
+    - MintegralAdSDK
+    - Moya
+    - myTargetSDK
+    - myTrackerSDK
+    - nanopb
+    - OguryAds
+    - OguryChoiceManager
+    - OguryCore
+    - OgurySdk
+    - OneKit-Pangle
+    - PromisesObjC
+    - RangersAPM-Pangle
+    - SigmobAd-iOS
+    - smaato-ios-sdk
+    - StartAppSDK
+    - SuperAwesome
+    - SwiftyXMLParser
+    - TapjoySDK
+    - TradPlusAdSDK
+    - UnityAds
+    - VungleSDK-iOS
+    - YandexMobileAds
+    - YandexMobileMetrica
+    - YDADSDK
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  tradplus_sdk:
+    :path: ".symlinks/plugins/tradplus_sdk/ios"
+
+SPEC CHECKSUMS:
+  AdColony: 4f3738dc633d7aaa8ec60729df973076cc8e97ed
+  Ads-CN: f141a1c2f156e2f8c57f76bd8f89f1242660c9b9
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  AppLovinSDK: 221dfbdff620be0ff227ed5b018b97b1f3d15713
+  BaiduMobAdSDK: f4c68649b472327e072ed724e70684891da8ba73
+  BURelyFoundation: f529322f9e93cf8cc0b4539e447aff77a8ff34de
+  ChartboostHelium: 28526776dd2c4961881a704b24a002b3f06bd57b
+  ChartboostSDK: b9940615a3073ee71703958809baf6c86ab008cb
+  FBAudienceNetwork: 4600bc7fa9bd925b1e397b7c9bbef02923062bbc
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Fyber_Marketplace_SDK: 8079047b963f2e829fde65ac69677d95e73501f1
+  GDTMobSDK: ae4fa3dae40077452abdd04ce3fa144d4a03bd8b
+  Google-Mobile-Ads-SDK: 2685d6b3374b26de8a71f535614396e57cf80b13
+  GoogleAppMeasurement: 5d69e04287fc2c10cc43724bfa4bf31fc12c3dff
+  GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  HyBid: 8c26de7af30d92b5e54fb44494c8d6cf0b33afac
+  InMobiSDK: edcb8f809e359fd750214456834cc7ee3b78009c
+  IronSourceSDK: dbcd6e4fb3275affc5a7d447c0df24171778ead1
+  KlevinAdSDK: 4f42e3734d49972b1c696ae637a29ac76394ba0e
+  KSAdSDK: a02139b90f394079bf2013a3a0409f7d37138131
+  MaioSDK: 674022c6f61693de0601e110da2564ca121df37d
+  MintegralAdSDK: 90872ff3f2ef55fa4ffd5c84a787aa791712c545
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  myTargetSDK: e79ecceb7ce283f274202ff8e8b64b854ac8edad
+  myTrackerSDK: 4fc38a0c56573d58761f3e85dbad483077fd0d2d
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  OguryAds: 5ac1f23b2f96da3c5c5bb2a863e60c19c3031700
+  OguryChoiceManager: c31d4028ace32f0d7da73c8dd33b53bb942a8491
+  OguryCore: 51a06f5bffc34f94d6a8c1ed88e646acbbc59a63
+  OgurySdk: 86b949726a3a0cf4f7324158f6928abbffd2599d
+  OneKit-Pangle: 68a778c39d36ed8feffd667a6b49225427bcf286
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  RangersAPM-Pangle: 97c8fe91af08574a739cc72a714b735efb6c891f
+  SigmobAd-iOS: 70863fd508c5ff2ce6fa035c5e1f52d8643c30b8
+  smaato-ios-sdk: c6866bb44ee931abf597204bba15d2697b3f1a55
+  StartAppSDK: 6ce3499322d452a3c6e61229ff8a3d4111fda6c3
+  SuperAwesome: ad69b6708108f62c1c33f7b2c582ada82dec8abc
+  SwiftyXMLParser: 9b98995235961881322015ebe38d1f3d7c953bd7
+  TapjoySDK: 3dcd899e69eb3e36f231390c95c7105730619bcb
+  tradplus_sdk: 4f619a51ce0b4bd3070ea1e64dd9655643f84dd4
+  TradPlusAdSDK: 4a14ef09d7888d6cf8d7c7a0c138d6431a653713
+  UnityAds: a2274b216f9ed1e4d1d74c08178f21223f08e17a
+  VungleSDK-iOS: 5d0c27330a1d793d1f628a1f0e227113c9f8a478
+  YandexMobileAds: 45b76c6321cbfaca2527f99ba280a5381a60a7d1
+  YandexMobileMetrica: f5f9c605eaaba33ff6ab2b6bc3259035ca60ed87
+  YDADSDK: 8b7e374e18e39b6b5e6d5862e606c68cbbae89a4
+
+PODFILE CHECKSUM: 8ecf75151d727c76c985731c06af5e80e8d24c68
+
+COCOAPODS: 1.11.3

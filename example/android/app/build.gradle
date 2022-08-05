@@ -1,0 +1,302 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+
+        if (isTestMode as int == 0) {
+            if (isWinsOrMac as int == 0) {
+                maven {
+                    url 'C://Users/Administrator/.m2/repository'
+                }
+            }else{
+                maven {
+                    url '/Users/caesar.qiu/.m2/repository'
+                }
+            }
+        }
+
+    }
+
+}
+
+android {
+    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.unstall.meetdeleteapp"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+        minSdkVersion 23
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+//            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+def TRADPLUS_VERSION = "8.2.0.1"
+
+dependencies {
+    //TradPlus SDK
+    implementation "com.tradplusad:tradplus:${TRADPLUS_VERSION}"
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    if (isReleaseOnGP as int == 0) {
+        // Admob & Google Ad Manager
+        implementation "com.google.android.gms:play-services-ads:${googlex_version}"
+        implementation "com.tradplusad:tradplus-googlex:2.${TRADPLUS_VERSION}"
+        // Meta
+        implementation "com.facebook.android:audience-network-sdk:${facebook_version}"
+        implementation "com.tradplusad:tradplus-facebook:1.${TRADPLUS_VERSION}"
+        // Applovin
+        implementation "com.applovin:applovin-sdk:${max_version}"
+        implementation "com.tradplusad:tradplus-applovin:9.${TRADPLUS_VERSION}"
+        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        // Ironsource
+        implementation "com.ironsource.sdk:mediationsdk:${ironsource_version}"
+        implementation "com.tradplusad:tradplus-ironsource:10.${TRADPLUS_VERSION}"
+        implementation 'com.google.android.gms:play-services-appset:16.0.0'
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        implementation 'com.google.android.gms:play-services-basement:17.4.0'
+        // Tapjoy
+        implementation "com.tapjoy:tapjoy-android-sdk:${tapjoy_version}@aar"
+        implementation "com.tradplusad:tradplus-tapjoy:6.${TRADPLUS_VERSION}"
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        // Adcolony
+        implementation "com.adcolony:sdk:${adcolony_version}"
+        implementation "com.tradplusad:tradplus-adcolony:4.${TRADPLUS_VERSION}"
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        // Pangle
+        implementation "com.tradplusad:tradplus-pangle:19.${TRADPLUS_VERSION}"
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        // 会自动引用，无需重复引用
+        implementation(name: 'open_ad_sdk_V4.5.0.6', ext:'aar')
+        // UnityAds
+        implementation "com.tradplusad:tradplus-unity:5.${TRADPLUS_VERSION}"
+        implementation "com.unity3d.ads:unity-ads:${unity_version}"
+        // Chartboost
+        implementation "com.tradplusad:tradplus-chartboostx:15.${TRADPLUS_VERSION}"
+        implementation "com.chartboost:chartboost-sdk:${chartboost_version}"
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+//        implementation 'com.google.android.gms:play-services-base:17.4.0'
+        // Inmobi
+        implementation "com.tradplusad:tradplus-inmobix:23.${TRADPLUS_VERSION}"
+        implementation "com.inmobi.monetization:inmobi-ads:${inmobi_version}"
+        implementation 'androidx.browser:browser:1.0.0'
+        implementation 'androidx.appcompat:appcompat:1.0.0'
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        implementation 'com.google.android.gms:play-services-location:17.1.0'
+        implementation 'androidx.browser:browser:1.3.0'
+        implementation 'com.squareup.picasso:picasso:2.71828'
+        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+        // Fyber
+        implementation "com.fyber:marketplace-sdk:${fyber_version}"
+        implementation "com.tradplusad:tradplus-fyber:24.${TRADPLUS_VERSION}"
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+//        implementation 'com.google.android.gms:play-services-base:17.4.0'
+        // Maio
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        implementation "com.tradplusad:tradplus-maio:31.${TRADPLUS_VERSION}"
+        // 会自动引用，无需重复引用
+        implementation(name: 'maio_1.1.16', ext: 'aar')
+        // Criteo
+        implementation "com.criteo.publisher:criteo-publisher-sdk:${criteo_version}"
+        implementation "com.tradplusad:tradplus-criteo:32.${TRADPLUS_VERSION}"
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+//        implementation 'com.google.android.gms:play-services-base:17.4.0'
+        // MyTarget
+        implementation "com.my.target:mytarget-sdk:${mytarget_version}"
+        implementation "com.tradplusad:tradplus-mytarget:33.${TRADPLUS_VERSION}"
+        // Ogury
+        implementation "co.ogury:ogury-sdk:${ogury_version}"
+        implementation "com.tradplusad:tradplus-ogury:34.${TRADPLUS_VERSION}"
+        // Appnext
+    //    implementation "com.tradplusad:tradplus-appnext:36.${TRADPLUS_VERSION}"
+    //    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    //    implementation 'androidx.annotation:annotation:1.1.0'
+    //    // Mandatory
+    //    implementation 'androidx.work:work-runtime:2.4.0'
+    //    // Mandatory
+    //    implementation 'com.github.bumptech.glide:glide:4.11.0' // Mandatory
+    //    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //    // Mandatory
+    //    //For the Interstitial and Rewarded/Fullscreen video ad unit:
+    //    implementation 'com.appnext.sdk:ads:2.6.5.473'
+    //    //For the Banners ad unit:
+    //    implementation 'com.appnext.sdk:banners:2.6.5.473'
+    //    //For the New Native Ads ad unit:
+    //    implementation 'com.appnext.sdk:native-ads2:2.6.5.473'
+        // Cross Promotion
+        implementation "com.tradplusad:tradplus-crosspromotion:27.${TRADPLUS_VERSION}"
+        // Smaato
+        implementation "com.tradplusad:tradplus-smaato:38.${TRADPLUS_VERSION}"
+        implementation "com.smaato.android.sdk:smaato-sdk:${smaato_version}"
+        implementation "com.smaato.android.sdk:smaato-sdk-banner:${smaato_version}"
+        implementation "com.smaato.android.sdk:smaato-sdk-interstitial:${smaato_version}"
+        implementation "com.smaato.android.sdk:smaato-sdk-rewarded-ads:${smaato_version}"
+        implementation "com.smaato.android.sdk:smaato-sdk-native:${smaato_version}"
+        // Huawei
+        implementation "com.tradplusad:tradplus-huawei:41.${TRADPLUS_VERSION}"
+        implementation "com.huawei.hms:ads:${huaiwei_os_version}"
+        implementation "com.huawei.hms:ads-consent:${huaiwei_os_version}"
+        // Startapp
+        implementation "com.startapp:inapp-sdk:${startapp_version}"
+        implementation "com.tradplusad:tradplus-startapp:28.${TRADPLUS_VERSION}"
+        // Mintegral
+        implementation "com.tradplusad:tradplus-mintegralx_overseas:18.${TRADPLUS_VERSION}"
+        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+        implementation "com.mbridge.msdk.oversea:reward:${mtg_os_version}"
+        implementation "com.mbridge.msdk.oversea:mbsplash:${mtg_os_version}"
+        implementation "com.mbridge.msdk.oversea:mbbanner:${mtg_os_version}"
+        implementation "com.mbridge.msdk.oversea:mbnative:${mtg_os_version}"
+        implementation "com.mbridge.msdk.oversea:mbnativeadvanced:${mtg_os_version}"
+        implementation "com.mbridge.msdk.oversea:newinterstitial:${mtg_os_version}"
+        implementation "com.mbridge.msdk.oversea:mbbid:${mtg_os_version}"
+        // Superawesome
+    //    implementation "com.google.android.gms:play-services-ads:${googlex_version}"
+        implementation "com.tradplusad:tradplus-awesome:47.${TRADPLUS_VERSION}"
+        implementation "tv.superawesome.sdk.publisher:superawesome:${awesome_version}"
+        // Kidoz
+        implementation "com.tradplusad:tradplus-kidoz:37.${TRADPLUS_VERSION}"
+        implementation 'org.greenrobot:eventbus:3.2.0'
+        implementation "net.kidoz.sdk:kidoz-android-native:${kidoz_version}"
+//        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+        // Vungle
+        implementation "com.tradplusad:tradplus-vunglex:7.${TRADPLUS_VERSION}"
+        implementation "com.vungle:publisher-sdk-android:${vunglex_version}"
+        implementation 'com.google.android.gms:play-services-basement:17.5.0'
+//        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+        // Verve
+        implementation "net.pubnative:hybid.sdk:${verve_version}"
+        implementation "com.tradplusad:tradplus-verve:53.${TRADPLUS_VERSION}"
+        // Yandex
+        implementation "com.yandex.android:mobileads:${yandex_version}"
+        implementation "com.tradplusad:tradplus-yandex:50.${TRADPLUS_VERSION}"
+
+    }else {
+        // 国内广告平台
+        // CSJ
+        implementation "com.tradplusad:tradplus-toutiao:17.${TRADPLUS_VERSION}"
+        implementation(name: "open_ad_sdk_cn_V${toutiao_cn_version}", ext: 'aar')
+        // Sigmob
+        implementation "com.tradplusad:tradplus-sigmob:21.${TRADPLUS_VERSION}"
+//        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+        implementation(name: "wind-sdk-${sigmob_version}", ext: 'aar')
+        implementation(name: 'wind-common-1.3.4', ext: 'aar')
+        // Youdao
+        implementation "com.tradplusad:tradplus-youdao:25.${TRADPLUS_VERSION}"
+        implementation(name: 'youdaosdk_4.2.16', ext: 'aar')
+//        implementation(name: 'msa_mdid_1.0.13', ext: 'aar')
+        // Tencent Ads
+        implementation "com.tradplusad:tradplus-txadnet:16.${TRADPLUS_VERSION}"
+        implementation(name: "GDTSDK.unionNormal.${txadnet_version}", ext: 'aar')
+        implementation 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+        // Cross Promotion
+        implementation "com.tradplusad:tradplus-crosspromotion:27.${TRADPLUS_VERSION}"
+        // Kuaishou
+//        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+        implementation "com.tradplusad:tradplus-kwad:20.${TRADPLUS_VERSION}"
+        implementation(name: "kssdk-ad-${kwad_version}", ext: 'aar')
+        // Baidu
+        implementation "com.tradplusad:tradplus-baidu:43.${TRADPLUS_VERSION}"
+//        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+        implementation files ('libs/android-query-full.0.26.7.jar')
+        implementation(name: "Baidu_MobAds_SDK-release_v${baidu_version}", ext: 'aar')
+//        implementation(name:'msa_mdid_1.0.13',ext:'aar')
+        // Klevin
+        implementation "com.tradplusad:tradplus-klevin:44.${TRADPLUS_VERSION}"
+        implementation(name: "klevinSDK_${klevin_version}", ext: 'aar')
+        // Mintegral
+        implementation "com.tradplusad:tradplus-mintegralx_cn:18.${TRADPLUS_VERSION}"
+//        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+        //从16.1.7开始 MTG会自动打入微信小程序open sdk会和腾讯广点通SDK有冲突，所以做exclude移除处理
+        //如果需要使用微信小程序跳转功能，需要手动引入
+//        implementation 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+        implementation ("com.mbridge.msdk.china:reward:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        implementation ("com.mbridge.msdk.china:mbsplash:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        implementation ("com.mbridge.msdk.china:mbbanner:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        implementation ("com.mbridge.msdk.china:mbnative:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        implementation ("com.mbridge.msdk.china:mbnativeadvanced:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        implementation ("com.mbridge.msdk.china:newinterstitial:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        implementation ("com.mbridge.msdk.china:mbbid:${mtg_cn_version}"){
+            exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+        }
+        // Mimo
+        implementation "com.tradplusad:tradplus-mimo:46.${TRADPLUS_VERSION}"
+        implementation(name: "mimo-ad-sdk-${mimo_version}", ext: 'aar')
+//        implementation 'com.google.code.gson:gson:2.8.5'
+        implementation 'com.github.bumptech.glide:glide:4.9.0'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+        // Huawei
+        implementation "com.tradplusad:tradplus-huawei-cn:41.${TRADPLUS_VERSION}"
+        implementation "com.huawei.hms:ads-lite:${huaiwei_cn_version}"
+
+    }
+
+
+}
+flutter {
+    source '../..'
+}

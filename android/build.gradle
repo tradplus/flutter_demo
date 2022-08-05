@@ -1,0 +1,71 @@
+group 'com.example.tradplus_sdk'
+version '1.0'
+
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        if (isTestMode as int == 0) {
+            if (isWinsOrMac as int == 0) {
+                maven {
+                    url 'C://Users/Administrator/.m2/repository'
+                }
+            }else{
+                maven {
+                    url '/Users/caesar.qiu/.m2/repository'
+                }
+            }
+        }
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        if (isTestMode as int == 0) {
+            if (isWinsOrMac as int == 0) {
+                maven {
+                    url 'C://Users/Administrator/.m2/repository'
+                }
+            }else{
+                maven {
+                    url '/Users/caesar.qiu/.m2/repository'
+                }
+            }
+        }
+        google()
+        mavenCentral()
+
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+    }
+}
+
+def TRADPLUS_VERSION = "8.2.0.1"
+
+dependencies {
+    //TradPlus
+    compileOnly "com.tradplusad:tradplus:${TRADPLUS_VERSION}"
+}

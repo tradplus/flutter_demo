@@ -1,0 +1,124 @@
+//
+//  TPFInterstitialManager.m
+//  tradplus_sdk
+//
+//  Created by xuejun on 2022/7/19.
+//
+
+#import "TPFBannerManager.h"
+#import <TradPlusAds/TradPlusAds.h>
+
+@interface TPFBannerManager()
+
+@property (nonatomic,strong)NSMutableDictionary <NSString *,TPFBanner *>*bannerAds;
+@end
+
+@implementation TPFBannerManager
+
++ (TPFBannerManager *)sharedInstance
+{
+    static TPFBannerManager *manager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[TPFBannerManager alloc] init];
+    });
+    return manager;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.bannerAds = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result
+{
+    NSString *adUnitID = call.arguments[@"adUnitID"];
+    if([@"banner_load" isEqualToString:call.method])
+    {
+        [self loadAdWithAdUnitID:adUnitID methodCall:call];
+    }
+    else if([@"banner_ready" isEqualToString:call.method])
+    {
+        [self isAdReadyWithAdUnitID:adUnitID result:result];
+    }
+    else if([@"banner_entryAdScenario" isEqualToString:call.method])
+    {
+        [self entryAdScenarioWithAdUnitID:adUnitID methodCall:call];
+    }
+}
+
+- (TPFBanner *)getBannerWithAdUnitID:(NSString *)adUnitID
+{
+    if([self.bannerAds valueForKey:adUnitID])
+    {
+        return self.bannerAds[adUnitID];
+    }
+    return nil;
+}
+
+- (void)loadAdWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFBanner *banner = [self getBannerWithAdUnitID:adUnitID];
+    if(banner == nil)
+    {
+        
+        banner = [[TPFBanner alloc] init];
+        self.bannerAds[adUnitID] = banner;
+    }
+    NSDictionary *extraMap = call.arguments[@"extraMap"];
+    CGFloat height = [extraMap[@"height"] floatValue];
+    CGFloat width = [extraMap[@"width"] floatValue];
+    if(height > 0 && width > 0)
+    {
+        [banner setBannerSize:CGSizeMake(width, height)];
+    }
+    [banner setAdUnitID:adUnitID];
+    NSInteger contentMode = [extraMap[@"contentMode"] integerValue];
+    [banner setBannerContentMode:contentMode];
+    if(extraMap != nil)
+    {
+        id customMap = extraMap[@"customMap"];
+        if(customMap != nil && [customMap isKindOfClass:[NSDictionary class]])
+        {
+            [banner setCustomMap:customMap];
+        }
+    }
+    NSString *sceneId = extraMap[@"sceneId"];
+    [banner loadAdWithSceneId:sceneId];
+}
+
+- (void)isAdReadyWithAdUnitID:(NSString *)adUnitID result:(FlutterResult)result
+
+{
+    BOOL isReady = NO;
+    TPFBanner *banner = [self getBannerWithAdUnitID:adUnitID];
+    if(banner != nil)
+    {
+        isReady = banner.isAdReady;
+    }
+    else
+    {
+        MSLogInfo(@"banner adUnitID:%@ not initialize",adUnitID);
+    }
+    result(@(isReady));
+}
+
+- (void)entryAdScenarioWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFBanner *banner = [self getBannerWithAdUnitID:adUnitID];
+    NSString *sceneId = call.arguments[@"sceneId"];
+    if(banner != nil)
+    {
+        [banner entryAdScenario:sceneId];
+    }
+    else
+    {
+        MSLogInfo(@"banner adUnitID:%@ not initialize",adUnitID);
+    }
+}
+
+@end
