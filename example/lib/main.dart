@@ -10,6 +10,8 @@ import 'banner.dart';
 import 'offerwall.dart';
 import 'privacy.dart';
 import 'other.dart';
+import 'splash_iOS.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -71,7 +73,14 @@ class _MyAppState extends State<MyApp> {
                       }
                     case 4:
                       {
-                        widget = SplashWidget();
+                        if (defaultTargetPlatform == TargetPlatform.iOS)
+                        {
+                          widget = SplashIOSWidget();
+                        }
+                        else
+                        {
+                          widget = SplashWidget();
+                        }
                         break;
                       }
                     case 5:
