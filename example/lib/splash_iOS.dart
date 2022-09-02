@@ -47,34 +47,34 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        loadAd();
-                      },
-                      child: const Text("Load",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        checkAdReady();
-                      },
-                      child: const Text("isReady",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        showAd();
-                      },
-                      child: const Text("Show",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                ]),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white70),
+                          onPressed: () {
+                            loadAd();
+                          },
+                          child: const Text("Load",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ))),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white70),
+                          onPressed: () {
+                            checkAdReady();
+                          },
+                          child: const Text("isReady",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ))),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white70),
+                          onPressed: () {
+                            showAd();
+                          },
+                          child: const Text("Show",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ))),
+                    ]),
                 Container(
                   height: 100,
                   margin: const EdgeInsets.only(top: 20),
@@ -130,71 +130,83 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
 
   addListener() {
     listener = TPSplashAdListener(
-      onAdLoaded: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'onAdLoaded : adUnitId = $adUnitId, adInfo = $adInfo');
-        setState(() {
-          infoString = "Ad Loaded";
-        });
-      },
-      onAdLoadFailed: (adUnitId, error) {
-        TPAdConfiguration.showLog(
-            'onAdLoadFailed : adUnitId = $adUnitId, error = $error');
-        setState(() {
-          infoString = "Load Failed";
-        });
-      },
-      onAdImpression: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'onAdImpression : adUnitId = $adUnitId, adInfo = $adInfo');
-      },
-      onAdShowFailed: (adUnitId, adInfo, error) {
-        TPAdConfiguration.showLog(
-            'onAdShowFailed : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
-      },
-      onAdClicked: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'onAdClicked : adUnitId = $adUnitId, adInfo = $adInfo');
-      },
-      onAdClosed: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'onAdClosed : adUnitId = $adUnitId, adInfo = $adInfo');
-        setState(() {
-          hasAd = false;
-        });
-      },
-      oneLayerLoadFailed: (adUnitId, adInfo, error) {
-        TPAdConfiguration.showLog(
-            'oneLayerLoadFailed : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
-      },
-      //以下回调可选
-      onAdStartLoad: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'onAdStartLoad : adUnitId = $adUnitId, adInfo = $adInfo');
-        setState(() {
-          infoString = "start loading...";
-        });
-      },
-      onBiddingStart: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'onBiddingStart : adUnitId = $adUnitId, adInfo = $adInfo');
-      },
-      onBiddingEnd: (adUnitId, adInfo, error) {
-        TPAdConfiguration.showLog(
-            'onBiddingEnd : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
-      },
-      oneLayerStartLoad: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'oneLayerStartLoad : adUnitId = $adUnitId, adInfo = $adInfo');
-      },
-      oneLayerLoaded: (adUnitId, adInfo) {
-        TPAdConfiguration.showLog(
-            'oneLayerLoaded : adUnitId = $adUnitId, adInfo = $adInfo');
-      },
-      onAdAllLoaded: (adUnitId, isSuccess) {
-        TPAdConfiguration.showLog(
-            'onAdAllLoaded : adUnitId = $adUnitId, isSuccess = $isSuccess');
-      }
+        onAdLoaded: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onAdLoaded : adUnitId = $adUnitId, adInfo = $adInfo');
+          setState(() {
+            infoString = "Ad Loaded";
+          });
+        },
+        onAdLoadFailed: (adUnitId, error) {
+          TPAdConfiguration.showLog(
+              'onAdLoadFailed : adUnitId = $adUnitId, error = $error');
+          setState(() {
+            infoString = "Load Failed";
+          });
+        },
+        onAdImpression: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onAdImpression : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        onAdShowFailed: (adUnitId, adInfo, error) {
+          TPAdConfiguration.showLog(
+              'onAdShowFailed : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
+        },
+        onAdClicked: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onAdClicked : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        onAdClosed: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onAdClosed : adUnitId = $adUnitId, adInfo = $adInfo');
+          setState(() {
+            hasAd = false;
+          });
+        },
+        oneLayerLoadFailed: (adUnitId, adInfo, error) {
+          TPAdConfiguration.showLog(
+              'oneLayerLoadFailed : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
+        },
+        //以下回调可选
+        onAdStartLoad: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onAdStartLoad : adUnitId = $adUnitId, adInfo = $adInfo');
+          setState(() {
+            infoString = "start loading...";
+          });
+        },
+        onBiddingStart: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onBiddingStart : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        onBiddingEnd: (adUnitId, adInfo, error) {
+          TPAdConfiguration.showLog(
+              'onBiddingEnd : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
+        },
+        oneLayerStartLoad: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'oneLayerStartLoad : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        oneLayerLoaded: (adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'oneLayerLoaded : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        onAdAllLoaded: (adUnitId, isSuccess) {
+          TPAdConfiguration.showLog(
+              'onAdAllLoaded : adUnitId = $adUnitId, isSuccess = $isSuccess');
+        },
+        onZoomOutStart:(adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onZoomOutStart : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        onZoomOutEnd:(adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onZoomOutEnd : adUnitId = $adUnitId, adInfo = $adInfo');
+        },
+        onSkip:(adUnitId, adInfo) {
+          TPAdConfiguration.showLog(
+              'onSkip : adUnitId = $adUnitId, adInfo = $adInfo');
+        }
     );
     TPSplashManager.setSplashListener(listener!);
   }

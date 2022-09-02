@@ -35,34 +35,34 @@ class SplashWidgetState extends State<SplashWidget> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        loadAd();
-                      },
-                      child: const Text("Load",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        checkAdReady();
-                      },
-                      child: const Text("isReady",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        showAd();
-                      },
-                      child: const Text("Show",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                ]),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white70),
+                          onPressed: () {
+                            loadAd();
+                          },
+                          child: const Text("Load",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ))),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white70),
+                          onPressed: () {
+                            checkAdReady();
+                          },
+                          child: const Text("isReady",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ))),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white70),
+                          onPressed: () {
+                            showAd();
+                          },
+                          child: const Text("Show",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ))),
+                    ]),
                 Container(
                   height: 100,
                   margin: const EdgeInsets.only(top: 20),
@@ -199,6 +199,18 @@ class SplashWidgetState extends State<SplashWidget> {
         TPAdConfiguration.showLog(
             'onAdAllLoaded : adUnitId = $adUnitId, isSuccess = $isSuccess');
       },
+      onZoomOutStart:(adUnitId, adInfo) {
+        TPAdConfiguration.showLog(
+            'onZoomOutStart : adUnitId = $adUnitId, adInfo = $adInfo');
+      },
+      onZoomOutEnd:(adUnitId, adInfo) {
+        TPAdConfiguration.showLog(
+            'onZoomOutEnd : adUnitId = $adUnitId, adInfo = $adInfo');
+      },
+      onSkip:(adUnitId, adInfo) {
+        TPAdConfiguration.showLog(
+            'onSkip : adUnitId = $adUnitId, adInfo = $adInfo');
+      },
       onDownloadStart: (adUnitId, totalBytes, currBytes, fileName, appName) {
         TPAdConfiguration.showLog(
             'onDownloadStart : adUnitId = $adUnitId, totalBytes = $totalBytes, currBytes = $currBytes, fileName = $fileName, appName = $appName');
@@ -206,7 +218,7 @@ class SplashWidgetState extends State<SplashWidget> {
       onDownloadUpdate:
           (adUnitId, totalBytes, currBytes, fileName, appName, progress) {
         TPAdConfiguration.showLog(
-            'onDownloadStart : adUnitId = $adUnitId, totalBytes = $totalBytes, currBytes = $currBytes, fileName = $fileName, appName = $appName, progress = $progress');
+            'onDownloadUpdate : adUnitId = $adUnitId, totalBytes = $totalBytes, currBytes = $currBytes, fileName = $fileName, appName = $appName, progress = $progress');
       },
       onDownloadPause: (adUnitId, totalBytes, currBytes, fileName, appName) {
         TPAdConfiguration.showLog(

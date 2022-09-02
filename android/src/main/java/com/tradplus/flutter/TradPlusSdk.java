@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.tradplus.ads.base.common.TPDiskManager;
+import com.tradplus.ads.base.common.TPPrivacyManager;
 import com.tradplus.ads.base.common.TPTaskManager;
 import com.tradplus.ads.common.ClientMetadata;
 import com.tradplus.ads.common.util.LogUtil;
@@ -74,6 +76,8 @@ public class TradPlusSdk {
                         result.success(getSdkVersion());
                     } else if (call.method.equals("tp_init")) {
                         initMethonCall(call, result);
+                    }else if (call.method.equals("tp_checkCurrentArea")) {
+                        currentAreaMethonCall(call, result);
                     } else if (call.method.equals("tp_isEUTraffic")) {
                         result.success(com.tradplus.ads.open.TradPlusSdk.isEUTraffic(getApplicationContext()));
                     } else if (call.method.equals("tp_setGDPRDataCollection")) {
@@ -102,6 +106,8 @@ public class TradPlusSdk {
                         setSegmentMap(call,result);
                     }else if (call.method.equals("tp_setTestDevice")) {
                         setTestDevice(call,result);
+                    }else if (call.method.equals("tp_setMaxDatabaseSize")) {
+                        setMaxDatabaseSize(call,result);
                     }else if (call.method.equals("tp_clearCache")) {
                         clearCache(call,result);
                     }else if (call.method.equals("tp_isCalifornia")) {
@@ -183,6 +189,45 @@ public class TradPlusSdk {
 
     public boolean isOpenPersonalizedAd() {
         return com.tradplus.ads.open.TradPlusSdk.isOpenPersonalizedAd();
+    }
+
+    public void setMaxDatabaseSize(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+        long size = call.argument("size");
+        TPDiskManager.getInstance().setMaxDatabaseSize(size);
+    }
+
+    public void currentAreaMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        com.tradplus.ads.open.TradPlusSdk.checkCurrentArea(getApplicationContext(),new TPPrivacyManager.OnPrivacyRegionListener() {
+            @Override
+            public void onSuccess(boolean b, boolean i, boolean b1) {
+                TPTaskManager.getInstance().runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Map<String, Object> paramsMap = new HashMap<>();
+                        paramsMap.put("iseu", b);
+                        paramsMap.put("iscn", i);
+                        paramsMap.put("isca", b1);
+
+                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_currentarea_success", paramsMap);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailed() {
+                TPTaskManager.getInstance().runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Map<String, Object> paramsMap = new HashMap<>();
+                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_currentarea_failed", paramsMap);
+                    }
+                });
+
+            }
+
+        });
+
     }
 
     public void initMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {

@@ -12,7 +12,6 @@ import 'privacy.dart';
 import 'other.dart';
 import 'splash_iOS.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -25,8 +24,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var listTitle = <String>["插屏", "激励视频", "横幅", "原生", "开屏", "积分墙", "隐私设置","测试设置"];
+  var listTitle = <String>[
+    "插屏",
+    "激励视频",
+    "横幅",
+    "原生",
+    "开屏",
+    "积分墙",
+    "隐私设置",
+    "测试设置"
+  ];
   static TPInitListener? listener;
+  String appId = TPAdConfiguration.appId;
 
   @override
   void initState() {
@@ -73,12 +82,9 @@ class _MyAppState extends State<MyApp> {
                       }
                     case 4:
                       {
-                        if (defaultTargetPlatform == TargetPlatform.iOS)
-                        {
+                        if (defaultTargetPlatform == TargetPlatform.iOS) {
                           widget = SplashIOSWidget();
-                        }
-                        else
-                        {
+                        } else {
                           widget = SplashWidget();
                         }
                         break;
@@ -118,8 +124,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  canShowDialog() async {
-    bool isEU = await TPSDKManager.isEUTraffic();
+  canShowDialog(bool isEU) async {
     if (isEU) {
       bool isFirst = await TPSDKManager.isFirstShowGDPR();
       if (!isFirst) {
@@ -133,47 +138,49 @@ class _MyAppState extends State<MyApp> {
       TPAdConfiguration.showLog("sdk init finish");
     }, gdprSuccess: (String msg) {
       TPAdConfiguration.showLog("gdprSuccess : msg = $msg");
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        canShowDialog();
-      }
     }, gdprFailed: (String msg) {
       TPAdConfiguration.showLog("gdprFailed : msg = $msg");
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        canShowDialog();
-      }
     }, dialogClosed: (int level) {
       TPAdConfiguration.showLog("dialogClosed");
       if (defaultTargetPlatform == TargetPlatform.android) {
         TPSDKManager.setFirstShowGDPR(true);
       }
+    }, currentAreaSuccess: (bool isEu, bool isCn, bool isCa) {
+      TPAdConfiguration.showLog(
+          "sdk currentAreaSuccess isEu = $isEu,isCn = $isCn, isCa = $isCa");
+      //在获取到相关地域配置后设置相关隐私API（GDPR，COPPA，CCPA等） 然后初始化SDK
+      if (defaultTargetPlatform == TargetPlatform.android) {
+        canShowDialog(isEu);
+      }
+    }, currentAreaFailed: () {
+      TPAdConfiguration.showLog("currentAreaFailed");
+      //一般为网络问题导致查询失败 不设置相关隐私API 直接初始化SDK
     });
     TPSDKManager.setInitListener(listener!);
-    String appId = TPAdConfiguration.appId;
-    if (defaultTargetPlatform == TargetPlatform.iOS)
-    {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
       Map customMap = {
-        "user_id":"test_user_id",
-        "user_age":19,
-        "segment_id":1571,
-        "bucket_id":299,
-        "custom_data":"TestIMP",
-        "channel":"tp_channel",
-        "sub_channel":"tp_sub_channel"
+        "user_id": "test_user_id",
+        "user_age": 19,
+        "segment_id": 1571,
+        "bucket_id": 299,
+        "custom_data": "TestIMP",
+        "channel": "tp_channel",
+        "sub_channel": "tp_sub_channel"
       };
       TPSDKManager.setCustomMap(customMap);
-    }else{
+    } else {
       Map customMap = {
-        "user_id":"test_user_id",
-        "user_age":"19",
-        "custom_data":"TestIMP",
-        "channel":"tp_channel",
-        "sub_channel":"tp_sub_channel"
+        "user_id": "test_user_id",
+        "user_age": "19",
+        "custom_data": "TestIMP",
+        "channel": "tp_channel",
+        "sub_channel": "tp_sub_channel"
       };
       TPSDKManager.setCustomMap(customMap);
       TPSDKManager.setTestDevice(TPAdConfiguration.testDevice);
     }
 
-
+    TPSDKManager.checkCurrentArea();
     TPSDKManager.init(appId);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 import 'log.dart';
+import 'configure.dart';
 
 class PrivacyWidget extends StatefulWidget
 {
@@ -31,7 +32,7 @@ class PrivacyWidgetState extends State<PrivacyWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('隐私设置'),
+          title: const Text('隐私设置'),
           actions:<Widget>[
             IconButton(
               icon: const Icon(Icons.info_outline),
@@ -46,16 +47,16 @@ class PrivacyWidgetState extends State<PrivacyWidget>
           ]
       ),
       body: ListView.builder(
-      itemCount: 7,
-      itemExtent: 50,
-      itemBuilder: (BuildContext context, int index) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: childrenWithIndex(index),
-          );
-        }
+          itemCount: 8,
+          itemExtent: 50,
+          itemBuilder: (BuildContext context, int index) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: childrenWithIndex(index),
+            );
+          }
       ),
-      );
+    );
   }
 
   childrenWithIndex(int index)
@@ -63,11 +64,11 @@ class PrivacyWidgetState extends State<PrivacyWidget>
     switch(index)
     {
       case 0:
-      {
+        {
           return[
-              Text("SDK version : $version"),
+            Text("SDK version : $version"),
           ];
-      }
+        }
       case 1:
         {
           return[
@@ -76,59 +77,59 @@ class PrivacyWidgetState extends State<PrivacyWidget>
           ];
         }
       case 2:
-      {
-        return[
-          Text(gdprState),
-          Container(
-            margin: const EdgeInsets.only(left: 50),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
-                onPressed: (){
-                  setGDPR();
-                },
-                child: const Text("设置",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
-          ),
-        ];
-      }
+        {
+          return[
+            Text(gdprState),
+            Container(
+              margin: const EdgeInsets.only(left: 50),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.white70),
+                  onPressed: (){
+                    setGDPR();
+                  },
+                  child: const Text("设置",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ))),
+            ),
+          ];
+        }
       case 3:
-      {
-        return[
-          Text(ccpaState),
-          Container(
-            margin: const EdgeInsets.only(left: 50),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
-                onPressed: (){
-                  setCCPA();
-                },
-                child: const Text("设置",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
-          ),
-        ];
-      }
+        {
+          return[
+            Text(ccpaState),
+            Container(
+              margin: const EdgeInsets.only(left: 50),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.white70),
+                  onPressed: (){
+                    setCCPA();
+                  },
+                  child: const Text("设置",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ))),
+            ),
+          ];
+        }
       case 4:
-      {
-        return[
-          Text(coppaState),
-          Container(
-            margin: const EdgeInsets.only(left: 50),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
-                onPressed: (){
-                  setCOPPA();
-                },
-                child: const Text("设置",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
-          ),
-        ];
-      }
+        {
+          return[
+            Text(coppaState),
+            Container(
+              margin: const EdgeInsets.only(left: 50),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.white70),
+                  onPressed: (){
+                    setCOPPA();
+                  },
+                  child: const Text("设置",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ))),
+            ),
+          ];
+        }
       case 5:
         {
           return[
@@ -156,6 +157,20 @@ class PrivacyWidgetState extends State<PrivacyWidget>
                   showGDPRDialog();
                 },
                 child: const Text("showGDPRDialog",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ))),
+          ];
+        }
+      case 7:
+        {
+          return[
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.white70),
+                onPressed: (){
+                  checkCurrentArea();
+                },
+                child: const Text("地区查询",
                     style: TextStyle(
                       color: Colors.black,
                     ))),
@@ -206,21 +221,7 @@ class PrivacyWidgetState extends State<PrivacyWidget>
 
   showGDPRDialog() async
   {
-    if (defaultTargetPlatform == TargetPlatform.iOS)
-    {
-      // int gdpr = await TPSDKManager.getGDPRDataCollection();
-      bool isEU = await TPSDKManager.isEUTraffic();
-      if(isEU)//未设置
-      {
-        TPSDKManager.showGDPRDialog();
-      }
-      else
-      {
-        print("当前不在欧洲");
-      }
-    }else{
-      TPSDKManager.showGDPRDialog();
-    }
+    TPSDKManager.showGDPRDialog();
   }
 
   updateState() async
@@ -265,23 +266,36 @@ class PrivacyWidgetState extends State<PrivacyWidget>
     setState((){});
   }
 
+  checkCurrentArea()
+  {
+    TPSDKManager.checkCurrentArea();
+  }
+
 
   addListener()
   {
     listener = TPInitListener(
-        //iOS level固定为0，只做为关闭回调
+      //iOS level固定为0，只做为关闭回调
         dialogClosed:(int level)
         {
           print("dialogClosed");
           updateState();
         },
-        gdprSuccess: (String msg)
+        gdprSuccess:(String msg)
         {
           print("sdk init finish");
         },
         gdprFailed:(String msg)
         {
           print("sdk init finish");
+        },
+        currentAreaSuccess: (bool isEu, bool isCn, bool isCa) {
+          TPAdConfiguration.showLog("sdk currentAreaSuccess isEu = $isEu,isCn = $isCn, isCa = $isCa");
+          //在获取到相关地域配置后设置相关隐私API（GDPR，COPPA，CCPA等） 然后初始化SDK
+        },
+        currentAreaFailed: () {
+          TPAdConfiguration.showLog("currentAreaFailed");
+          //一般为网络问题导致查询失败 不设置相关隐私API 直接初始化SDK
         }
     );
     TPSDKManager.setInitListener(listener!);
