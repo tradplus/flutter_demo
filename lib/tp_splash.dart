@@ -87,6 +87,12 @@ class TPSplash {
     } else if (method == 'splash_allLoaded') {
       bool isSuccess = arguments["success"];
       listener.onAdAllLoaded!(adUnitId, isSuccess);
+    }else if (method == 'splash_onZoomOutStart') {
+      listener.onZoomOutStart!(adUnitId, adInfo);
+    }else if (method == 'splash_onZoomOutEnd') {
+      listener.onZoomOutEnd!(adUnitId, adInfo);
+    }else if (method == 'splash_onSkip') {
+      listener.onSkip!(adUnitId, adInfo);
     } else if (method == 'splash_downloadstart') {
       num l = arguments["l"];
       num l1 = arguments["l1"];
@@ -143,6 +149,10 @@ class TPSplashAdListener {
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, bool isSuccess)? onAdAllLoaded;
 
+  final Function(String adUnitId, Map adInfo)? onZoomOutStart;
+  final Function(String adUnitId, Map adInfo)? onZoomOutEnd;
+  final Function(String adUnitId, Map adInfo)? onSkip;
+
   //android only 下载回调
   final Function(String adUnitId, num totalBytes, num currBytes,
       String fileName, String appName)? onDownloadStart;
@@ -159,22 +169,26 @@ class TPSplashAdListener {
 
   const TPSplashAdListener(
       {required this.onAdLoaded,
-      required this.onAdLoadFailed,
-      required this.onAdImpression,
-      required this.onAdShowFailed,
-      required this.onAdClicked,
-      required this.onAdClosed,
-      required this.oneLayerLoadFailed,
-      this.onAdStartLoad,
-      this.onBiddingStart,
-      this.onBiddingEnd,
-      this.oneLayerStartLoad,
-      this.oneLayerLoaded,
-      this.onAdAllLoaded,
-      this.onDownloadStart,
-      this.onDownloadUpdate,
-      this.onDownloadPause,
-      this.onDownloadFinish,
-      this.onDownloadFail,
-      this.onInstall});
+        required this.onAdLoadFailed,
+        required this.onAdImpression,
+        required this.onAdShowFailed,
+        required this.onAdClicked,
+        required this.onAdClosed,
+        required this.oneLayerLoadFailed,
+        this.onAdStartLoad,
+        this.onBiddingStart,
+        this.onBiddingEnd,
+        this.oneLayerStartLoad,
+        this.oneLayerLoaded,
+        this.onAdAllLoaded,
+        this.onDownloadStart,
+        this.onDownloadUpdate,
+        this.onDownloadPause,
+        this.onDownloadFinish,
+        this.onDownloadFail,
+        this.onInstall,
+        this.onZoomOutStart,
+        this.onZoomOutEnd,
+        this.onSkip
+      });
 }

@@ -34,6 +34,7 @@ class TPNative
         double templateWidth = 320,//模版类型预设宽度
         double templateHeight = 250,//模版类型预设高度
         bool isAutoLoad = true,
+        num? loadCount,
         Map? customMap,
         Map? localParams, //客户设置特殊参数数据
       })
@@ -45,7 +46,9 @@ class TPNative
     extraMap['isAutoLoad'] = isAutoLoad;
     extraMap['templateWidth'] = templateWidth;
     extraMap['templateHeight'] = templateHeight;
-    extraMap['loadCount'] = 2;
+    if(loadCount != null) {
+      extraMap['loadCount'] = loadCount;
+    }
     if(customMap != null)
     {
       extraMap['customMap'] = customMap;

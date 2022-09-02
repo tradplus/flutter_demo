@@ -17,6 +17,17 @@ final TPSDKManager = TradplusSdk();
 class TradplusSdk {
   static MethodChannel channel = const MethodChannel('tradplus_sdk');
 
+  ///TradplusSDK 设置删除数据库最大限制数
+  Future<void> setMaxDatabaseSize(num size) async{
+    Map arguments = {};
+    arguments['size'] = size;
+    TradplusSdk.channel.invokeMethod('tp_setMaxDatabaseSize',arguments);
+  }
+  ///TradplusSDK 获取地区api
+  Future<void> checkCurrentArea() async{
+    TradplusSdk.channel.invokeMethod('tp_checkCurrentArea');
+  }
+
   ///TradplusSDK 初始化 传入 appId
   Future<void> init(String appId) async{
     Map arguments = {};
@@ -171,34 +182,43 @@ class TradplusSdk {
 
   callback(TPInitListener listener,String method,Map arguments)
   {
-      if(method == 'tp_initFinish')
+    if(method == 'tp_initFinish')
+    {
+      bool success = false;
+      if(arguments.containsKey("success"))
       {
-        bool success = false;
-        if(arguments.containsKey("success"))
-        {
-          success = arguments["success"];
-        }
-        listener.initFinish!(success);
+        success = arguments["success"];
       }
-      else if(method == 'tp_dialogClosed')
+      listener.initFinish!(success);
+    }
+    else if(method == 'tp_dialogClosed')
+    {
+      int level = 0;
+      if(arguments.containsKey("level"))
       {
-        int level = 0;
-        if(arguments.containsKey("level"))
-        {
-          level = arguments["level"];
-        }
-        listener.dialogClosed!(level);
+        level = arguments["level"];
       }
-      else if(method == 'tp_gdpr_success')
-      {
-        String msg = arguments["msg"];
-        listener.gdprSuccess!(msg);
-      }
-      else if(method == 'tp_gdpr_failed')
-      {
-        String msg = arguments["msg"];
-        listener.gdprFailed!(msg);
-      }
+      listener.dialogClosed!(level);
+    }
+    else if(method == 'tp_gdpr_success')
+    {
+      String msg = arguments["msg"];
+      listener.gdprSuccess!(msg);
+    }
+    else if(method == 'tp_gdpr_failed')
+    {
+      String msg = arguments["msg"];
+      listener.gdprFailed!(msg);
+    }else if(method == 'tp_currentarea_success')
+    {
+      bool isEu = arguments["iseu"];
+      bool isCn = arguments["iscn"];
+      bool isCa = arguments["isca"];
+      listener.currentAreaSuccess!(isEu,isCn,isCa);
+    }else if(method == 'tp_currentarea_failed')
+    {
+      listener.currentAreaFailed!();
+    }
   }
 }
 
@@ -211,10 +231,14 @@ class TPInitListener
   final Function(String msg)? gdprSuccess;
   //android 支持
   final Function(String msg)? gdprFailed;
+  final Function(bool isEu,bool isCn,bool isCa)? currentAreaSuccess;
+  final Function? currentAreaFailed;
   const TPInitListener({
     this.initFinish,
     this.dialogClosed,
     this.gdprSuccess,
-    this.gdprFailed
+    this.gdprFailed,
+    this.currentAreaSuccess,
+    this.currentAreaFailed,
   });
 }

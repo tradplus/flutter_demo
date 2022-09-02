@@ -83,6 +83,10 @@
     {
         [self clearCacheWithCall:call];
     }
+    else if([@"tp_checkCurrentArea" isEqualToString:call.method])
+    {
+        [self checkCurrentArea];
+    }
 }
 
 - (void)clearCacheWithCall:(FlutterMethodCall*)call
@@ -132,6 +136,20 @@
 {
     BOOL isEU = ([MSConsentManager sharedManager].isGDPRApplicable == MSBoolYes);
     result(@(isEU));
+}
+
+- (void)checkCurrentArea
+{
+    [TradPlus checkCurrentArea:^(BOOL isUnknown, BOOL isCN, BOOL isCA, BOOL isEU) {
+        if(!isUnknown)
+        {
+            [TradplusSdkPlugin callbackWithEventName:@"tp_currentarea_success" adUnitID:nil adInfo:nil error:nil exp:@{@"iscn":@(isCN),@"iseu":@(isEU),@"isca":@(isCA)}];
+        }
+        else
+        {
+            [TradplusSdkPlugin callbackWithEventName:@"tp_currentarea_failed" adUnitID:nil adInfo:nil error:nil];
+        }
+    }];
 }
 
 - (void)setGDPRDataCollection:(FlutterMethodCall*)call

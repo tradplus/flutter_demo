@@ -174,4 +174,26 @@
     NSString *eventNam = [self eventName:@"allLoaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.splash.unitID adInfo:nil error:nil exp:@{@"success":@(success)}];
 }
+
+//v8.1.0+新增 跳过
+- (void)tpSplashAdSkip:(NSDictionary *)adInfo
+{
+    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    NSString *eventNam = [self eventName:@"onSkip"];
+    [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.splash.unitID adInfo:adInfo error:nil];
+}
+//v8.1.0+新增 点睛开始
+- (void)tpSplashAdZoomOutViewShow:(NSDictionary *)adInfo
+{
+    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    NSString *eventNam = [self eventName:@"onZoomOutStart"];
+    [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.splash.unitID adInfo:adInfo error:nil];
+}
+//v8.1.0+新增 点睛关闭
+- (void)tpSplashAdZoomOutViewClose:(NSDictionary *)adInfo
+{
+    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    NSString *eventNam = [self eventName:@"onZoomOutEnd"];
+    [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.splash.unitID adInfo:adInfo error:nil];
+}
 @end
