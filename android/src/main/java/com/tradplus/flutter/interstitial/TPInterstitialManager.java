@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
+import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
@@ -65,6 +66,9 @@ public class TPInterstitialManager {
 
         } else if ("interstitial_show".equals(call.method)) {
             tpInterstitial.showAd(TradPlusSdk.getInstance().getActivity(), call.argument("sceneId"));
+
+        } else if ("interstitial_setCustomAdInfo".equals(call.method)) {
+            tpInterstitial.setCustomShowData(call.argument("customAdInfo"));
 
         } else {
             Log.e("TradPlusLog", "unknown method");

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.bean.TPBaseAd;
+import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.mgr.nativead.TPCustomNativeAd;
 import com.tradplus.ads.mobileads.util.SegmentUtils;
@@ -72,7 +73,10 @@ public class TPNativeManager {
             tpNative.entryAdScenario(call.argument("sceneId"));
         } else if ("native_getLoadedCount".equals(call.method)) {
             result.success(tpNative.getLoadedCount());
-        } else {
+        } else if ("native_setCustomAdInfo".equals(call.method)) {
+            tpNative.setCustomShowData(call.argument("customAdInfo"));
+
+        }else {
             Log.e("TradPlusLog", "unknown method");
         }
 
@@ -129,14 +133,17 @@ public class TPNativeManager {
         return true;
     }
 
-    public boolean renderView(String adUnitId, ViewGroup viewContainer, int layoutId, String adSceneId) {
+    public boolean renderView(String adUnitId, ViewGroup viewContainer, int layoutId, String adSceneId,Map<String, Object> customAdInfo) {
         TPNative tpNative = mTPNatives.get(adUnitId);
         if (tpNative == null) {
             Log.v("TradPlusLog", "TPNaitve is null");
 
             return false;
         }
+
         TPCustomNativeAd nativeAd = tpNative.getNativeAd();
+        nativeAd.setCustomShowData(customAdInfo);
+
         if (nativeAd == null) {
             Log.v("TradPlusLog", "TPCustom Ad is null");
             return false;
@@ -149,18 +156,20 @@ public class TPNativeManager {
         return true;
     }
 
-    public boolean renderView(String adUnitId, ViewGroup viewContainer, TPNativeAdRender adRender, String adSceneId) {
+    public boolean renderView(String adUnitId, ViewGroup viewContainer, TPNativeAdRender adRender, String adSceneId,Map<String, Object> customAdInfo) {
         TPNative tpNative = mTPNatives.get(adUnitId);
         if (tpNative == null) {
             // print log
             return false;
         }
+
+
         TPCustomNativeAd nativeAd = tpNative.getNativeAd();
         if (nativeAd == null) {
             // print log
             return false;
         }
-
+        nativeAd.setCustomShowData(customAdInfo);
         nativeAd.showAd(viewContainer, adRender, adSceneId);
         return true;
     }

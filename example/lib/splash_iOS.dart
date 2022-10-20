@@ -111,6 +111,15 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
   showAd() async {
     bool isReady = await TPSplashManager.splashAdReady(unitId);
     if (isReady) {
+      infoString = "";
+      //展示前设置自定义信息
+      String time = DateTime.now().millisecondsSinceEpoch.toString();
+      Map customAdInfo ={
+        "act":"Show",
+        "time":time
+      };
+      TPSplashManager.setCustomAdInfo(unitId, customAdInfo);
+
       //iOS
       TPSplashManager.showSplashAd(unitId);
       print('ad show');

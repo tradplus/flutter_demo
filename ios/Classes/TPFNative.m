@@ -45,6 +45,12 @@
     [self.native loadAd];
 }
 
+- (void)loadAds:(NSInteger)adsCount
+{
+    MSLogTrace(@"%s %ld", __PRETTY_FUNCTION__,(long)adsCount);
+    [self.native loadAds:adsCount];
+}
+
 - (TradPlusAdNativeObject *)getReadyNativeObject
 {
     return self.native.getReadyNativeObject;
@@ -89,6 +95,12 @@
 {
     MSLogTrace(@"%s", __PRETTY_FUNCTION__);
     return self.native.readyAdCount;
+}
+
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    self.native.customAdInfo = customAdInfo;
 }
 
 - (NSString *)eventName:(NSString *)event

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadAd;
 - (void)setCustomMap:(NSDictionary *)dic;
 - (void)showAd;
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -4,13 +4,14 @@ import 'package:flutter/services.dart';
 
 class TPNativeViewWidget extends StatefulWidget
 {
-  const TPNativeViewWidget(this.adUnitId,this.width,this.height,{Key? key, this.sceneId = "",this.className = "",this.extraMap}) : super(key: key);
+  const TPNativeViewWidget(this.adUnitId,this.width,this.height,{Key? key, this.sceneId = "",this.className = "",this.extraMap,this.customAdInfo}) : super(key: key);
   final String adUnitId;
   final double? width;
   final double? height;
   final String? sceneId;
   final String? className;
   final Map? extraMap;
+  final Map? customAdInfo;
   @override
   State<StatefulWidget> createState() {
     return TPNativeViewWidgetState();
@@ -31,6 +32,7 @@ class TPNativeViewWidgetState extends State<TPNativeViewWidget> {
           "width": widget.width,
           "height": widget.height,
           "layoutName" : widget.className,
+          "customAdInfo":widget.customAdInfo
         },
         creationParamsCodec: const StandardMessageCodec(),
       );
@@ -45,7 +47,8 @@ class TPNativeViewWidgetState extends State<TPNativeViewWidget> {
             "height": widget.height,
             "className": widget.className,
             "extraMap": widget.extraMap,
-            "sceneId":widget.sceneId
+            "sceneId":widget.sceneId,
+            "customAdInfo":widget.customAdInfo
           },
           creationParamsCodec: const StandardMessageCodec(),
       );

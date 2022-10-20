@@ -62,6 +62,12 @@
     return self.splash.isAdReady;
 }
 
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    self.splash.customAdInfo = customAdInfo;
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"splash_%@",event];

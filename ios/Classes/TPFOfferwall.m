@@ -92,6 +92,12 @@
     [self.offerwall setUserId:userId];
 }
 
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    self.offerwall.customAdInfo = customAdInfo;
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"offerwall_%@",event];

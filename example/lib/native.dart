@@ -212,17 +212,23 @@ class NativeWidgetState extends State<NativeWidget> {
   }
 
   getNativeView() {
+    //展示前设置自定义信息
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Show",
+      "time":time
+    };
     if (showType == 0) {
       return null;
     } else if (showType == 1) //使用布局
     {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         return TPNativeViewWidget(unitId, 320, 320,
-            className: "TPNativeTemplate", sceneId: sceneId);
+            className: "TPNativeTemplate", sceneId: sceneId,customAdInfo:customAdInfo);
       } else //android
       {
         return TPNativeViewWidget(unitId, 320, 540,
-            className: "native_ad_list_item",sceneId: sceneId);
+            className: "native_ad_list_item",sceneId: sceneId,customAdInfo:customAdInfo);
       }
     } else if (showType == 2) //使用自定义Map
     {
@@ -231,6 +237,7 @@ class NativeWidgetState extends State<NativeWidget> {
         320,
         320,
         sceneId: sceneId,
+        customAdInfo:customAdInfo,
         extraMap: {
           "parent": TPNativeManager.createNativeSubViewAttribute(320, 320,
               backgroundColorStr: "#FFFFFF"),

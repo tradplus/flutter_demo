@@ -9,6 +9,7 @@ import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.bean.TPBaseAd;
 import com.tradplus.ads.base.config.ConfigLoadManager;
+import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.core.AdCacheManager;
 import com.tradplus.ads.core.AdMediationManager;
@@ -70,7 +71,10 @@ public class TPBannerManager {
             tpBanner.entryAdScenario(call.argument("sceneId"));
         } else if ("banner_ready".equals(call.method)) {
             result.success(isReadyByBanner(adUnitId));
-        } else {
+        } else if ("banner_setCustomAdInfo".equals(call.method)) {
+            tpBanner.setCustomShowData(call.argument("customAdInfo"));
+
+        }else {
             Log.e("TradPlusLog", "unknown method");
         }
 

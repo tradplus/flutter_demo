@@ -41,6 +41,14 @@ class TPSplash {
     TradplusSdk.channel.invokeMethod('splash_show', arguments);
   }
 
+  ///开发者通过此接口在展示前设置透传信息，透传信息可以在广告展示后的相关回调的adInfo中获取
+  Future<void> setCustomAdInfo(String adUnitId,Map customAdInfo) async {
+    Map arguments = {};
+    arguments['adUnitID'] = adUnitId;
+    arguments['customAdInfo'] = customAdInfo;
+    TradplusSdk.channel.invokeMethod('splash_setCustomAdInfo', arguments);
+  }
+
   ///设置广告Listener：adUnitId 设置后只返回指定广告位相关回调（可选）
   setSplashListener(TPSplashAdListener listener, {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
@@ -169,26 +177,26 @@ class TPSplashAdListener {
 
   const TPSplashAdListener(
       {required this.onAdLoaded,
-        required this.onAdLoadFailed,
-        required this.onAdImpression,
-        required this.onAdShowFailed,
-        required this.onAdClicked,
-        required this.onAdClosed,
-        required this.oneLayerLoadFailed,
-        this.onAdStartLoad,
-        this.onBiddingStart,
-        this.onBiddingEnd,
-        this.oneLayerStartLoad,
-        this.oneLayerLoaded,
-        this.onAdAllLoaded,
-        this.onDownloadStart,
-        this.onDownloadUpdate,
-        this.onDownloadPause,
-        this.onDownloadFinish,
-        this.onDownloadFail,
-        this.onInstall,
-        this.onZoomOutStart,
-        this.onZoomOutEnd,
-        this.onSkip
+      required this.onAdLoadFailed,
+      required this.onAdImpression,
+      required this.onAdShowFailed,
+      required this.onAdClicked,
+      required this.onAdClosed,
+      required this.oneLayerLoadFailed,
+      this.onAdStartLoad,
+      this.onBiddingStart,
+      this.onBiddingEnd,
+      this.oneLayerStartLoad,
+      this.oneLayerLoaded,
+      this.onAdAllLoaded,
+      this.onDownloadStart,
+      this.onDownloadUpdate,
+      this.onDownloadPause,
+      this.onDownloadFinish,
+      this.onDownloadFail,
+      this.onInstall,
+      this.onZoomOutStart,
+      this.onZoomOutEnd,
+      this.onSkip
       });
 }

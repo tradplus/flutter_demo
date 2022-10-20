@@ -53,6 +53,10 @@
     {
         [self entryAdScenarioWithAdUnitID:adUnitID methodCall:call];
     }
+    else if([@"rewardVideo_setCustomAdInfo" isEqualToString:call.method])
+    {
+        [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
+    }
 }
 
 - (TPFRewardVideo *)getRewardVideoWithAdUnitID:(NSString *)adUnitID
@@ -143,4 +147,17 @@
     }
 }
 
+- (void)setCustomAdInfoWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFRewardVideo *rewardVideo = [self getRewardVideoWithAdUnitID:adUnitID];
+    NSDictionary *customAdInfo = call.arguments[@"customAdInfo"];
+    if(rewardVideo != nil)
+    {
+        [rewardVideo setCustomAdInfo:customAdInfo];
+    }
+    else
+    {
+        MSLogInfo(@"rewardVideo adUnitID:%@ not initialize",adUnitID);
+    }
+}
 @end

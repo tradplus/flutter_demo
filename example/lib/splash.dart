@@ -110,11 +110,18 @@ class SplashWidgetState extends State<SplashWidget> {
     if (isReady) {
       if (defaultTargetPlatform == TargetPlatform.android) {
         setState(() {
+
+          //展示前设置自定义信息
+          String time = DateTime.now().millisecondsSinceEpoch.toString();
+          Map customAdInfo ={
+            "act":"Show",
+            "time":time
+          };
+          TPSplashManager.setCustomAdInfo(unitId, customAdInfo);
+
+
           hasAd = true;
         });
-      } else {
-        //iOS
-        TPSplashManager.showSplashAd(unitId);
       }
 
       print('ad show');

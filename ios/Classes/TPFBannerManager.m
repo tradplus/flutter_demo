@@ -49,6 +49,10 @@
     {
         [self entryAdScenarioWithAdUnitID:adUnitID methodCall:call];
     }
+    else if([@"banner_setCustomAdInfo" isEqualToString:call.method])
+    {
+        [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
+    }
 }
 
 - (TPFBanner *)getBannerWithAdUnitID:(NSString *)adUnitID
@@ -114,6 +118,20 @@
     if(banner != nil)
     {
         [banner entryAdScenario:sceneId];
+    }
+    else
+    {
+        MSLogInfo(@"banner adUnitID:%@ not initialize",adUnitID);
+    }
+}
+
+- (void)setCustomAdInfoWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFBanner *banner = [self getBannerWithAdUnitID:adUnitID];
+    NSDictionary *customAdInfo = call.arguments[@"customAdInfo"];
+    if(banner != nil)
+    {
+        [banner setCustomAdInfo:customAdInfo];
     }
     else
     {

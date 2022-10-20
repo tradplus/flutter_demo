@@ -54,6 +54,10 @@
     {
         [self getLoadedCount:adUnitID result:result];
     }
+    else if([@"native_setCustomAdInfo" isEqualToString:call.method])
+    {
+        [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
+    }
 }
 
 - (TPFNative *)getNativeWithAdUnitID:(NSString *)adUnitID
@@ -98,10 +102,23 @@
             [native setCustomMap:customMap];
         }
     }
-    [native setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
-    if(!isAutoLoad)
+    NSInteger loadCount = [extraMap[@"loadCount"] integerValue];
+    if(loadCount > 0)
     {
-        [native loadAd];
+        [native setAdUnitID:adUnitID isAutoLoad:NO];
+        [native loadAds:loadCount];
+        if(isAutoLoad)
+        {
+            [native setAdUnitID:adUnitID isAutoLoad:YES];
+        }
+    }
+    else
+    {
+        [native setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
+        if(!isAutoLoad)
+        {
+            [native loadAd];
+        }
     }
 }
 
@@ -147,5 +164,18 @@
     }
 }
 
+- (void)setCustomAdInfoWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFNative *native = [self getNativeWithAdUnitID:adUnitID];
+    NSDictionary *customAdInfo = call.arguments[@"customAdInfo"];
+    if(native != nil)
+    {
+        [native setCustomAdInfo:customAdInfo];
+    }
+    else
+    {
+        MSLogInfo(@"native adUnitID:%@ not initialize",adUnitID);
+    }
+}
 
 @end

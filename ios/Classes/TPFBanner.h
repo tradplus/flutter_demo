@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)entryAdScenario:(nullable NSString *)sceneId;
 - (void)setBannerSize:(CGSize)size;
 - (void)setBannerContentMode:(NSInteger)mode;
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
 - (void)showAd;
 
 @property (nonatomic,strong)TradPlusAdBanner *banner;

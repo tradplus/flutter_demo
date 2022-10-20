@@ -53,6 +53,10 @@
     {
         [self entryAdScenarioWithAdUnitID:adUnitID methodCall:call];
     }
+    else if([@"interstitial_setCustomAdInfo" isEqualToString:call.method])
+    {
+        [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
+    }
 }
 
 - (TPFInterstitial *)getInterstitialWithAdUnitID:(NSString *)adUnitID
@@ -131,6 +135,20 @@
     if(interstitial != nil)
     {
         [interstitial entryAdScenario:sceneId];
+    }
+    else
+    {
+        MSLogInfo(@"interstitial adUnitID:%@ not initialize",adUnitID);
+    }
+}
+
+- (void)setCustomAdInfoWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFInterstitial *interstitial = [self getInterstitialWithAdUnitID:adUnitID];
+    NSDictionary *customAdInfo = call.arguments[@"customAdInfo"];
+    if(interstitial != nil)
+    {
+        [interstitial setCustomAdInfo:customAdInfo];
     }
     else
     {

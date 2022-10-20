@@ -115,6 +115,15 @@ class InterstitialWidgetState extends State<InterstitialWidget> {
   showAd() async {
     bool isReady = await TPInterstitialManager.interstitialAdReady(unitId);
     if (isReady) {
+
+      //展示前设置自定义信息
+      String time = DateTime.now().millisecondsSinceEpoch.toString();
+      Map customAdInfo ={
+        "act":"Show",
+        "time":time
+      };
+      TPInterstitialManager.setCustomAdInfo(unitId, customAdInfo);
+
       TPInterstitialManager.showInterstitialAd(unitId, sceneId: sceneId);
       print('ad show');
     } else {

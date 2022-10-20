@@ -18,6 +18,7 @@
     CGFloat width;
     NSString *sceneId;
     TradPlusAdNativeObject *nativeObject;
+    NSDictionary *customAdInfo;
 }
 
 @end
@@ -36,18 +37,22 @@
       height = [args[@"height"] floatValue];
       width = [args[@"width"] floatValue];
       sceneId = args[@"sceneId"];
+      customAdInfo = args[@"customAdInfo"];
   }
   return self;
 }
 
 - (UIView*)view
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     TPFNative *native = [[TPFNativeManager sharedInstance] getNativeWithAdUnitID:adUnitId];
     nativeObject = native.getReadyNativeObject;
     if(nativeObject == nil)
     {
         return nil;
+    }
+    if(customAdInfo != nil)
+    {
+        nativeObject.customAdInfo = customAdInfo;
     }
     if(className != nil
        && ![className isKindOfClass:[NSNull class]]

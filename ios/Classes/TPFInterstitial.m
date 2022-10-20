@@ -68,6 +68,12 @@
     return self.interstitial.isAdReady;
 }
 
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    self.interstitial.customAdInfo = customAdInfo;
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"interstitial_%@",event];

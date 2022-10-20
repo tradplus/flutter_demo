@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setServerSideVerificationOptionsWithUserID:(nonnull NSString *)userID customData:(nullable NSString *)customData;
 - (void)showAdWithSceneId:(nullable NSString *)sceneId;
 - (void)entryAdScenario:(nullable NSString *)sceneId;
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
 @end
 
 NS_ASSUME_NONNULL_END

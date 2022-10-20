@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
+import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
@@ -63,7 +64,10 @@ public class TPRewardManager {
         } else if ("rewardVideo_show".equals(call.method)) {
             tpReward.showAd(TradPlusSdk.getInstance().getActivity(), call.argument("sceneId"));
 
-        } else {
+        } else if ("rewardVideo_setCustomAdInfo".equals(call.method)) {
+            tpReward.setCustomShowData(call.argument("customAdInfo"));
+
+        }else {
             Log.e("TradPlusLog", "unknown method");
         }
 

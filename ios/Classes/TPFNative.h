@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,readonly)BOOL isAdReady;
 
 - (void)loadAd;
+- (void)loadAds:(NSInteger)adsCount;
 - (void)setTemplateRenderSize:(CGSize)size;
 - (void)setAdUnitID:(NSString * _Nonnull)adUnitID isAutoLoad:(BOOL)isAutoLoad;
 - (void)showWithClassName:(Class)viewClass subview:(UIView *)adView sceneId:(NSString *)sceneId;
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (TradPlusAdNativeObject *)getReadyNativeObject;
 - (void)entryAdScenario:(nullable NSString *)sceneId;
 - (void)setCustomMap:(NSDictionary *)dic;
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
 - (NSInteger)getLoadedCount;
 @end
 

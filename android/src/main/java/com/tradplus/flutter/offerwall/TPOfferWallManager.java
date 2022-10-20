@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.common.TPTaskManager;
+import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
@@ -76,7 +77,10 @@ public class TPOfferWallManager {
         }else if ("offerwall_setUserId".equals(call.method)) {
             tpOfferWall.setUserId( call.argument("userId"));
 
-        } else {
+        } else if ("offerwall_setCustomAdInfo".equals(call.method)) {
+            tpOfferWall.setCustomShowData(call.argument("customAdInfo"));
+
+        }else {
             Log.e("TradPlusLog", "unknown method");
         }
 

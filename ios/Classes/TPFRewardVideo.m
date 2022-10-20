@@ -75,6 +75,12 @@
     return self.rewarded.isAdReady;
 }
 
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    self.rewarded.customAdInfo = customAdInfo;
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"rewardVideo_%@",event];

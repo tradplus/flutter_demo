@@ -6,7 +6,17 @@ buildscript {
         flatDir {
             dirs 'libs'
         }
-
+        if (isTestMode as int == 0) {
+            if (isWinsOrMac as int == 0) {
+                maven {
+                    url 'C://Users/Administrator/.m2/repository'
+                }
+            }else{
+                maven {
+                    url '/Users/caesar.qiu/.m2/repository'
+                }
+            }
+        }
         google()
         mavenCentral()
     }
@@ -18,10 +28,20 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
+        if (isTestMode as int == 0) {
+            if (isWinsOrMac as int == 0) {
+                maven {
+                    url 'C://Users/Administrator/.m2/repository'
+                }
+            }else{
+                maven {
+                    url '/Users/caesar.qiu/.m2/repository'
+                }
+            }
+        }
         flatDir {
             dirs 'libs'
         }
-
         google()
         mavenCentral()
 
@@ -43,7 +63,7 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "8.2.0.1"
+def TRADPLUS_VERSION = "8.6.0.1"
 
 dependencies {
     //TradPlus

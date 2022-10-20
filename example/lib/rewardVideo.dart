@@ -119,6 +119,15 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
   showAd() async {
     bool isReady = await TPRewardVideoManager.rewardVideoAdReady(unitId);
     if (isReady) {
+
+      //展示前设置自定义信息
+      String time = DateTime.now().millisecondsSinceEpoch.toString();
+      Map customAdInfo ={
+        "act":"Show",
+        "time":time
+      };
+      TPRewardVideoManager.setCustomAdInfo(unitId, customAdInfo);
+
       TPRewardVideoManager.showRewardVideoAd(unitId, sceneId: sceneId);
       print('ad show');
     } else {

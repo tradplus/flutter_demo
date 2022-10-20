@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.bean.TPBaseAd;
+import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
@@ -65,7 +66,10 @@ public class TPSplashManager  {
         } else if ("splash_show".equals(call.method)) {
             Log.i("TradPlusLog","please create the Widget to show Splash View");
 
-        } else {
+        } else if ("splash_setCustomAdInfo".equals(call.method)) {
+            tpSplash.setCustomShowData(call.argument("customAdInfo"));
+
+        }else {
             Log.e("TradPlusLog", "unknown method");
         }
 

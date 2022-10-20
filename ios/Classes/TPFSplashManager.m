@@ -49,6 +49,10 @@
     {
         [self showAdWithAdUnitID:adUnitID methodCall:call];
     }
+    else if([@"splash_setCustomAdInfo" isEqualToString:call.method])
+    {
+        [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
+    }
 }
 
 - (TPFSplash *)getSplashWithAdUnitID:(NSString *)adUnitID
@@ -111,4 +115,17 @@
     }
 }
 
+- (void)setCustomAdInfoWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFSplash *splash = [self getSplashWithAdUnitID:adUnitID];
+    NSDictionary *customAdInfo = call.arguments[@"customAdInfo"];
+    if(splash != nil)
+    {
+        [splash setCustomAdInfo:customAdInfo];
+    }
+    else
+    {
+        MSLogInfo(@"splash adUnitID:%@ not initialize",adUnitID);
+    }
+}
 @end

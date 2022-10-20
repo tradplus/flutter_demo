@@ -132,6 +132,13 @@ class BannerWidgetState extends State<BannerWidget> {
     bool isReady = await TPBannerManager.bannerAdReady(unitId);
     if (isReady) {
       setState(() {
+        //展示前设置自定义信息
+        String time = DateTime.now().millisecondsSinceEpoch.toString();
+        Map customAdInfo ={
+          "act":"Show",
+          "time":time
+        };
+        TPBannerManager.setCustomAdInfo(unitId, customAdInfo);
         hasAd = true;
       });
     }

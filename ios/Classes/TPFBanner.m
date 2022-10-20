@@ -93,6 +93,12 @@
     [self.banner showWithSceneId:self.sceneId];
 }
 
+- (void)setCustomAdInfo:(NSDictionary *)customAdInfo
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    self.banner.customAdInfo = customAdInfo;
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"banner_%@",event];

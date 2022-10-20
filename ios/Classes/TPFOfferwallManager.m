@@ -69,6 +69,10 @@
     {
         [self setUserIdWithAdUnitID:adUnitID methodCall:call];
     }
+    else if([@"offerwall_setCustomAdInfo" isEqualToString:call.method])
+    {
+        [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
+    }
 }
 
 - (TPFOfferwall *)getOfferwallWithAdUnitID:(NSString *)adUnitID
@@ -203,6 +207,20 @@
     if(offerwall != nil)
     {
         [offerwall setUserId:userId];
+    }
+    else
+    {
+        MSLogInfo(@"offerwall adUnitID:%@ not initialize",adUnitID);
+    }
+}
+
+- (void)setCustomAdInfoWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFOfferwall *offerwall = [self getOfferwallWithAdUnitID:adUnitID];
+    NSDictionary *customAdInfo = call.arguments[@"customAdInfo"];
+    if(offerwall != nil)
+    {
+        [offerwall setCustomAdInfo:customAdInfo];
     }
     else
     {
