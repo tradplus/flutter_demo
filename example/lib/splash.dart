@@ -16,6 +16,8 @@ class SplashWidgetState extends State<SplashWidget> {
   static TPSplashAdListener? listener;
   String infoString = "";
   bool hasAd = false;
+  bool useDef = true;
+  String useDefText = "模版：默认";
 
   void initState() {
     super.initState();
@@ -35,34 +37,43 @@ class SplashWidgetState extends State<SplashWidget> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.white70),
-                          onPressed: () {
-                            loadAd();
-                          },
-                          child: const Text("Load",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ))),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.white70),
-                          onPressed: () {
-                            checkAdReady();
-                          },
-                          child: const Text("isReady",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ))),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.white70),
-                          onPressed: () {
-                            showAd();
-                          },
-                          child: const Text("Show",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ))),
-                    ]),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      onPressed: () {
+                        loadAd();
+                      },
+                      child: const Text("Load",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ))),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      onPressed: () {
+                        checkAdReady();
+                      },
+                      child: const Text("isReady",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ))),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      onPressed: () {
+                        showAd();
+                      },
+                      child: const Text("Show",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ))),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      onPressed: () {
+                        changeClassName();
+                      },
+                      child:  Text(useDefText,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ))),
+                ]),
                 Container(
                   height: 100,
                   margin: const EdgeInsets.only(top: 20),
@@ -102,26 +113,45 @@ class SplashWidgetState extends State<SplashWidget> {
     Map extraMap = TPSplashManager.createSplashExtraMap(
         customMap: customMap, localParams: localParams);
     TPSplashManager.loadSplashAd(unitId, extraMap: extraMap);
+
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Load",
+      "time":time
+    };
+    TPSplashManager.setCustomAdInfo(unitId, customAdInfo);
+  }
+
+  changeClassName()
+  {
+    setState(() {
+      useDef = !useDef;
+      if(useDef)
+        useDefText = "模版：默认";
+      else
+        useDefText = "模版：自定义";
+    });
   }
 
   //展示广告
   showAd() async {
     bool isReady = await TPSplashManager.splashAdReady(unitId);
     if (isReady) {
+
+      String time = DateTime.now().millisecondsSinceEpoch.toString();
+      Map customAdInfo ={
+        "act":"Show",
+        "time":time
+      };
+      TPSplashManager.setCustomAdInfo(unitId, customAdInfo);
+
       if (defaultTargetPlatform == TargetPlatform.android) {
         setState(() {
-
-          //展示前设置自定义信息
-          String time = DateTime.now().millisecondsSinceEpoch.toString();
-          Map customAdInfo ={
-            "act":"Show",
-            "time":time
-          };
-          TPSplashManager.setCustomAdInfo(unitId, customAdInfo);
-
-
           hasAd = true;
         });
+      } else {
+        //iOS
+        TPSplashManager.showSplashAd(unitId);
       }
 
       print('ad show');
@@ -251,6 +281,15 @@ class SplashWidgetState extends State<SplashWidget> {
     if (!hasAd) {
       return null;
     }
-    return TPSplashViewWidget(unitId);
+    if(useDef)
+    {
+      return TPSplashViewWidget(unitId);
+    }
+    else
+    {
+      String layoutName = "tp_native_splash_ad1";
+      return TPSplashViewWidget(unitId,layoutName: layoutName);
+    }
+
   }
 }

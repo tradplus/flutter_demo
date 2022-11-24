@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'part_refresh_view.dart';
 import 'package:tradplus_sdk/tradplus_sdk.dart';
@@ -15,6 +16,8 @@ class BannerWidgetState extends State<BannerWidget> {
   String unitId = TPAdConfiguration.bannerAdUnitId;
   static TPBannerAdListener? listener;
   bool hasAd = false;
+  bool useDef = true;
+  String useDefText = "模版：默认";
   String infoString = "";
   String sceneId = TPAdConfiguration.bannerSceneId;
 
@@ -86,6 +89,23 @@ class BannerWidgetState extends State<BannerWidget> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.white70),
+                onPressed: () {
+                  changeClassName();
+                },
+                child: Text(useDefText,
+                  style: TextStyle(
+                  color: Colors.black,
+                  ))),
+              ],
+            ),
+          ),
           PartRefreshWidget(globalKey, () {
             ///创建需要局部刷新的widget
             return Text(
@@ -97,7 +117,7 @@ class BannerWidgetState extends State<BannerWidget> {
               child: Container(
                 // height: 100,
                 width: 320,
-                height: 250,
+                height: 60,
 
                 // color: Colors.deepPurple,
                 margin: const EdgeInsets.only(top: 20),
@@ -125,6 +145,23 @@ class BannerWidgetState extends State<BannerWidget> {
     Map extraMap = TPBannerManager.createBannerExtraMap(
         height: 60, width: 320, customMap: customMap,localParams:localParams, sceneId: sceneId);
     TPBannerManager.loadBannerAd(unitId, extraMap: extraMap);
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Load",
+      "time":time
+    };
+    TPBannerManager.setCustomAdInfo(unitId, customAdInfo);
+  }
+
+  changeClassName()
+  {
+    setState(() {
+      useDef = !useDef;
+      if(useDef)
+        useDefText = "模版：默认";
+      else
+        useDefText = "模版：自定义";
+    });
   }
 
   //展示广告
@@ -132,7 +169,6 @@ class BannerWidgetState extends State<BannerWidget> {
     bool isReady = await TPBannerManager.bannerAdReady(unitId);
     if (isReady) {
       setState(() {
-        //展示前设置自定义信息
         String time = DateTime.now().millisecondsSinceEpoch.toString();
         Map customAdInfo ={
           "act":"Show",
@@ -260,6 +296,23 @@ class BannerWidgetState extends State<BannerWidget> {
     if (!hasAd) {
       return null;
     }
-    return TPBannerViewWidget(unitId);
+    if(useDef)
+    {
+      return TPBannerViewWidget(unitId);
+    }
+    else
+    {
+      //使用自定义模版
+      String className = "";
+      if(defaultTargetPlatform == TargetPlatform.iOS)
+      {
+        className = "NativeBannerTemplate";
+      }
+      else
+      {
+        className = "native_banner_ad_unit";
+      }
+      return TPBannerViewWidget(unitId,className:className);
+    }
   }
 }

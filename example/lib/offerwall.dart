@@ -156,13 +156,19 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
         customMap: customMap,
         localParams:localParams);
     TPOfferWallManager.loadOfferwallAd(unitId,extraMap: extraMap);
+
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Load",
+      "time":time
+    };
+    TPOfferWallManager.setCustomAdInfo(unitId, customAdInfo);
   }
 
   showAd() async {
     bool isReady = await TPOfferWallManager.offerwallAdReady(unitId);
     if (isReady) {
 
-      //展示前设置自定义信息
       String time = DateTime.now().millisecondsSinceEpoch.toString();
       Map customAdInfo ={
         "act":"Show",

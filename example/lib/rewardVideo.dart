@@ -113,6 +113,13 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
         userId: "rewardVideo_userId",
         customData: "rewardVideo_customData");
     TPRewardVideoManager.loadRewardVideoAd(unitId, extraMap: extraMap);
+
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Load",
+      "time":time
+    };
+    TPRewardVideoManager.setCustomAdInfo(unitId, customAdInfo);
   }
 
   //展示广告
@@ -120,7 +127,6 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
     bool isReady = await TPRewardVideoManager.rewardVideoAdReady(unitId);
     if (isReady) {
 
-      //展示前设置自定义信息
       String time = DateTime.now().millisecondsSinceEpoch.toString();
       Map customAdInfo ={
         "act":"Show",

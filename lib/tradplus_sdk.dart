@@ -213,7 +213,7 @@ class TradplusSdk {
     {
       adInfo = arguments['adInfo'];
     }
-    listener.onGlobalAdImpression!(adInfo);
+    listener.onGlobalAdImpression(adInfo);
   }
 
   callback(TPInitListener listener,String method,Map arguments)

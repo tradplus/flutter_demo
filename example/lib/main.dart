@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     "测试设置"
   ];
   static TPInitListener? listener;
+  static TPGlobalAdImpressionListener? globalAdImpressionListener;
   String appId = TPAdConfiguration.appId;
 
   @override
@@ -182,5 +183,13 @@ class _MyAppState extends State<MyApp> {
 
     TPSDKManager.checkCurrentArea();
     TPSDKManager.init(appId);
+
+    globalAdImpressionListener = TPGlobalAdImpressionListener(
+        onGlobalAdImpression: (adInfo) {
+          TPAdConfiguration.showLog(
+              'onGlobalAdImpression :  adInfo = $adInfo');
+        });
+
+    TPSDKManager.setGlobalAdImpressionListener(globalAdImpressionListener!);
   }
 }

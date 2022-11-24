@@ -7,13 +7,17 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [GeneratedPluginRegistrant registerWithRegistry:self];
+  // Override point for customization after application launch.
+    return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
     if (@available(iOS 14.5, *)) {
         [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
         }];
      }
-    [GeneratedPluginRegistrant registerWithRegistry:self];
-  // Override point for customization after application launch.
-    return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
 @end

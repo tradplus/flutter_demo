@@ -109,6 +109,13 @@ class InterstitialWidgetState extends State<InterstitialWidget> {
     Map extraMap = TPInterstitialManager.createInterstitialExtraMap(
         isAutoLoad: TPAdConfiguration.isAutoLoad, customMap: customMap,localParams:localParams);
     TPInterstitialManager.loadInterstitialAd(unitId, extraMap: extraMap);
+
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Load",
+      "time":time
+    };
+    TPInterstitialManager.setCustomAdInfo(unitId, customAdInfo);
   }
 
   //展示广告
@@ -116,7 +123,6 @@ class InterstitialWidgetState extends State<InterstitialWidget> {
     bool isReady = await TPInterstitialManager.interstitialAdReady(unitId);
     if (isReady) {
 
-      //展示前设置自定义信息
       String time = DateTime.now().millisecondsSinceEpoch.toString();
       Map customAdInfo ={
         "act":"Show",

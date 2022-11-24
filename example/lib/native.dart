@@ -127,7 +127,7 @@ class NativeWidgetState extends State<NativeWidget> {
           Container(
               child: Container(
                 width: 320,
-                height: 320,
+                height: 500,
                 margin: const EdgeInsets.only(top: 10),
                 child: getNativeView(),
               )),
@@ -157,6 +157,13 @@ class NativeWidgetState extends State<NativeWidget> {
         customMap: customMap,
         localParams:localParams);
     TPNativeManager.loadNativeAd(unitId, extraMap: extraMap);
+
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    Map customAdInfo ={
+      "act":"Load",
+      "time":time
+    };
+    TPNativeManager.setCustomAdInfo(unitId, customAdInfo);
   }
 
   //广告是否已ready
@@ -211,16 +218,18 @@ class NativeWidgetState extends State<NativeWidget> {
     globalKey.currentState?.update();
   }
 
-  getNativeView() {
-    //展示前设置自定义信息
+  getNativeView()
+  {
     String time = DateTime.now().millisecondsSinceEpoch.toString();
     Map customAdInfo ={
       "act":"Show",
       "time":time
     };
-    if (showType == 0) {
+    if (showType == 0)
+    {
       return null;
-    } else if (showType == 1) //使用布局
+    }
+    else if (showType == 1) //使用布局
     {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         return TPNativeViewWidget(unitId, 320, 320,
@@ -237,7 +246,6 @@ class NativeWidgetState extends State<NativeWidget> {
         320,
         320,
         sceneId: sceneId,
-        customAdInfo:customAdInfo,
         extraMap: {
           "parent": TPNativeManager.createNativeSubViewAttribute(320, 320,
               backgroundColorStr: "#FFFFFF"),
@@ -256,6 +264,7 @@ class NativeWidgetState extends State<NativeWidget> {
           "adLogo": TPNativeManager.createNativeSubViewAttribute(20, 20,
               x: 320 - 30, y: 10)
         },
+          customAdInfo:customAdInfo,
       );
 
     }
