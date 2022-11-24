@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(TradplusSdkManager *)sharedInstance;
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result;
+- (void)addGlobalAdImpressionDelegate;
 @end
 
 NS_ASSUME_NONNULL_END

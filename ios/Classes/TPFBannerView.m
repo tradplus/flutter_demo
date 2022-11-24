@@ -12,6 +12,7 @@
 {
     NSString *adUnitId;
     TPFBanner *bannerControl;
+    NSString *className;
 }
 
 @end
@@ -27,13 +28,39 @@
   if (self = [super init])
   {
       adUnitId = args[@"adUnitId"];
+      className = args[@"className"];
       bannerControl = [[TPFBannerManager sharedInstance] getBannerWithAdUnitID:adUnitId];
+      if(bannerControl != nil)
+      {
+          if(className != nil
+             && ![className isKindOfClass:[NSNull class]]
+             && className.length > 0)
+          {
+              Class class = NSClassFromString(className);
+              if(class != nil)
+              {
+                  bannerControl.banner.customRenderingViewClass = class;
+              }
+              else
+              {
+                  MSLogInfo(@"banner no find  native className %@",className);
+              }
+          }
+          else
+          {
+              bannerControl.banner.customRenderingViewClass = nil;
+          }
+      }
   }
   return self;
 }
 
 - (UIView*)view
 {
+    if(bannerControl == nil)
+    {
+        return nil;
+    }
     if(bannerControl.banner.isAutoRefresh)
     {
         if(!bannerControl.banner.autoShow)

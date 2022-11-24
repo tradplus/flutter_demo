@@ -107,7 +107,8 @@
     TPFSplash *splash = [self getSplashWithAdUnitID:adUnitID];
     if(splash != nil)
     {
-        [splash showAd];
+        NSString *className = call.arguments[@"className"];
+        [splash showAdWithClassName:className];
     }
     else
     {

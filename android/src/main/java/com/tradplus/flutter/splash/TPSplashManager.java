@@ -16,6 +16,7 @@ import com.tradplus.ads.open.LoadAdEveryLayerListener;
 import com.tradplus.ads.open.banner.TPBanner;
 import com.tradplus.ads.open.interstitial.InterstitialAdListener;
 import com.tradplus.ads.open.interstitial.TPInterstitial;
+import com.tradplus.ads.open.nativead.TPNativeAdRender;
 import com.tradplus.ads.open.splash.SplashAdListener;
 import com.tradplus.ads.open.splash.TPSplash;
 import com.tradplus.flutter.TPUtils;
@@ -108,7 +109,7 @@ public class TPSplashManager  {
         return tpSplash;
     }
 
-    public boolean renderView(String adUnitId, ViewGroup viewContainer, String adSceneId) {
+    public boolean renderView(String adUnitId, ViewGroup viewContainer, String adSceneId, TPNativeAdRender tpNativeAdRender) {
         TPSplash tpSplash = mTPSplashs.get(adUnitId);
 
         if(tpSplash == null){
@@ -119,6 +120,10 @@ public class TPSplashManager  {
         if(viewContainer == null){
             Log.v("TradPlusLog", "viewContainer is null");
             return false;
+        }
+
+        if(tpNativeAdRender != null) {
+            tpSplash.setNativeAdRender(tpNativeAdRender);
         }
 
         tpSplash.showAd(viewContainer);

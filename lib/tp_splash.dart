@@ -34,10 +34,11 @@ class TPSplash {
         .invokeMethod('splash_ready', {'adUnitID': adUnitId});
   }
 
-  ///展示广告：adUnitId 广告位ID ,sceneId 从Tradplus后台获取到到场景ID 仅支持iOS
-  Future<void> showSplashAd(String adUnitId) async {
+  ///展示广告：adUnitId 广告位ID ,className 用户自定义模版名称  此接口仅支持iOS
+  Future<void> showSplashAd(String adUnitId,{String className = ""}) async {
     Map arguments = {};
     arguments['adUnitID'] = adUnitId;
+    arguments['className'] = className;
     TradplusSdk.channel.invokeMethod('splash_show', arguments);
   }
 

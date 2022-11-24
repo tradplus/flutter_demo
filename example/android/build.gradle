@@ -14,16 +14,10 @@ buildscript {
             name "Tapjoy's maven repo"
             url "https://sdk.tapjoy.com/"
         }
-        maven {
-            name 'Google'
-            url 'https://maven.google.com/'
-        }
         // Maio
         maven { url "https://imobile-maio.github.io/maven" }
         // Ogury
         maven { url 'https://maven.ogury.co'}
-        // Appnext
-//        maven { url "http://dl.appnext.com/" }
         // Smaato
         // Add the following repository setup to your project’s main build.gradle file
         maven {
@@ -42,7 +36,7 @@ buildscript {
             url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_china"
         }
         // Superawesome
-//        maven { url "https://aa-sdk.s3-eu-west-1.amazonaws.com/android_repo" }
+        maven { url "https://aa-sdk.s3-eu-west-1.amazonaws.com/android_repo" }
         // Verve
         maven { url 'https://verve.jfrog.io/artifactory/verve-gradle-release' }
     }
@@ -76,8 +70,6 @@ allprojects {
         maven { url "https://imobile-maio.github.io/maven" }
         // Ogury
         maven { url 'https://maven.ogury.co'}
-        // Appnext
-//        maven { url "http://dl.appnext.com/" }
         // Smaato
         // Add the following repository setup to your project’s main build.gradle file
         maven {

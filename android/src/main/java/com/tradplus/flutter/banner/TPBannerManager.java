@@ -114,7 +114,7 @@ public class TPBannerManager {
         return tpBanner;
     }
 
-    public boolean renderView(String adUnitId, ViewGroup viewContainer, String adSceneId) {
+    public boolean renderView(String adUnitId, ViewGroup viewContainer, String adSceneId,TPNativeAdRender tpNativeAdRender) {
         TPBanner tpBanner = mTPBanners.get(adUnitId);
 
         if(tpBanner == null){
@@ -131,9 +131,13 @@ public class TPBannerManager {
             ((ViewGroup) tpBanner.getParent()).removeView(tpBanner);
         }
 
+        if(tpNativeAdRender != null){
+            tpBanner.setNativeAdRender(tpNativeAdRender);
+        }
+
         viewContainer.addView(tpBanner);
         if(isReady(adUnitId)) {
-            tpBanner.showAd();
+            tpBanner.showAd(adSceneId);
         }
 
         if (viewContainer.getChildCount() <= 0) {

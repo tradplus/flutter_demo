@@ -32,7 +32,11 @@ static FlutterMethodChannel *channel;
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result
 {
-    if([call.method hasPrefix:@"tp_"])
+    if([call.method isEqualToString:@"tp_addGlobalAdImpressionListener"])
+    {
+        [[TradplusSdkManager sharedInstance] addGlobalAdImpressionDelegate];
+    }
+    else if([call.method hasPrefix:@"tp_"])
     {
         [[TradplusSdkManager sharedInstance] handleMethodCall:call result:result];
     }

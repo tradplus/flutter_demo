@@ -56,6 +56,23 @@
     [self.splash show];
 }
 
+- (void)showAdWithClassName:(NSString *)className
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    if(className != nil
+       && ![className isKindOfClass:[NSNull class]]
+       && className.length > 0)
+    {
+        Class class = NSClassFromString(className);
+        if(class != nil)
+        {
+            [self.splash showWithRenderingViewClass:class];
+            return;
+        }
+    }
+    [self.splash show];
+}
+
 - (BOOL)isAdReady
 {
     MSLogTrace(@"%s", __PRETTY_FUNCTION__);

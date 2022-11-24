@@ -26,10 +26,16 @@ class TPListenerCenter
 
   TPInitListener? initListener;
 
+  TPGlobalAdImpressionListener? globalAdImpressionListener;
+
   TPListenerCenter() {
     TradplusSdk.channel.setMethodCallHandler((MethodCall call) async{
       String method = call.method;
-      if(method.startsWith("tp_"))//SDK相关
+      if(method == 'tp_globalAdImpression')
+      {
+        globalAdImpressionCallBack(call);
+      }
+      else if(method.startsWith("tp_"))//SDK相关
       {
         tpCallBack(call);
       }
@@ -61,6 +67,18 @@ class TPListenerCenter
         print("unkown method");
       }
     });
+  }
+
+  globalAdImpressionCallBack(MethodCall call)
+  {
+    String method = call.method;
+    var arguments = call.arguments;
+    if(globalAdImpressionListener == null)
+    {
+      print("not set globalAdImpressionListener");
+      return;
+    }
+    TPSDKManager.globalAdImpressionCallback(globalAdImpressionListener!, method, arguments);
   }
 
   tpCallBack(MethodCall call)

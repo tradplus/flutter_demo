@@ -48,6 +48,12 @@ class TradplusSdk {
     TPListenerManager.initListener = listener;
   }
 
+  setGlobalAdImpressionListener(TPGlobalAdImpressionListener listener)
+  {
+    TradplusSdk.channel.invokeMethod('tp_addGlobalAdImpressionListener');
+    TPListenerManager.globalAdImpressionListener = listener;
+  }
+
   ///获取 TradplusSDK 版本号
   Future<String> version() async
   {
@@ -106,6 +112,20 @@ class TradplusSdk {
   Future<int>getGDPRDataCollection() async
   {
     return await TradplusSdk.channel.invokeMethod('tp_getGDPRDataCollection');
+  }
+
+  ///设置 LGPD等级 是否允许数据上报: ture 设备数据允许上报, false 设备数据不允许上报
+  Future<void>setLGPDDataCollection(bool canDataCollection) async
+  {
+    Map arguments = {};
+    arguments['canDataCollection'] = canDataCollection;
+    TradplusSdk.channel.invokeMethod('tp_setLGPDConsent',arguments);
+  }
+
+  /// 获取当前 LGPD等级：  0 允许上报 , 1 不允许上报, 2 未设置
+  Future<int>getLGPDDataCollection() async
+  {
+    return await TradplusSdk.channel.invokeMethod('tp_getLGPDConsent');
   }
 
   ///设置 CCPA等级 是否允许数据上报: ture 加州用户接受上报数据, false 加州用户均不上报数据
@@ -178,7 +198,23 @@ class TradplusSdk {
     TradplusSdk.channel.invokeMethod('tp_clearCache',arguments);
   }
 
+  ///设置 是否开启close后自动加载delay 2S: ture 是, false 否
+  Future<void>setOpenDelayLoadAds(bool isOpen) async
+  {
+    Map arguments = {};
+    arguments['isOpen'] = isOpen;
+    TradplusSdk.channel.invokeMethod('tp_setOpenDelayLoadAds',arguments);
+  }
 
+  globalAdImpressionCallback(TPGlobalAdImpressionListener listener,String method,Map arguments)
+  {
+    Map adInfo = {};
+    if (arguments.containsKey("adInfo"))
+    {
+      adInfo = arguments['adInfo'];
+    }
+    listener.onGlobalAdImpression!(adInfo);
+  }
 
   callback(TPInitListener listener,String method,Map arguments)
   {
@@ -241,4 +277,14 @@ class TPInitListener
     this.currentAreaSuccess,
     this.currentAreaFailed,
   });
+}
+
+class TPGlobalAdImpressionListener
+{
+  final Function(Map adInfo) onGlobalAdImpression;
+
+  const TPGlobalAdImpressionListener(
+      {
+        required this.onGlobalAdImpression
+      });
 }

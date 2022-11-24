@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TPBannerViewWidget extends StatefulWidget {
-  TPBannerViewWidget(this.adUnitId);
+  TPBannerViewWidget(this.adUnitId,{Key? key,this.className = ""});
 
   String adUnitId;
+  final String? className;
 
   @override
   State<StatefulWidget> createState() {
@@ -20,14 +21,20 @@ class TPBannerViewWidgetState extends State<TPBannerViewWidget> {
       return AndroidView(
         key: UniqueKey(),
         viewType: 'tp_banner_view',
-        creationParams: <String, dynamic>{"adUnitId": widget.adUnitId},
+        creationParams: <String, dynamic>{
+          "adUnitId": widget.adUnitId,
+          "layoutName":widget.className
+        },
         creationParamsCodec: const StandardMessageCodec(),
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
         key: UniqueKey(),
         viewType: 'tp_banner_view',
-        creationParams: {"adUnitId": widget.adUnitId},
+        creationParams: {
+          "adUnitId": widget.adUnitId,
+          "className":widget.className
+        },
         creationParamsCodec: const StandardMessageCodec(),
       );
     } else {

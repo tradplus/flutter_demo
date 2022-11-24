@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TPSplashViewWidget extends StatefulWidget {
-  TPSplashViewWidget(this.adUnitId);
+  TPSplashViewWidget(this.adUnitId,{Key? key,this.layoutName = ""});
 
   String adUnitId;
+  final String? layoutName;
 
   @override
   State<StatefulWidget> createState() {
@@ -20,7 +21,10 @@ class TPSplashViewWidgetState extends State<TPSplashViewWidget> {
       return AndroidView(
         key: UniqueKey(),
         viewType: 'tp_splash_view',
-        creationParams: <String, dynamic>{"adUnitId": widget.adUnitId},
+        creationParams: <String, dynamic>{
+          "adUnitId": widget.adUnitId,
+          "layoutName":widget.layoutName
+        },
         creationParamsCodec: const StandardMessageCodec(),
       );
     } else {

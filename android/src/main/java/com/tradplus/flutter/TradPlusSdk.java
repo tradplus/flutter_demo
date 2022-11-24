@@ -6,12 +6,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.common.TPDiskManager;
 import com.tradplus.ads.base.common.TPPrivacyManager;
 import com.tradplus.ads.base.common.TPTaskManager;
 import com.tradplus.ads.common.ClientMetadata;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.core.AdCacheManager;
+import com.tradplus.ads.core.GlobalImpressionManager;
 import com.tradplus.ads.mobileads.gdpr.Const;
 import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.mobileads.util.TestDeviceUtil;
@@ -76,7 +78,7 @@ public class TradPlusSdk {
                         result.success(getSdkVersion());
                     } else if (call.method.equals("tp_init")) {
                         initMethonCall(call, result);
-                    }else if (call.method.equals("tp_checkCurrentArea")) {
+                    } else if (call.method.equals("tp_checkCurrentArea")) {
                         currentAreaMethonCall(call, result);
                     } else if (call.method.equals("tp_isEUTraffic")) {
                         result.success(com.tradplus.ads.open.TradPlusSdk.isEUTraffic(getApplicationContext()));
@@ -84,8 +86,10 @@ public class TradPlusSdk {
                         setGDPRMethonCall(call, result);
                     } else if (call.method.equals("tp_getGDPRDataCollection")) {
                         result.success(getGDPRMethonCall());
-                    } else if (call.method.equals("tp_setCCPADoNotSell")) {
-                        setCCPAMethonCall(call, result);
+                    } else if (call.method.equals("tp_setLGPDConsent")) {
+                        setLGPDMethonCall(call, result);
+                    } else if (call.method.equals("tp_getLGPDConsent")) {
+                        result.success(getLGPDMethonCall());
                     } else if (call.method.equals("tp_getCCPADoNotSell")) {
                         result.success(isCCPADoNotSell());
                     } else if (call.method.equals("tp_setCOPPAIsAgeRestrictedUser")) {
@@ -102,21 +106,25 @@ public class TradPlusSdk {
                         setFirstShowGDPR(call, result);
                     } else if (call.method.equals("tp_isFirstShowGDPR")) {
                         result.success(isFirstShowGDPR());
-                    }else if (call.method.equals("tp_setCustomMap")) {
-                        setSegmentMap(call,result);
-                    }else if (call.method.equals("tp_setTestDevice")) {
-                        setTestDevice(call,result);
-                    }else if (call.method.equals("tp_setMaxDatabaseSize")) {
-                        setMaxDatabaseSize(call,result);
-                    }else if (call.method.equals("tp_clearCache")) {
-                        clearCache(call,result);
-                    }else if (call.method.equals("tp_isCalifornia")) {
+                    } else if (call.method.equals("tp_setCustomMap")) {
+                        setSegmentMap(call, result);
+                    } else if (call.method.equals("tp_setTestDevice")) {
+                        setTestDevice(call, result);
+                    } else if (call.method.equals("tp_setMaxDatabaseSize")) {
+                        setMaxDatabaseSize(call, result);
+                    } else if (call.method.equals("tp_clearCache")) {
+                        clearCache(call, result);
+                    } else if (call.method.equals("tp_isCalifornia")) {
                         result.success(com.tradplus.ads.open.TradPlusSdk.isCalifornia(getApplicationContext()));
-                    }else if (call.method.equals("tp_isPrivacyUserAgree")) {
+                    } else if (call.method.equals("tp_isPrivacyUserAgree")) {
                         result.success(com.tradplus.ads.open.TradPlusSdk.isPrivacyUserAgree());
-                    }else if (call.method.equals("tp_setPrivacyUserAgree")) {
-                        setPrivacyUserAgreeMethonCall(call,result);
-                    }else{
+                    } else if (call.method.equals("tp_setPrivacyUserAgree")) {
+                        setPrivacyUserAgreeMethonCall(call, result);
+                    } else if (call.method.equals("tp_setOpenDelayLoadAds")) {
+                        setOpenDelayLoadAds(call, result);
+                    } else if (call.method.equals("tp_addGlobalAdImpressionListener")) {
+                        setGlobalImpressionListener(call, result);
+                    } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
                 } catch (Throwable e) {
@@ -130,25 +138,25 @@ public class TradPlusSdk {
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_splash_view", new TPSplashViewFactory(flutterPluginBinding.getBinaryMessenger()));
     }
 
-    private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+    private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String unitId = call.argument("adUnitId");
         int readyAdNum = AdCacheManager.getInstance().getReadyAdNum(unitId);
-        AdCacheManager.getInstance().removeEndCache(unitId,readyAdNum);
+        AdCacheManager.getInstance().removeEndCache(unitId, readyAdNum);
     }
 
-    private void setSegmentMap(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+    private void setSegmentMap(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Map<String, String> customMap = call.argument("customMap");
-        Log.i("tradplus","customMap = "+customMap);
+        Log.i("tradplus", "customMap = " + customMap);
         if (customMap != null) {
 
             SegmentUtils.initCustomMap(customMap);
         }
     }
 
-    private void setTestDevice(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+    private void setTestDevice(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         boolean isTestDevice = call.argument("testDevice");
         String testModeId = call.argument("testModeId");
-        TestDeviceUtil.getInstance().setNeedTestDevice(isTestDevice,testModeId);
+        TestDeviceUtil.getInstance().setNeedTestDevice(isTestDevice, testModeId);
     }
 
     public void showGDPRDialog() {
@@ -162,6 +170,17 @@ public class TradPlusSdk {
         }, Const.URL.GDPR_URL);
     }
 
+
+    public void setGlobalImpressionListener(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        com.tradplus.ads.open.TradPlusSdk.setGlobalImpressionListener(new GlobalImpressionManager.GlobalImpressionListener() {
+            @Override
+            public void onImpressionSuccess(TPAdInfo tpAdInfo) {
+                final Map<String, Object> paramsMap = new HashMap<>();
+                paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
+                TradPlusSdk.getInstance().sendCallBackToFlutter("tp_globalAdImpression", paramsMap);
+            }
+        });
+    }
 
     public void setFirstShowGDPR(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         boolean first = call.argument("first");
@@ -180,6 +199,7 @@ public class TradPlusSdk {
         com.tradplus.ads.open.TradPlusSdk.setPrivacyUserAgree(open);
 
     }
+
     public void setOpenPersonalizedAdMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         boolean open = call.argument("open");
 
@@ -191,13 +211,13 @@ public class TradPlusSdk {
         return com.tradplus.ads.open.TradPlusSdk.isOpenPersonalizedAd();
     }
 
-    public void setMaxDatabaseSize(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+    public void setMaxDatabaseSize(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         long size = call.argument("size");
         TPDiskManager.getInstance().setMaxDatabaseSize(size);
     }
 
     public void currentAreaMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        com.tradplus.ads.open.TradPlusSdk.checkCurrentArea(getApplicationContext(),new TPPrivacyManager.OnPrivacyRegionListener() {
+        com.tradplus.ads.open.TradPlusSdk.checkCurrentArea(getApplicationContext(), new TPPrivacyManager.OnPrivacyRegionListener() {
             @Override
             public void onSuccess(boolean b, boolean i, boolean b1) {
                 TPTaskManager.getInstance().runOnMainThread(new Runnable() {
@@ -310,6 +330,15 @@ public class TradPlusSdk {
         return com.tradplus.ads.open.TradPlusSdk.getGDPRDataCollection(getApplicationContext());
     }
 
+    public void setLGPDMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        boolean canDataCollection = call.argument("canDataCollection");
+        com.tradplus.ads.open.TradPlusSdk.setLGPDConsent(getApplicationContext(), canDataCollection ? 0 : 1);
+    }
+
+    public int getLGPDMethonCall() {
+        return com.tradplus.ads.open.TradPlusSdk.getLGPDConsent(getApplicationContext());
+    }
+
     private String getSdkVersion() {
         return ClientMetadata.getInstance(getApplicationContext()).getSdkVersion();
     }
@@ -320,6 +349,11 @@ public class TradPlusSdk {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    public void setOpenDelayLoadAds(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        boolean isOpen = call.argument("isOpen");
+        com.tradplus.ads.open.TradPlusSdk.setOpenDelayLoadAds(isOpen);
     }
 
     private Activity mainAtivity;

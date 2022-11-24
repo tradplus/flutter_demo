@@ -9,6 +9,10 @@
 #import <TradPlusAds/TradPlusAds.h>
 #import "TradplusSdkPlugin.h"
 
+@interface TradplusSdkManager()<TradPlusAdImpressionDelegate>
+
+@end
+
 @implementation TradplusSdkManager
 
 +(TradplusSdkManager *)sharedInstance
@@ -19,6 +23,11 @@
         manager = [[TradplusSdkManager alloc] init];
     });
     return manager;
+}
+
+- (void)addGlobalAdImpressionDelegate
+{
+    [TradPlus sharedInstance].impressionDelegate = self;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result
@@ -66,6 +75,14 @@
     else if([@"tp_getCOPPAIsAgeRestrictedUser" isEqualToString:call.method])
     {
         [self getCOPPAIsAgeRestrictedUser:result];
+    }
+    else if([@"tp_setLGPDConsent" isEqualToString:call.method])
+    {
+        [self setLGPDConsent:call];
+    }
+    else if([@"tp_getLGPDConsent" isEqualToString:call.method])
+    {
+        [self getLGPDConsent:result];
     }
     else if([@"tp_showGDPRDialog" isEqualToString:call.method])
     {
@@ -152,6 +169,30 @@
     }];
 }
 
+- (void)setLGPDConsent:(FlutterMethodCall*)call
+{
+    BOOL canDataCollection = [call.arguments[@"canDataCollection"] boolValue];
+    [TradPlus setLGPDIsConsentEnabled:canDataCollection];
+}
+
+- (void)getLGPDConsent:(FlutterResult)result
+{
+    NSInteger callbackState = 2;//未设置
+    if([[NSUserDefaults standardUserDefaults] objectForKey:gTPLGPDStorageKey])
+    {
+        NSInteger lgpdStatus = [[NSUserDefaults standardUserDefaults] integerForKey:gTPLGPDStorageKey];
+        if(lgpdStatus == 2)
+        {
+            callbackState = 0;//允许
+        }
+        else if(lgpdStatus == 1)
+        {
+            callbackState = 1;//不允许
+        }
+    }
+    result(@(callbackState));
+}
+
 - (void)setGDPRDataCollection:(FlutterMethodCall*)call
 {
     BOOL canDataCollection = [call.arguments[@"canDataCollection"] boolValue];
@@ -172,6 +213,7 @@
     }
     result(@(callbackState));
 }
+
 
 - (void)setCCPADoNotSell:(FlutterMethodCall*)call
 {
@@ -254,5 +296,11 @@
     [[MSConsentManager sharedManager] showConsentDialogFromViewController:[MsCommon getTopRootViewController] didShow:nil didDismiss:^{
         [TradplusSdkPlugin callbackWithEventName:@"tp_dialogClosed" adUnitID:nil adInfo:nil error:nil];
     }];
+}
+
+#pragma mark - TradPlusAdImpressionDelegate
+- (void)tradPlusAdImpression:(NSDictionary *)adInfo
+{
+    [TradplusSdkPlugin callbackWithEventName:@"tp_globalAdImpression" adUnitID:nil adInfo:adInfo error:nil];
 }
 @end

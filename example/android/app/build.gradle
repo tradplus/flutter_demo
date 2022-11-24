@@ -30,16 +30,19 @@ buildscript {
         flatDir {
             dirs 'libs'
         }
-
         google()
-        // TradPlus
         mavenCentral()
-
     }
 
 }
 
 android {
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+        exclude 'META-INF/com.android.tools/proguard/coroutines.pro'
+//        exclude 'AndroidManifest.xml'
+    }
+
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -50,7 +53,9 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.unstall.meetdeleteapp"
+//        applicationId "com.unstall.meetdeleteapp"
+        applicationId "com.QuickLoad.MergeCannonDefense"
+
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 23
@@ -71,7 +76,7 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "8.6.0.1"
+def TRADPLUS_VERSION = "8.8.0.1"
 
 dependencies {
     //TradPlus SDK
@@ -80,7 +85,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
-
     implementation 'com.google.code.gson:gson:2.8.6'
 
     if (isReleaseOnGP as int == 0) {
@@ -112,15 +116,20 @@ dependencies {
         implementation "com.tradplusad:tradplus-pangle:19.${TRADPLUS_VERSION}"
 //        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
         // 会自动引用，无需重复引用
-        implementation(name: 'open_ad_sdk_V4.7.0.3', ext:'aar')
+        implementation(name: 'open_ad_sdk_V4.8.0.5', ext:'aar')
         // UnityAds
         implementation "com.tradplusad:tradplus-unity:5.${TRADPLUS_VERSION}"
         implementation "com.unity3d.ads:unity-ads:${unity_version}"
         // Chartboost
-        implementation "com.tradplusad:tradplus-chartboostx:15.${TRADPLUS_VERSION}"
-        implementation "com.chartboost:chartboost-sdk:${chartboost_version}"
+//        implementation "com.tradplusad:tradplus-chartboostx:15.${TRADPLUS_VERSION}"
+//        implementation "com.chartboost:chartboost-sdk:${chartboost_version}"
 //        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
 //        implementation 'com.google.android.gms:play-services-base:17.4.0'
+        // Helium
+        implementation "com.tradplusad:tradplus-helium:30.${TRADPLUS_VERSION}"
+        implementation "com.chartboost:helium:${helium_version}"
+        // Helium requirement
+        implementation 'org.greenrobot:eventbus:3.3.1'
         // Inmobi
         implementation "com.tradplusad:tradplus-inmobix:23.${TRADPLUS_VERSION}"
         implementation "com.inmobi.monetization:inmobi-ads:${inmobi_version}"
@@ -152,22 +161,6 @@ dependencies {
         // Ogury
         implementation "co.ogury:ogury-sdk:${ogury_version}"
         implementation "com.tradplusad:tradplus-ogury:34.${TRADPLUS_VERSION}"
-        // Appnext
-    //    implementation "com.tradplusad:tradplus-appnext:36.${TRADPLUS_VERSION}"
-    //    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
-    //    implementation 'androidx.annotation:annotation:1.1.0'
-    //    // Mandatory
-    //    implementation 'androidx.work:work-runtime:2.4.0'
-    //    // Mandatory
-    //    implementation 'com.github.bumptech.glide:glide:4.11.0' // Mandatory
-    //    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    //    // Mandatory
-    //    //For the Interstitial and Rewarded/Fullscreen video ad unit:
-    //    implementation 'com.appnext.sdk:ads:2.6.5.473'
-    //    //For the Banners ad unit:
-    //    implementation 'com.appnext.sdk:banners:2.6.5.473'
-    //    //For the New Native Ads ad unit:
-    //    implementation 'com.appnext.sdk:native-ads2:2.6.5.473'
         // Cross Promotion
         implementation "com.tradplusad:tradplus-crosspromotion:27.${TRADPLUS_VERSION}"
         // Smaato
@@ -224,7 +217,7 @@ dependencies {
         implementation "com.tradplusad:tradplus-sigmob:21.${TRADPLUS_VERSION}"
 //        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         implementation(name: "wind-sdk-${sigmob_version}", ext: 'aar')
-        implementation(name: 'wind-common-1.3.5', ext: 'aar')
+        implementation(name: 'wind-common-1.4.0', ext: 'aar')
         // Youdao
         implementation "com.tradplusad:tradplus-youdao:25.${TRADPLUS_VERSION}"
         implementation(name: 'youdaosdk_4.2.16', ext: 'aar')
@@ -236,7 +229,7 @@ dependencies {
         // Cross Promotion
         implementation "com.tradplusad:tradplus-crosspromotion:27.${TRADPLUS_VERSION}"
         // Kuaishou
-//        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+        implementation 'androidx.recyclerview:recyclerview:1.1.0'
         implementation "com.tradplusad:tradplus-kwad:20.${TRADPLUS_VERSION}"
         implementation(name: "kssdk-ad-${kwad_version}", ext: 'aar')
         // Baidu
@@ -284,7 +277,6 @@ dependencies {
         // Huawei
         implementation "com.tradplusad:tradplus-huawei-cn:41.${TRADPLUS_VERSION}"
         implementation "com.huawei.hms:ads-lite:${huaiwei_cn_version}"
-
     }
 
 
