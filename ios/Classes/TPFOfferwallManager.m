@@ -93,12 +93,8 @@
         offerwall = [[TPFOfferwall alloc] init];
         self.offerwallAds[adUnitID] = offerwall;
     }
+    [offerwall setAdUnitID:adUnitID];
     NSDictionary *extraMap = call.arguments[@"extraMap"];
-    BOOL isAutoLoad = YES;
-    if(extraMap != nil)
-    {
-        isAutoLoad = [extraMap[@"isAutoLoad"] boolValue];
-    }
     if(extraMap != nil)
     {
         id customMap = extraMap[@"customMap"];
@@ -107,11 +103,7 @@
             [offerwall setCustomMap:customMap];
         }
     }
-    [offerwall setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
-    if(!isAutoLoad)
-    {
-        [offerwall loadAd];
-    }
+    [offerwall loadAd];
 }
 
 - (void)isAdReadyWithAdUnitID:(NSString *)adUnitID result:(FlutterResult)result

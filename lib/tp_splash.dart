@@ -89,7 +89,12 @@ class TPSplash {
       listener.onBiddingStart!(adUnitId, adInfo);
     } else if (method == 'splash_bidEnd') {
       listener.onBiddingEnd!(adUnitId, adInfo, error);
-    } else if (method == 'splash_oneLayerLoaded') {
+    }
+    else if(method == 'splash_isLoading')
+    {
+      listener.onAdIsLoading!(adUnitId);
+    }
+    else if (method == 'splash_oneLayerLoaded') {
       listener.oneLayerLoaded!(adUnitId, adInfo);
     } else if (method == 'splash_oneLayerLoadedFail') {
       listener.oneLayerLoadFailed(adUnitId, adInfo, error);
@@ -154,6 +159,7 @@ class TPSplashAdListener {
   final Function(String adUnitId, Map adInfo)? onAdStartLoad;
   final Function(String adUnitId, Map adInfo)? onBiddingStart;
   final Function(String adUnitId, Map adInfo, Map error)? onBiddingEnd;
+  final Function(String adUnitId)? onAdIsLoading;
   final Function(String adUnitId, Map adInfo)? oneLayerStartLoad;
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, bool isSuccess)? onAdAllLoaded;
@@ -187,6 +193,7 @@ class TPSplashAdListener {
       this.onAdStartLoad,
       this.onBiddingStart,
       this.onBiddingEnd,
+      this.onAdIsLoading,
       this.oneLayerStartLoad,
       this.oneLayerLoaded,
       this.onAdAllLoaded,

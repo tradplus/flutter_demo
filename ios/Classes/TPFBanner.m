@@ -113,7 +113,7 @@
     {
         self.didLoaded = YES;
     }
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"loaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -122,7 +122,7 @@
 ///tpBannerAdOneLayerLoad:didFailWithError：返回三方源的错误信息
 - (void)tpBannerAdLoadFailWithError:(NSError *)error
 {
-    MSLogInfo(@"%s error:%@", __PRETTY_FUNCTION__, error);
+    MSLogTrace(@"%s error:%@", __PRETTY_FUNCTION__, error);
     NSString *eventNam = [self eventName:@"loadFailed"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:nil error:error];
 }
@@ -130,7 +130,7 @@
 ///AD展现
 - (void)tpBannerAdImpression:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"impression"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -138,7 +138,7 @@
 ///AD展现失败
 - (void)tpBannerAdShow:(NSDictionary *)adInfo didFailWithError:(NSError *)error
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"showFailed"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:error];
 }
@@ -146,7 +146,7 @@
 ///AD被点击
 - (void)tpBannerAdClicked:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"clicked"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -154,7 +154,7 @@
 ///v7.6.0+新增 开始加载流程
 - (void)tpBannerAdStartLoad:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"startLoad"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -163,7 +163,7 @@
 ///v7.6.0+新增。替代原回调接口：tpBannerAdLoadStart:(NSDictionary *)adInfo;
 - (void)tpBannerAdOneLayerStartLoad:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"oneLayerStartLoad"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -171,7 +171,7 @@
 ///bidding开始
 - (void)tpBannerAdBidStart:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"bidStart"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -179,7 +179,7 @@
 ///bidding结束 error = nil 表示成功
 - (void)tpBannerAdBidEnd:(NSDictionary *)adInfo error:(NSError *)error
 {
-    MSLogInfo(@"%s adInfo:%@ error:%@", __PRETTY_FUNCTION__, adInfo,error);
+    MSLogTrace(@"%s adInfo:%@ error:%@", __PRETTY_FUNCTION__, adInfo,error);
     NSString *eventNam = [self eventName:@"bidEnd"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:error];
 }
@@ -187,7 +187,7 @@
 ///当每个广告源加载成功后会都会回调一次。
 - (void)tpBannerAdOneLayerLoaded:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"oneLayerLoaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
@@ -195,7 +195,7 @@
 ///当每个广告源加载失败后会都会回调一次，返回三方源的错误信息
 - (void)tpBannerAdOneLayerLoad:(NSDictionary *)adInfo didFailWithError:(NSError *)error
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"oneLayerLoadedFail"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:error];
 }
@@ -203,7 +203,7 @@
 ///加载流程全部结束
 - (void)tpBannerAdAllLoaded:(BOOL)success
 {
-    MSLogInfo(@"%s success:%@", __PRETTY_FUNCTION__, @(success));
+    MSLogTrace(@"%s success:%@", __PRETTY_FUNCTION__, @(success));
     NSString *eventNam = [self eventName:@"allLoaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:nil error:nil exp:@{@"success":@(success)}];
 }
@@ -211,9 +211,15 @@
 ///三方关闭按钮触发时的回调
 - (void)tpBannerAdClose:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"closed"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
 }
 
+- (void)tpBannerAdIsLoading:(NSDictionary *)adInfo
+{
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    NSString *eventNam = [self eventName:@"isLoading"];
+    [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.banner.unitID adInfo:adInfo error:nil];
+}
 @end

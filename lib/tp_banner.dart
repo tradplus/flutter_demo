@@ -137,6 +137,10 @@ class TPBanner
     {
       listener.onBiddingEnd!(adUnitId,adInfo,error);
     }
+    else if(method == 'banner_isLoading')
+    {
+      listener.onAdIsLoading!(adUnitId);
+    }
     else if(method == 'banner_oneLayerLoaded')
     {
       listener.oneLayerLoaded!(adUnitId,adInfo);
@@ -214,6 +218,7 @@ class TPBannerAdListener
   final Function(String adUnitId, Map adInfo)? onAdStartLoad;
   final Function(String adUnitId, Map adInfo)? onBiddingStart;
   final Function(String adUnitId, Map adInfo, Map error)? onBiddingEnd;
+  final Function(String adUnitId)? onAdIsLoading;
   final Function(String adUnitId, Map adInfo)? oneLayerStartLoad;
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, bool isSuccess)? onAdAllLoaded;
@@ -235,6 +240,7 @@ class TPBannerAdListener
     this.onAdStartLoad,
     this.onBiddingStart,
     this.onBiddingEnd,
+    this.onAdIsLoading,
     this.oneLayerStartLoad,
     this.oneLayerLoaded,
     this.onAdAllLoaded,

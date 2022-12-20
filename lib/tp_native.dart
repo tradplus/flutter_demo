@@ -33,7 +33,6 @@ class TPNative
       {
         double templateWidth = 320,//模版类型预设宽度
         double templateHeight = 250,//模版类型预设高度
-        bool isAutoLoad = true,
         num? loadCount,
         Map? customMap,
         Map? localParams, //客户设置特殊参数数据
@@ -43,7 +42,6 @@ class TPNative
     if(localParams != null){
       extraMap['localParams'] = localParams;
     }
-    extraMap['isAutoLoad'] = isAutoLoad;
     extraMap['templateWidth'] = templateWidth;
     extraMap['templateHeight'] = templateHeight;
     if(loadCount != null) {
@@ -165,6 +163,10 @@ class TPNative
     {
       listener.onBiddingEnd!(adUnitId,adInfo,error);
     }
+    else if(method == 'native_isLoading')
+    {
+      listener.onAdIsLoading!(adUnitId);
+    }
     else if(method == 'native_oneLayerLoaded')
     {
       listener.oneLayerLoaded!(adUnitId,adInfo);
@@ -250,6 +252,7 @@ class TPNativeAdListener
   final Function(String adUnitId, Map adInfo)? onAdStartLoad;
   final Function(String adUnitId, Map adInfo)? onBiddingStart;
   final Function(String adUnitId, Map adInfo,Map error)? onBiddingEnd;
+  final Function(String adUnitId)? onAdIsLoading;
   final Function(String adUnitId, Map adInfo)? oneLayerStartLoad;
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, Map adInfo)? onVideoPlayStart;
@@ -273,6 +276,7 @@ class TPNativeAdListener
     this.onAdStartLoad,
     this.onBiddingStart,
     this.onBiddingEnd,
+    this.onAdIsLoading,
     this.oneLayerStartLoad,
     this.oneLayerLoaded,
     this.onAdAllLoaded,

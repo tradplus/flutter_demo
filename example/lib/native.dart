@@ -151,7 +151,6 @@ class NativeWidgetState extends State<NativeWidget> {
       "custom_data": "native_customData"
     };
     Map extraMap = TPNativeManager.createNativeExtraMap(
-        isAutoLoad: TPAdConfiguration.isAutoLoad,
         templateHeight: 320,
         templateWidth: 320,
         customMap: customMap,

@@ -152,7 +152,6 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
       "custom_data": "offerwall_customData"
     };
     Map extraMap = TPOfferWallManager.createOfferwallExtraMap(
-        isAutoLoad: TPAdConfiguration.isAutoLoad,
         customMap: customMap,
         localParams:localParams);
     TPOfferWallManager.loadOfferwallAd(unitId,extraMap: extraMap);

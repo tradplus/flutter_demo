@@ -104,6 +104,10 @@
     {
         [self checkCurrentArea];
     }
+    else if([@"tp_setSettingDataParam" isEqualToString:call.method])
+    {
+        [self setSettingDataParam:call];
+    }
 }
 
 - (void)clearCacheWithCall:(FlutterMethodCall*)call
@@ -137,6 +141,74 @@
     {
         MSLogInfo(@"not find init appId");
     }
+}
+
+- (void)setSettingDataParam:(FlutterMethodCall*)call
+{
+    id setting = call.arguments[@"setting"];
+    if(![setting isKindOfClass:[NSDictionary class]])
+    {
+        return;
+    }
+    NSDictionary *settingDic = setting;
+    //交叉推广超时
+    if([settingDic valueForKey:@"http_timeout_crosspromotion"])
+    {
+        NSInteger http_timeout_crosspromotion = [settingDic[@"http_timeout_crosspromotion"] integerValue];
+        if(http_timeout_crosspromotion > 0)
+        {
+            http_timeout_crosspromotion = http_timeout_crosspromotion/1000;
+            if(http_timeout_crosspromotion == 0)
+                http_timeout_crosspromotion = 1;
+            gTPHttpTimeoutCross = http_timeout_crosspromotion;
+        }
+    }
+    //adx超时
+    if([settingDic valueForKey:@"http_timeout_adx"])
+    {
+        NSInteger http_timeout_adx = [settingDic[@"http_timeout_adx"] integerValue];
+        if(http_timeout_adx > 0)
+        {
+            http_timeout_adx = http_timeout_adx/1000;
+            if(http_timeout_adx == 0)
+                http_timeout_adx = 1;
+            gTPHttpTimeoutAdx = http_timeout_adx;
+        }
+    }
+    //配置超时
+    if([settingDic valueForKey:@"http_timeout_conf"])
+    {
+        NSInteger http_timeout_conf = [settingDic[@"http_timeout_conf"] integerValue];
+        if(http_timeout_conf > 0)
+        {
+            http_timeout_conf = http_timeout_conf/1000;
+            if(http_timeout_conf == 0)
+                http_timeout_conf = 1;
+            gTPHttpTimeoutConf = http_timeout_conf;
+        }
+    }
+    //其他网络超时
+    if([settingDic valueForKey:@"http_timeout_event"])
+    {
+        NSInteger http_timeout_event = [settingDic[@"http_timeout_event"] integerValue];
+        if(http_timeout_event > 0)
+        {
+            http_timeout_event = http_timeout_event/1000;
+            if(http_timeout_event == 0)
+                http_timeout_event = 1;
+            gTPHttpTimeoutEvent = http_timeout_event;
+        }
+    }
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    if([settingDic valueForKey:@"autoload_close"])
+    {
+        id autoload_close = settingDic[@"autoload_close"];
+        if([autoload_close isKindOfClass:[NSArray class]])
+        {
+            dic[@"autoload_close"] = autoload_close;
+        }
+    }
+    [[TradPlus sharedInstance] setSettingDataParam:dic];
 }
 
 - (void)sdkVersion:(FlutterResult)result

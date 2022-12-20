@@ -77,12 +77,8 @@
         interstitial = [[TPFInterstitial alloc] init];
         self.interstitialAds[adUnitID] = interstitial;
     }
+    [interstitial setAdUnitID:adUnitID];
     NSDictionary *extraMap = call.arguments[@"extraMap"];
-    BOOL isAutoLoad = YES;
-    if(extraMap != nil)
-    {
-        isAutoLoad = [extraMap[@"isAutoLoad"] boolValue];
-    }
     if(extraMap != nil)
     {
         id customMap = extraMap[@"customMap"];
@@ -91,11 +87,7 @@
             [interstitial setCustomMap:customMap];
         }
     }
-    [interstitial setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
-    if(!isAutoLoad)
-    {
-        [interstitial loadAd];
-    }
+    [interstitial loadAd];
 }
 
 - (void)isAdReadyWithAdUnitID:(NSString *)adUnitID result:(FlutterResult)result

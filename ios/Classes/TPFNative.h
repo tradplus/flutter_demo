@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadAd;
 - (void)loadAds:(NSInteger)adsCount;
 - (void)setTemplateRenderSize:(CGSize)size;
-- (void)setAdUnitID:(NSString * _Nonnull)adUnitID isAutoLoad:(BOOL)isAutoLoad;
+- (void)setAdUnitID:(NSString * _Nonnull)adUnitID;
 - (void)showWithClassName:(Class)viewClass subview:(UIView *)adView sceneId:(NSString *)sceneId;
 - (void)showWithRenderer:(TradPlusNativeRenderer *)renderer subview:(UIView *)adView sceneId:(NSString *)sceneId;
 - (TradPlusAdNativeObject *)getReadyNativeObject;

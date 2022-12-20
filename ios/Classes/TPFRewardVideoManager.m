@@ -76,12 +76,8 @@
         rewardVideo = [[TPFRewardVideo alloc] init];
         self.rewardVideoAds[adUnitID] = rewardVideo;
     }
+    [rewardVideo setAdUnitID:adUnitID];
     NSDictionary *extraMap = call.arguments[@"extraMap"];
-    BOOL isAutoLoad = YES;
-    if(extraMap != nil)
-    {
-        isAutoLoad = [extraMap[@"isAutoLoad"] boolValue];
-    }
     if(extraMap != nil)
     {
         id customMap = extraMap[@"customMap"];
@@ -90,17 +86,13 @@
             [rewardVideo setCustomMap:customMap];
         }
     }
-    [rewardVideo setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
     NSString *userId = extraMap[@"userId"];
     NSString *customData = extraMap[@"customData"];
     if(userId != nil)
     {
         [rewardVideo setServerSideVerificationOptionsWithUserID:userId customData:customData];
     }
-    if(!isAutoLoad)
-    {
-        [rewardVideo loadAd];
-    }
+    [rewardVideo loadAd];
 }
 
 - (void)isAdReadyWithAdUnitID:(NSString *)adUnitID result:(FlutterResult)result

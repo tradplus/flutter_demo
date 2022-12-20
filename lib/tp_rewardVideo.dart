@@ -8,7 +8,6 @@ class TPRewardVideo
   ///构建ExtraMap：isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
   ///userId customData 服务器奖励验证参数， 使用服务器奖励验证时 userId 必填
   Map createRewardVideoExtraMap({
-        bool isAutoLoad = true, //是否开启自动加载 默认为true
         String? userId, //服务器奖励验证参数，如使用服务器奖励验证时此参数必填
         String? customData,//服务器奖励验证参数
         Map? localParams,//客户设置特殊参数数据
@@ -20,7 +19,6 @@ class TPRewardVideo
       extraMap['localParams'] = localParams;
     }
 
-    extraMap['isAutoLoad'] = isAutoLoad;
     if(userId != null)
     {
       extraMap['userId'] = userId;
@@ -151,6 +149,10 @@ class TPRewardVideo
     {
       listener.onBiddingEnd!(adUnitId,adInfo,error);
     }
+    else if(method == 'rewardVideo_isLoading')
+    {
+      listener.onAdIsLoading!(adUnitId);
+    }
     else if(method == 'rewardVideo_oneLayerLoaded')
     {
       listener.oneLayerLoaded!(adUnitId,adInfo);
@@ -262,6 +264,7 @@ class TPRewardVideoAdListener
   final Function(String adUnitId, Map adInfo)? onAdStartLoad;
   final Function(String adUnitId, Map adInfo)? onBiddingStart;
   final Function(String adUnitId, Map adInfo,Map error)? onBiddingEnd;
+  final Function(String adUnitId)? onAdIsLoading;
   final Function(String adUnitId, Map adInfo)? oneLayerStartLoad;
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, Map adInfo)? onVideoPlayStart;
@@ -292,6 +295,7 @@ class TPRewardVideoAdListener
     this.onAdStartLoad,
     this.onBiddingStart,
     this.onBiddingEnd,
+    this.onAdIsLoading,
     this.oneLayerStartLoad,
     this.oneLayerLoaded,
     this.onAdAllLoaded,

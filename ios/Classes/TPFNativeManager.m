@@ -77,6 +77,7 @@
         native = [[TPFNative alloc] init];
         self.nativeAds[adUnitID] = native;
     }
+    [native setAdUnitID:adUnitID];
     NSDictionary *extraMap = call.arguments[@"extraMap"];
     CGFloat templateWidth = [extraMap[@"templateWidth"] floatValue];
     CGFloat templateHeight = [extraMap[@"templateHeight"] floatValue];
@@ -89,11 +90,6 @@
         templateHeight = 250;
     }
     [native setTemplateRenderSize:CGSizeMake(templateWidth, templateHeight)];
-    BOOL isAutoLoad = YES;
-    if(extraMap != nil)
-    {
-        isAutoLoad = [extraMap[@"isAutoLoad"] boolValue];
-    }
     if(extraMap != nil)
     {
         id customMap = extraMap[@"customMap"];
@@ -105,20 +101,11 @@
     NSInteger loadCount = [extraMap[@"loadCount"] integerValue];
     if(loadCount > 0)
     {
-        [native setAdUnitID:adUnitID isAutoLoad:NO];
         [native loadAds:loadCount];
-        if(isAutoLoad)
-        {
-            [native setAdUnitID:adUnitID isAutoLoad:YES];
-        }
     }
     else
     {
-        [native setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
-        if(!isAutoLoad)
-        {
-            [native loadAd];
-        }
+        [native loadAd];
     }
 }
 

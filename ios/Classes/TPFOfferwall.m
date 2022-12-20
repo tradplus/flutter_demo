@@ -27,10 +27,10 @@
     return self;
 }
 
-- (void)setAdUnitID:(NSString * _Nonnull)adUnitID isAutoLoad:(BOOL)isAutoLoad
+- (void)setAdUnitID:(NSString * _Nonnull)adUnitID
 {
-    MSLogTrace(@"%s adUnitID:%@ isAutoLoad:%@", __PRETTY_FUNCTION__,adUnitID,@(isAutoLoad));
-    [self.offerwall setAdUnitID:adUnitID isAutoLoad:isAutoLoad];
+    MSLogTrace(@"%s adUnitID:%@", __PRETTY_FUNCTION__,adUnitID);
+    [self.offerwall setAdUnitID:adUnitID];
 }
 
 - (void)setCustomMap:(NSDictionary *)dic
@@ -108,7 +108,7 @@
 ///AD加载完成 首个广告源加载成功时回调 一次加载流程只会回调一次
 - (void)tpOfferwallAdLoaded:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"loaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -117,7 +117,7 @@
 ///tpOfferwallAdOneLayerLoaded:didFailWithError：返回三方源的错误信息
 - (void)tpOfferwallAdLoadFailWithError:(NSError *)error
 {
-    MSLogInfo(@"%s error:%@", __PRETTY_FUNCTION__, error);
+    MSLogTrace(@"%s error:%@", __PRETTY_FUNCTION__, error);
     NSString *eventNam = [self eventName:@"loadFailed"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:nil error:error];
 }
@@ -125,7 +125,7 @@
 ///AD展现
 - (void)tpOfferwallAdImpression:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"impression"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -133,7 +133,7 @@
 ///AD展现失败
 - (void)tpOfferwallAdShow:(NSDictionary *)adInfo didFailWithError:(NSError *)error
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"showFailed"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:error];
 }
@@ -141,7 +141,7 @@
 ///AD被点击
 - (void)tpOfferwallAdClicked:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"clicked"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -149,7 +149,7 @@
 ///AD关闭
 - (void)tpOfferwallAdDismissed:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"closed"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -157,7 +157,7 @@
 ///开始加载流程
 - (void)tpOfferwallAdStartLoad:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"startLoad"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -165,7 +165,7 @@
 ///当每个广告源开始加载时会都会回调一次。
 - (void)tpOfferwallAdOneLayerStartLoad:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"oneLayerStartLoad"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -173,7 +173,7 @@
 ///当每个广告源加载成功后会都会回调一次。
 - (void)tpOfferwallAdOneLayerLoaded:(NSDictionary *)adInfo
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"oneLayerLoaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
@@ -181,7 +181,7 @@
 ///当每个广告源加载失败后会都会回调一次，返回三方源的错误信息
 - (void)tpOfferwallAdOneLayerLoad:(NSDictionary *)adInfo didFailWithError:(NSError *)error
 {
-    MSLogInfo(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
     NSString *eventNam = [self eventName:@"oneLayerLoadedFail"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:error];
 }
@@ -189,15 +189,22 @@
 ///加载流程全部结束
 - (void)tpOfferwallAdAllLoaded:(BOOL)success
 {
-    MSLogInfo(@"%s success:%@", __PRETTY_FUNCTION__, @(success));
+    MSLogTrace(@"%s success:%@", __PRETTY_FUNCTION__, @(success));
     NSString *eventNam = [self eventName:@"allLoaded"];
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:nil error:nil exp:@{@"success":@(success)}];
+}
+
+- (void)tpOfferwallAdIsLoading:(NSDictionary *)adInfo
+{
+    MSLogTrace(@"%s adInfo:%@", __PRETTY_FUNCTION__, adInfo);
+    NSString *eventNam = [self eventName:@"isLoading"];
+    [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:adInfo error:nil];
 }
 
 ///userID 设置完成 error = nil 成功
 - (void)tpOfferwallSetUserIdFinish:(NSError *)error
 {
-    MSLogInfo(@"%s error:%@", __PRETTY_FUNCTION__, error);
+    MSLogTrace(@"%s error:%@", __PRETTY_FUNCTION__, error);
     NSString *eventNam = [self eventName:@"setUserIdFinish"];
     bool success = (error == nil);
     [TradplusSdkPlugin callbackWithEventName:eventNam adUnitID:self.offerwall.unitID adInfo:nil error:nil exp:@{@"success":@(success)}];
@@ -206,7 +213,7 @@
 ///用户当前积分墙积分数量
 - (void)tpOfferwallGetCurrencyBalance:(NSDictionary *)response error:(NSError *)error
 {
-    MSLogInfo(@"%s error:%@", __PRETTY_FUNCTION__, error);
+    MSLogTrace(@"%s error:%@", __PRETTY_FUNCTION__, error);
     if(error == nil)
     {
         NSInteger amount = 0;
@@ -241,7 +248,7 @@
 //扣除用户积分墙积分回调
 - (void)tpOfferwallSpendCurrency:(NSDictionary *)response error:(NSError *)error
 {
-    MSLogInfo(@"%s error:%@", __PRETTY_FUNCTION__, error);
+    MSLogTrace(@"%s error:%@", __PRETTY_FUNCTION__, error);
     if(error == nil)
     {
         NSInteger amount = 0;
@@ -276,7 +283,7 @@
 //添加用户积分墙积分回调
 - (void)tpOfferwallAwardCurrency:(NSDictionary *)response error:(NSError *)error
 {
-    MSLogInfo(@"%s error:%@", __PRETTY_FUNCTION__, error);
+    MSLogTrace(@"%s error:%@", __PRETTY_FUNCTION__, error);
     if(error == nil)
     {
         NSInteger amount = 0;

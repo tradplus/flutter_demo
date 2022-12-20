@@ -107,7 +107,6 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
       "custom_data": "rewardVideo_customData"
     };
     Map extraMap = TPRewardVideoManager.createRewardVideoExtraMap(
-        isAutoLoad: TPAdConfiguration.isAutoLoad,
         customMap: customMap,
         localParams : localParams,
         userId: "rewardVideo_userId",

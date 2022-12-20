@@ -107,7 +107,7 @@ class InterstitialWidgetState extends State<InterstitialWidget> {
       "custom_data": "interstitial_customData"
     };
     Map extraMap = TPInterstitialManager.createInterstitialExtraMap(
-        isAutoLoad: TPAdConfiguration.isAutoLoad, customMap: customMap,localParams:localParams);
+        customMap: customMap,localParams:localParams);
     TPInterstitialManager.loadInterstitialAd(unitId, extraMap: extraMap);
 
     String time = DateTime.now().millisecondsSinceEpoch.toString();

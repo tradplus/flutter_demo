@@ -15,12 +15,12 @@ class OtherWidget extends StatefulWidget
 
 class OtherWidgetState extends State<OtherWidget>
 {
-  int itemCount = 4;
+  int itemCount = 3;
   void initState() {
     super.initState();
     if(defaultTargetPlatform == TargetPlatform.iOS)
     {
-      itemCount = 3;
+      itemCount = 2;
     }
   }
   @override
@@ -60,25 +60,6 @@ class OtherWidgetState extends State<OtherWidget>
     {
       case 0:
       {
-        bool autoload = TPAdConfiguration.isAutoLoad;
-        return[
-          Text("是否自动加载 $autoload"),
-          Container(
-            margin: const EdgeInsets.only(left: 50),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
-                onPressed: (){
-                  setAutoload();
-                },
-                child: const Text("设置",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
-          ),
-        ];
-      }
-      case 1:
-      {
         bool adCustomMap = TPAdConfiguration.adCustomMap;
         return[
           Text("是否设置广告位 流量分组 $adCustomMap"),
@@ -96,7 +77,7 @@ class OtherWidgetState extends State<OtherWidget>
           ),
         ];
       }
-      case 2:
+      case 1:
         {
           return[
             ElevatedButton(
@@ -110,7 +91,7 @@ class OtherWidgetState extends State<OtherWidget>
                     ))),
           ];
         }
-      case 3:
+      case 2:
       {
         bool testDevice = TPAdConfiguration.testDevice;
         return[

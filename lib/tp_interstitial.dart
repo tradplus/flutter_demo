@@ -7,11 +7,10 @@ class TPInterstitial
 {
   ///构建ExtraMap：isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
   Map createInterstitialExtraMap(
-      {bool isAutoLoad = true,Map? customMap,Map? localParams}
+      {Map? customMap,Map? localParams}
       )
   {
     Map extraMap = {};
-    extraMap['isAutoLoad'] = isAutoLoad;
     if(localParams != null)
     {
       extraMap['localParams'] = localParams;
@@ -137,6 +136,10 @@ class TPInterstitial
       {
         listener.onBiddingEnd!(adUnitId,adInfo,error);
       }
+      else if(method == 'interstitial_isLoading')
+      {
+        listener.onAdIsLoading!(adUnitId);
+      }
       else if(method == 'interstitial_oneLayerLoaded')
       {
         listener.oneLayerLoaded!(adUnitId,adInfo);
@@ -222,6 +225,7 @@ class TPInterstitialAdListener
   final Function(String adUnitId, Map adInfo)? onAdStartLoad;
   final Function(String adUnitId, Map adInfo)? onBiddingStart;
   final Function(String adUnitId, Map adInfo, Map error)? onBiddingEnd;
+  final Function(String adUnitId)? onAdIsLoading;
   final Function(String adUnitId, Map adInfo)? oneLayerStartLoad;
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, Map adInfo)? onVideoPlayStart;
@@ -245,6 +249,7 @@ class TPInterstitialAdListener
     this.onAdStartLoad,
     this.onBiddingStart,
     this.onBiddingEnd,
+    this.onAdIsLoading,
     this.oneLayerStartLoad,
     this.oneLayerLoaded,
     this.onAdAllLoaded,

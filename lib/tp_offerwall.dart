@@ -8,12 +8,10 @@ class TPOfferwall
   ///构建ExtraMap，isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
   Map createOfferwallExtraMap(
       {
-        bool isAutoLoad = true, //是否开启自动加载 默认为true
         Map? customMap,//流量分组Map
         Map? localParams,//客户设置特殊参数数据
    }) {
     Map extraMap = {};
-    extraMap['isAutoLoad'] = isAutoLoad;
     if(localParams != null)
     {
       extraMap['localParams'] = localParams;
@@ -170,6 +168,10 @@ class TPOfferwall
     {
       listener.onBiddingEnd!(adUnitId,adInfo,error);
     }
+    else if(method == 'offerwall_isLoading')
+    {
+      listener.onAdIsLoading!(adUnitId);
+    }
     else if(method == 'offerwall_oneLayerLoaded')
     {
       listener.oneLayerLoaded!(adUnitId,adInfo);
@@ -244,6 +246,7 @@ class TPOfferwallAdListener
   final Function(String adUnitId, Map adInfo)? onAdStartLoad;
   final Function(String adUnitId, Map adInfo)? onBiddingStart;
   final Function(String adUnitId, Map adInfo,Map error)? onBiddingEnd;
+  final Function(String adUnitId)? onAdIsLoading;
   final Function(String adUnitId, Map adInfo)? oneLayerStartLoad;
   final Function(String adUnitId, Map adInfo)? oneLayerLoaded;
   final Function(String adUnitId, Map adInfo)? onVideoPlayStart;
@@ -267,6 +270,7 @@ class TPOfferwallAdListener
     this.onAdStartLoad,
     this.onBiddingStart,
     this.onBiddingEnd,
+    this.onAdIsLoading,
     this.oneLayerStartLoad,
     this.oneLayerLoaded,
     this.onAdAllLoaded,

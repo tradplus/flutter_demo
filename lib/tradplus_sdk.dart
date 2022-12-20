@@ -42,6 +42,13 @@ class TradplusSdk {
     TradplusSdk.channel.invokeMethod('tp_setCustomMap', arguments);
   }
 
+  ///设置流量分组等自定数据，需要在初始化前设置
+  Future<void> setSettingDataParam(Map settingMap) async{
+    Map arguments = {};
+    arguments['setting'] = settingMap;
+    TradplusSdk.channel.invokeMethod('tp_setSettingDataParam', arguments);
+  }
+
   ///设置初始化监听
   setInitListener(TPInitListener listener)
   {
