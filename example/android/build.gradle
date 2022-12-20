@@ -7,6 +7,10 @@ buildscript {
         google()
         // TradPlus
         mavenCentral()
+        // pangle
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
         // Ironsource
         maven { url 'https://android-sdk.is.com/' }
         // Tapjoy
@@ -55,6 +59,10 @@ allprojects {
         google()
         // TradPlus
         mavenCentral()
+        // pangle
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
         // Ironsource
         maven { url 'https://android-sdk.is.com/' }
         // Tapjoy

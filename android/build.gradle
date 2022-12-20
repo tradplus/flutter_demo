@@ -41,7 +41,7 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "8.8.0.1"
+def TRADPLUS_VERSION = "9.0.0.1"
 
 dependencies {
     //TradPlus

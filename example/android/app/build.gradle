@@ -74,7 +74,7 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "8.8.0.1"
+def TRADPLUS_VERSION = "9.0.0.1"
 
 dependencies {
     //TradPlus SDK
@@ -113,8 +113,7 @@ dependencies {
         // Pangle
         implementation "com.tradplusad:tradplus-pangle:19.${TRADPLUS_VERSION}"
 //        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
-        // 会自动引用，无需重复引用
-        implementation(name: 'open_ad_sdk_V4.8.0.5', ext:'aar')
+        implementation "com.pangle.global:ads-sdk-beta:${pangle_os_version}"
         // UnityAds
         implementation "com.tradplusad:tradplus-unity:5.${TRADPLUS_VERSION}"
         implementation "com.unity3d.ads:unity-ads:${unity_version}"
@@ -146,8 +145,7 @@ dependencies {
         // Maio
 //        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
         implementation "com.tradplusad:tradplus-maio:31.${TRADPLUS_VERSION}"
-        // 会自动引用，无需重复引用
-        implementation(name: 'maio_1.1.16', ext: 'aar')
+        implementation "com.maio:android-sdk:${maio_version}"
         // Criteo
         implementation "com.criteo.publisher:criteo-publisher-sdk:${criteo_version}"
         implementation "com.tradplusad:tradplus-criteo:32.${TRADPLUS_VERSION}"
@@ -170,8 +168,7 @@ dependencies {
         implementation "com.smaato.android.sdk:smaato-sdk-native:${smaato_version}"
         // Huawei
         implementation "com.tradplusad:tradplus-huawei:41.${TRADPLUS_VERSION}"
-        implementation "com.huawei.hms:ads:${huaiwei_os_version}"
-        implementation "com.huawei.hms:ads-consent:${huaiwei_os_version}"
+        implementation "com.huawei.hms:ads-lite:${huaiwei_version}"
         // Startapp
         implementation "com.startapp:inapp-sdk:${startapp_version}"
         implementation "com.tradplusad:tradplus-startapp:28.${TRADPLUS_VERSION}"
@@ -210,35 +207,35 @@ dependencies {
         // 国内广告平台
         // CSJ
         implementation "com.tradplusad:tradplus-toutiao:17.${TRADPLUS_VERSION}"
-        implementation(name: "open_ad_sdk_cn_V${toutiao_cn_version}", ext: 'aar')
+        implementation "com.pangle.cn:ads-sdk-pro:${toutiao_cn_version}"
         // Sigmob
         implementation "com.tradplusad:tradplus-sigmob:21.${TRADPLUS_VERSION}"
 //        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        implementation(name: "wind-sdk-${sigmob_version}", ext: 'aar')
-        implementation(name: 'wind-common-1.4.0', ext: 'aar')
+        implementation "com.tradplusad:sigmob-ads:${sigmob_version}"
+        implementation 'com.tradplusad:sigmob-ads-common:1.4.0'
         // Youdao
         implementation "com.tradplusad:tradplus-youdao:25.${TRADPLUS_VERSION}"
         implementation(name: 'youdaosdk_4.2.16', ext: 'aar')
-//        implementation(name: 'msa_mdid_1.0.13', ext: 'aar')
+        implementation "com.tradplusad:youdao-ads:${youdao_version}"
         // Tencent Ads
         implementation "com.tradplusad:tradplus-txadnet:16.${TRADPLUS_VERSION}"
-        implementation(name: "GDTSDK.unionNormal.${txadnet_version}", ext: 'aar')
+        implementation "com.qq.e.union:union:${txadnet_version}"
         implementation 'com.tencent.mm.opensdk:wechat-sdk-android:+'
         // Cross Promotion
         implementation "com.tradplusad:tradplus-crosspromotion:27.${TRADPLUS_VERSION}"
         // Kuaishou
         implementation 'androidx.recyclerview:recyclerview:1.1.0'
         implementation "com.tradplusad:tradplus-kwad:20.${TRADPLUS_VERSION}"
-        implementation(name: "kssdk-ad-${kwad_version}", ext: 'aar')
+        implementation "com.tradplusad:ksad-ads:${kwad_version}"
         // Baidu
         implementation "com.tradplusad:tradplus-baidu:43.${TRADPLUS_VERSION}"
 //        implementation 'androidx.recyclerview:recyclerview:1.1.0'
-        implementation files ('libs/android-query-full.0.26.7.jar')
-        implementation(name: "Baidu_MobAds_SDK-release_v${baidu_version}", ext: 'aar')
-//        implementation(name:'msa_mdid_1.0.13',ext:'aar')
+        implementation "com.tradplusad:baidu-ads:${baidu_version}"
+        // implementation 'com.tradplusad:msa_mdid:1.0.13'
+        implementation 'com.tradplusad:android-query-full:0.26.7'
         // Klevin
         implementation "com.tradplusad:tradplus-klevin:44.${TRADPLUS_VERSION}"
-        implementation(name: "klevinSDK_${klevin_version}", ext: 'aar')
+        implementation "com.tradplusad:klevin-ads:${klevin_version}"
         // Mintegral
         implementation "com.tradplusad:tradplus-mintegralx_cn:18.${TRADPLUS_VERSION}"
 //        implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -268,13 +265,13 @@ dependencies {
         }
         // Mimo
         implementation "com.tradplusad:tradplus-mimo:46.${TRADPLUS_VERSION}"
-        implementation(name: "mimo-ad-sdk-${mimo_version}", ext: 'aar')
+        implementation "com.tradplusad:mimo-ads:${mimo_version}"
 //        implementation 'com.google.code.gson:gson:2.8.5'
         implementation 'com.github.bumptech.glide:glide:4.9.0'
         annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
         // Huawei
         implementation "com.tradplusad:tradplus-huawei-cn:41.${TRADPLUS_VERSION}"
-        implementation "com.huawei.hms:ads-lite:${huaiwei_cn_version}"
+        implementation "com.huawei.hms:ads-lite:${huaiwei_version}"
     }
 
 
