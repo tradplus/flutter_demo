@@ -7,25 +7,18 @@ import androidx.annotation.NonNull;
 
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
-import com.tradplus.ads.base.bean.TPBaseAd;
 import com.tradplus.ads.base.config.ConfigLoadManager;
-import com.tradplus.ads.common.serialization.JSON;
+import com.tradplus.ads.base.network.response.ConfigResponse;
+import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.core.AdCacheManager;
-import com.tradplus.ads.core.AdMediationManager;
-import com.tradplus.ads.mgr.nativead.TPCustomNativeAd;
-import com.tradplus.ads.mobileads.util.SegmentUtils;
-import com.tradplus.ads.network.response.ConfigResponse;
 import com.tradplus.ads.open.DownloadListener;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
 import com.tradplus.ads.open.banner.BannerAdListener;
 import com.tradplus.ads.open.banner.TPBanner;
-import com.tradplus.ads.open.nativead.NativeAdListener;
-import com.tradplus.ads.open.nativead.TPNative;
 import com.tradplus.ads.open.nativead.TPNativeAdRender;
 import com.tradplus.flutter.TPUtils;
 import com.tradplus.flutter.TradPlusSdk;
-import com.tradplus.flutter.nativead.TPNativeManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -340,6 +333,14 @@ public class TPBannerManager {
             paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
             paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
             TradPlusSdk.getInstance().sendCallBackToFlutter("banner_bidEnd", paramsMap);
+        }
+
+        @Override
+        public void onAdIsLoading(String s) {
+            Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            TradPlusSdk.getInstance().sendCallBackToFlutter("banner_isLoading", paramsMap);
         }
     }
 

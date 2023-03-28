@@ -321,6 +321,10 @@ class NativeWidgetState extends State<NativeWidget> {
         TPAdConfiguration.showLog(
             'onBiddingEnd : adUnitId = $adUnitId, adInfo = $adInfo, error = $error');
       },
+      onAdIsLoading: (adUnitId) {
+        TPAdConfiguration.showLog(
+            'onAdIsLoading : adUnitId = $adUnitId');
+      },
       oneLayerStartLoad: (adUnitId, adInfo) {
         TPAdConfiguration.showLog(
             'oneLayerStartLoad : adUnitId = $adUnitId, adInfo = $adInfo');

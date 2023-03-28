@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
-import com.tradplus.ads.common.serialization.JSON;
+import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.common.util.LogUtil;
-import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
 import com.tradplus.ads.open.interstitial.InterstitialAdListener;
@@ -25,6 +24,9 @@ import io.flutter.plugin.common.BinaryMessenger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel.Result;
 
 /** TradplusFlutterDemoPlugin */
 public class TPInterstitialManager {
@@ -81,7 +83,7 @@ public class TPInterstitialManager {
 
         TPInterstitial tpInterstitial = mTPInterstitals.get(adUnitId);
         if (tpInterstitial == null) {
-            tpInterstitial = new TPInterstitial(TradPlusSdk.getInstance().getActivity(), adUnitId,isAutoLoad(params));
+            tpInterstitial = new TPInterstitial(TradPlusSdk.getInstance().getActivity(), adUnitId);
             mTPInterstitals.put(adUnitId, tpInterstitial);
             tpInterstitial.setAdListener(new TPInterstitialAdListener(adUnitId));
             tpInterstitial.setAllAdLoadListener(new TPInterstitialAllAdListener(adUnitId));
@@ -110,15 +112,6 @@ public class TPInterstitialManager {
 
         return tpInterstitial;
     }
-
-    private boolean isAutoLoad(Map<String, Object> params){
-        if (params != null && params.containsKey("isAutoLoad")) {
-            return (boolean) params.get("isAutoLoad");
-        }
-
-        return true;
-    }
-
 
     private class TPInterstitialDownloadListener implements DownloadListener {
         private String mAdUnitId;
@@ -271,6 +264,14 @@ public class TPInterstitialManager {
             paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
             paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
             TradPlusSdk.getInstance().sendCallBackToFlutter("interstitial_bidEnd", paramsMap);
+        }
+
+        @Override
+        public void onAdIsLoading(String s) {
+            Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            TradPlusSdk.getInstance().sendCallBackToFlutter("interstitial_isLoading", paramsMap);
         }
     }
     private class TPInterstitialAdListener implements InterstitialAdListener {

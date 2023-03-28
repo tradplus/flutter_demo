@@ -8,9 +8,8 @@ import androidx.annotation.NonNull;
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.bean.TPBaseAd;
-import com.tradplus.ads.common.serialization.JSON;
+import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.common.util.LogUtil;
-import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
 import com.tradplus.ads.open.banner.TPBanner;
@@ -286,6 +285,14 @@ public class TPSplashManager  {
             paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
             paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
             TradPlusSdk.getInstance().sendCallBackToFlutter("splash_bidEnd", paramsMap);
+        }
+
+        @Override
+        public void onAdIsLoading(String s) {
+            Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            TradPlusSdk.getInstance().sendCallBackToFlutter("splash_isLoading", paramsMap);
         }
     }
     private class TPSplashAdListener extends SplashAdListener {

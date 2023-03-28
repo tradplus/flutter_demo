@@ -8,13 +8,11 @@ import androidx.annotation.NonNull;
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.bean.TPBaseAd;
-import com.tradplus.ads.common.serialization.JSON;
+import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.mgr.nativead.TPCustomNativeAd;
-import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
-import com.tradplus.ads.open.interstitial.InterstitialAdListener;
 import com.tradplus.ads.open.nativead.NativeAdListener;
 import com.tradplus.ads.open.nativead.TPNative;
 import com.tradplus.ads.open.nativead.TPNativeAdRender;
@@ -31,6 +29,9 @@ import io.flutter.plugin.common.BinaryMessenger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel.Result;
 
 /**
  * TradplusFlutterDemoPlugin
@@ -85,7 +86,7 @@ public class TPNativeManager {
     private TPNative getOrCreateNative(String adUnitId, Map<String, Object> params) {
         TPNative tpNative = mTPNatives.get(adUnitId);
         if (tpNative == null) {
-            tpNative = new TPNative(TradPlusSdk.getInstance().getActivity(), adUnitId, isAutoLoad(params));
+            tpNative = new TPNative(TradPlusSdk.getInstance().getActivity(), adUnitId);
             mTPNatives.put(adUnitId, tpNative);
             tpNative.setAdListener(new TPNativeAdListener(adUnitId));
             tpNative.setAllAdLoadListener(new TPNativeAllAdListener(adUnitId));
@@ -123,14 +124,6 @@ public class TPNativeManager {
             }
         }
         return tpNative;
-    }
-
-    private boolean isAutoLoad(Map<String, Object> params) {
-        if (params != null && params.containsKey("isAutoLoad")) {
-            return (boolean) params.get("isAutoLoad");
-        }
-
-        return true;
     }
 
     public boolean renderView(String adUnitId, ViewGroup viewContainer, int layoutId, String adSceneId,Map<String, Object> customAdInfo) {
@@ -330,6 +323,14 @@ public class TPNativeManager {
             paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
             paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
             TradPlusSdk.getInstance().sendCallBackToFlutter("native_bidEnd", paramsMap);
+        }
+
+        @Override
+        public void onAdIsLoading(String s) {
+            Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            TradPlusSdk.getInstance().sendCallBackToFlutter("native_isLoading", paramsMap);
         }
     }
 

@@ -74,7 +74,7 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "9.0.0.1"
+def TRADPLUS_VERSION = "9.1.0.1"
 
 dependencies {
     //TradPlus SDK
@@ -122,11 +122,6 @@ dependencies {
 //        implementation "com.chartboost:chartboost-sdk:${chartboost_version}"
 //        implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
 //        implementation 'com.google.android.gms:play-services-base:17.4.0'
-        // Helium
-        implementation "com.tradplusad:tradplus-helium:30.${TRADPLUS_VERSION}"
-        implementation "com.chartboost:helium:${helium_version}"
-        // Helium requirement
-        implementation 'org.greenrobot:eventbus:3.3.1'
         // Inmobi
         implementation "com.tradplusad:tradplus-inmobix:23.${TRADPLUS_VERSION}"
         implementation "com.inmobi.monetization:inmobi-ads:${inmobi_version}"

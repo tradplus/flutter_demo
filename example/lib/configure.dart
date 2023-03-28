@@ -1,5 +1,6 @@
 
 import 'package:flutter/foundation.dart';
+import 'package:tradplus_sdk/tradplus_sdk.dart';
 
 final TPAdConfiguration = AdConfiguration();
 

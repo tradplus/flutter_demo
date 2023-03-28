@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.tradplus.ads.base.bean.TPAdError;
 import com.tradplus.ads.base.bean.TPAdInfo;
-import com.tradplus.ads.common.serialization.JSON;
+import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.common.util.LogUtil;
-import com.tradplus.ads.mobileads.util.SegmentUtils;
 import com.tradplus.ads.open.DownloadListener;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
 import com.tradplus.ads.open.RewardAdExListener;
@@ -77,7 +76,7 @@ public class TPRewardManager {
 
         TPReward tpReward = mTPReward.get(adUnitId);
         if (tpReward == null) {
-            tpReward = new TPReward(TradPlusSdk.getInstance().getActivity(), adUnitId,isAutoLoad(params));
+            tpReward = new TPReward(TradPlusSdk.getInstance().getActivity(), adUnitId);
             mTPReward.put(adUnitId, tpReward);
             tpReward.setAdListener(new TPRewardManager.TPRewardAdListener(adUnitId));
             tpReward.setAllAdLoadListener(new TPRewardManager.TPRewardAllAdListener(adUnitId));
@@ -112,15 +111,6 @@ public class TPRewardManager {
 
         return tpReward;
     }
-
-    private boolean isAutoLoad(Map<String, Object> params){
-        if (params != null && params.containsKey("isAutoLoad")) {
-            return (boolean) params.get("isAutoLoad");
-        }
-
-        return true;
-    }
-
 
     private class TPRewardExdListener implements RewardAdExListener {
         private String mAdUnitId;
@@ -323,6 +313,14 @@ public class TPRewardManager {
             paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
             paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
             TradPlusSdk.getInstance().sendCallBackToFlutter("rewardVideo_bidEnd", paramsMap);
+        }
+
+        @Override
+        public void onAdIsLoading(String s) {
+            Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            TradPlusSdk.getInstance().sendCallBackToFlutter("rewardVideo_isLoading", paramsMap);
         }
     }
     private class TPRewardAdListener implements RewardAdListener {
