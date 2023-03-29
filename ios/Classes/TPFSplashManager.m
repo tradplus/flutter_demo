@@ -69,9 +69,7 @@
     TPFSplash *splash = [self getSplashWithAdUnitID:adUnitID];
     if(splash == nil)
     {
-        
         splash = [[TPFSplash alloc] init];
-        [splash setAdUnitID:adUnitID];
         self.splashAds[adUnitID] = splash;
     }
     NSDictionary *extraMap = call.arguments[@"extraMap"];
@@ -83,6 +81,7 @@
             [splash setCustomMap:customMap];
         }
     }
+    [splash setAdUnitID:adUnitID];
     [splash loadAd];
 }
 

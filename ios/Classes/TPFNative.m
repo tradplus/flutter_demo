@@ -20,7 +20,6 @@
 {
     self = [super init];
     if (self) {
-        [TradPlus setLogLevel:MSLogLevelOff];
         self.native = [[TradPlusAdNative alloc] init];
         self.native.delegate = self;
     }

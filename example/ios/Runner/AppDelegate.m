@@ -14,6 +14,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    [TradPlus setLogLevel:MSLogLevelAll];
     if (@available(iOS 14.5, *)) {
         [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
         }];
