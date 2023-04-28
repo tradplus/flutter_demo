@@ -19,13 +19,6 @@ import com.tradplus.ads.open.nativead.TPNativeAdRender;
 import com.tradplus.flutter.TPUtils;
 import com.tradplus.flutter.TradPlusSdk;
 
-import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.BinaryMessenger;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,7 +61,7 @@ public class TPNativeManager {
             tpNative.loadAd();
 
         } else if ("native_ready".equals(call.method)) {
-            boolean isReady = tpNative.getLoadedCount() > 0;
+            boolean isReady = tpNative.isReady();
             result.success(isReady);
         } else if ("native_entryAdScenario".equals(call.method)) {
             tpNative.entryAdScenario(call.argument("sceneId"));

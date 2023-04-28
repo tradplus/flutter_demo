@@ -41,9 +41,12 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "9.1.0.1"
+def TRADPLUS_VERSION = "9.6.10.1"
 
 dependencies {
     //TradPlus
     compileOnly "com.tradplusad:tradplus:${TRADPLUS_VERSION}"
+    //TradPlus 测试工具
+    compileOnly 'com.tradplusad:tradplus-tool:1.0.6'
+
 }

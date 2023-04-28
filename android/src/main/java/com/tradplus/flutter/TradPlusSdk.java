@@ -8,12 +8,12 @@ import androidx.annotation.NonNull;
 
 import com.tradplus.ads.base.Const;
 import com.tradplus.ads.base.bean.TPAdInfo;
+import com.tradplus.ads.base.common.TPDataManager;
 import com.tradplus.ads.base.common.TPDiskManager;
 import com.tradplus.ads.base.common.TPPrivacyManager;
 import com.tradplus.ads.base.common.TPTaskManager;
 import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.base.util.TestDeviceUtil;
-import com.tradplus.ads.common.ClientMetadata;
 import com.tradplus.ads.core.AdCacheManager;
 import com.tradplus.ads.core.GlobalImpressionManager;
 import com.tradplus.flutter.banner.TPBannerManager;
@@ -25,6 +25,7 @@ import com.tradplus.flutter.offerwall.TPOfferWallManager;
 import com.tradplus.flutter.reward.TPRewardManager;
 import com.tradplus.flutter.splash.TPSplashManager;
 import com.tradplus.flutter.splash.TPSplashViewFactory;
+import com.tradplus.meditaiton.utils.ImportSDKUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -122,6 +123,8 @@ public class TradPlusSdk {
                         setGlobalImpressionListener(call, result);
                     }else if (call.method.equals("tp_setSettingDataParam")) {
                         setSettingDataParam(call, result);
+                    }else if (call.method.equals("tp_openTradPlusTool")) {
+                        openTradPlusTool(call, result);
                     } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
@@ -173,6 +176,7 @@ public class TradPlusSdk {
                 TradPlusSdk.getInstance().sendCallBackToFlutter("tp_dialogClosed", paramsMap);
             }
         }, Const.URL.GDPR_URL);
+
     }
 
 
@@ -345,7 +349,7 @@ public class TradPlusSdk {
     }
 
     private String getSdkVersion() {
-        return ClientMetadata.getInstance(getApplicationContext()).getSdkVersion();
+        return TPDataManager.getInstance().getSdkVersion();
     }
 
     public void sendCallBackToFlutter(final String callName, final Map<String, Object> paramsMap) {
@@ -373,5 +377,18 @@ public class TradPlusSdk {
 
     public Context getApplicationContext() {
         return mainAtivity.getApplicationContext();
+    }
+
+    public void openTradPlusTool(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+        String appid = call.argument("appId");
+
+        try{
+            ImportSDKUtil.getInstance().showTestTools(getActivity(), appid);
+
+        }catch (Throwable throwable){
+            throwable.printStackTrace();
+        }
+
+
     }
 }

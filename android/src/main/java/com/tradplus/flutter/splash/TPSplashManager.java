@@ -12,15 +12,11 @@ import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.common.util.LogUtil;
 import com.tradplus.ads.open.DownloadListener;
 import com.tradplus.ads.open.LoadAdEveryLayerListener;
-import com.tradplus.ads.open.banner.TPBanner;
-import com.tradplus.ads.open.interstitial.InterstitialAdListener;
-import com.tradplus.ads.open.interstitial.TPInterstitial;
 import com.tradplus.ads.open.nativead.TPNativeAdRender;
 import com.tradplus.ads.open.splash.SplashAdListener;
 import com.tradplus.ads.open.splash.TPSplash;
 import com.tradplus.flutter.TPUtils;
 import com.tradplus.flutter.TradPlusSdk;
-import com.tradplus.flutter.interstitial.TPInterstitialManager;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -183,6 +183,17 @@ class TradplusSdk {
     return await TradplusSdk.channel.invokeMethod('tp_isOpenPersonalizedAd');
   }
 
+  ///调用测试工具 传入 appId
+  ///集成参考
+  ///iOS https://docs.tradplusad.com/docs/integration_ios/sdk_test_android/test_tool/
+  ///android https://docs.tradplusad.com/docs/tradplussdk_android_doc_v6/sdk_test_android/test_tool
+  Future<void>openTradPlusTool(String appId) async
+  {
+    Map arguments = {};
+    arguments['appId'] = appId;
+    return await TradplusSdk.channel.invokeMethod('tp_openTradPlusTool',arguments);
+  }
+
   ///设置是否第一次show GDPR弹框, 仅支持 android
   Future<void>setFirstShowGDPR(bool first) async
   {
