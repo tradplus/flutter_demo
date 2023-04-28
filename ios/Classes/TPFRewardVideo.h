@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAdUnitID:(NSString * _Nonnull)adUnitID;
 - (void)loadAd;
 - (void)setCustomMap:(NSDictionary *)dic;
+- (void)setLocalParams:(NSDictionary *)dic;
 - (void)setServerSideVerificationOptionsWithUserID:(nonnull NSString *)userID customData:(nullable NSString *)customData;
 - (void)showAdWithSceneId:(nullable NSString *)sceneId;
 - (void)entryAdScenario:(nullable NSString *)sceneId;

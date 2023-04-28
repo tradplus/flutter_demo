@@ -89,6 +89,11 @@
         {
             [banner setCustomMap:customMap];
         }
+        id localParams = extraMap[@"localParams"];
+        if(localParams != nil && [localParams isKindOfClass:[NSDictionary class]])
+        {
+            [banner setLocalParams:localParams];
+        }
     }
     [banner setAdUnitID:adUnitID];
     NSString *sceneId = extraMap[@"sceneId"];

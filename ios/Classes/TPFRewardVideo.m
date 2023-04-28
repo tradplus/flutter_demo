@@ -45,6 +45,12 @@
     self.rewarded.dicCustomValue = dic;
 }
 
+- (void)setLocalParams:(NSDictionary *)dic
+{
+    self.rewarded.localParams = dic;
+    MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
+}
+
 - (void)setServerSideVerificationOptionsWithUserID:(nonnull NSString *)userID customData:(nullable NSString *)customData
 {
     MSLogTrace(@"%s ", __PRETTY_FUNCTION__);

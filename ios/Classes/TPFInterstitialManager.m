@@ -85,6 +85,11 @@
         {
             [interstitial setCustomMap:customMap];
         }
+        id localParams = extraMap[@"localParams"];
+        if(localParams != nil && [localParams isKindOfClass:[NSDictionary class]])
+        {
+            [interstitial setLocalParams:localParams];
+        }
     }
     [interstitial setAdUnitID:adUnitID];
     [interstitial loadAd];

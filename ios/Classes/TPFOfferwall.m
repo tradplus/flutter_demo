@@ -44,6 +44,12 @@
     self.offerwall.dicCustomValue = dic;
 }
 
+- (void)setLocalParams:(NSDictionary *)dic
+{
+    self.offerwall.localParams = dic;
+    MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
+}
+
 - (void)loadAd
 {
     MSLogTrace(@"%s ", __PRETTY_FUNCTION__);

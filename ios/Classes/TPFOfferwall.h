@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)awardWithAmount:(int)amount;
 - (void)setUserId:(NSString *)userId;
 - (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
+- (void)setLocalParams:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

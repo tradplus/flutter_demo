@@ -84,6 +84,11 @@
         {
             [rewardVideo setCustomMap:customMap];
         }
+        id localParams = extraMap[@"localParams"];
+        if(localParams != nil && [localParams isKindOfClass:[NSDictionary class]])
+        {
+            [rewardVideo setLocalParams:localParams];
+        }
     }
     NSString *userId = extraMap[@"userId"];
     NSString *customData = extraMap[@"customData"];

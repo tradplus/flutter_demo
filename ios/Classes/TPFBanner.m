@@ -57,6 +57,12 @@
     self.banner.dicCustomValue = dic;
 }
 
+- (void)setLocalParams:(NSDictionary *)dic
+{
+    self.banner.localParams = dic;
+    MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
+}
+
 - (void)loadAdWithSceneId:(nullable NSString *)sceneId
 {
     MSLogTrace(@"%s sceneId:%@", __PRETTY_FUNCTION__,sceneId);

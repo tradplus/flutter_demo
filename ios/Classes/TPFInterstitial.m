@@ -44,6 +44,12 @@
     self.interstitial.dicCustomValue = dic;
 }
 
+- (void)setLocalParams:(NSDictionary *)dic
+{
+    self.interstitial.localParams = dic;
+    MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
+}
+
 - (void)loadAd
 {
     MSLogTrace(@"%s", __PRETTY_FUNCTION__);

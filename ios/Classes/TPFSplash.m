@@ -85,6 +85,12 @@
     self.splash.customAdInfo = customAdInfo;
 }
 
+- (void)setLocalParams:(NSDictionary *)dic
+{
+    self.splash.localParams = dic;
+    MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"splash_%@",event];

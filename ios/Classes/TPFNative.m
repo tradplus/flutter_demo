@@ -102,6 +102,12 @@
     self.native.customAdInfo = customAdInfo;
 }
 
+- (void)setLocalParams:(NSDictionary *)dic
+{
+    self.native.localParams = dic;
+    MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
+}
+
 - (NSString *)eventName:(NSString *)event
 {
     return [NSString stringWithFormat:@"native_%@",event];

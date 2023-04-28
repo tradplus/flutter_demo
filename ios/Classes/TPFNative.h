@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (TradPlusAdNativeObject *)getReadyNativeObject;
 - (void)entryAdScenario:(nullable NSString *)sceneId;
 - (void)setCustomMap:(NSDictionary *)dic;
+- (void)setLocalParams:(NSDictionary *)dic;
 - (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
 - (NSInteger)getLoadedCount;
 @end

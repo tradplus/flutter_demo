@@ -96,6 +96,11 @@
         {
             [native setCustomMap:customMap];
         }
+        id localParams = extraMap[@"localParams"];
+        if(localParams != nil && [localParams isKindOfClass:[NSDictionary class]])
+        {
+            [native setLocalParams:localParams];
+        }
     }
     [native setAdUnitID:adUnitID];
     NSInteger loadCount = [extraMap[@"loadCount"] integerValue];
