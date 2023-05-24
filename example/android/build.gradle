@@ -46,15 +46,6 @@ allprojects {
         mavenCentral()
         // Ironsource
         maven { url 'https://android-sdk.is.com/' }
-        // Tapjoy
-        maven {
-            name "Tapjoy's maven repo"
-            url "https://sdk.tapjoy.com/"
-        }
-        maven {
-            name 'Google'
-            url 'https://maven.google.com/'
-        }
         // Pangle
         maven {
             url 'https://artifact.bytedance.com/repository/pangle'

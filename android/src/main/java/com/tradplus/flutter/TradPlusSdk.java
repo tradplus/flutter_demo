@@ -94,7 +94,7 @@ public class TradPlusSdk {
                     } else if (call.method.equals("tp_getCOPPAIsAgeRestrictedUser")) {
                         result.success(isCOPPAAgeRestrictedUser());
                     } else if (call.method.equals("tp_showGDPRDialog")) {
-                        showGDPRDialog();
+                        showGDPRDialog(call, result);
                     } else if (call.method.equals("tp_setOpenPersonalizedAd")) {
                         setOpenPersonalizedAdMethonCall(call, result);
                     } else if (call.method.equals("tp_isOpenPersonalizedAd")) {
@@ -141,8 +141,7 @@ public class TradPlusSdk {
 
     private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String unitId = call.argument("adUnitId");
-        int readyAdNum = AdCacheManager.getInstance().getReadyAdNum(unitId);
-        AdCacheManager.getInstance().removeEndCache(unitId, readyAdNum);
+        com.tradplus.ads.open.TradPlusSdk.clearCache(unitId);
     }
 
     private void setSegmentMap(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -167,7 +166,9 @@ public class TradPlusSdk {
         TestDeviceUtil.getInstance().setNeedTestDevice(isTestDevice, testModeId);
     }
 
-    public void showGDPRDialog() {
+    public void showGDPRDialog(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        String url = call.argument("gdprurl");
+
         com.tradplus.ads.open.TradPlusSdk.showUploadDataNotifyDialog(getApplicationContext(), new com.tradplus.ads.open.TradPlusSdk.TPGDPRAuthListener() {
             @Override
             public void onAuthResult(int level) {
@@ -175,7 +176,7 @@ public class TradPlusSdk {
                 paramsMap.put("level", level);
                 TradPlusSdk.getInstance().sendCallBackToFlutter("tp_dialogClosed", paramsMap);
             }
-        }, Const.URL.GDPR_URL);
+        }, url);
 
     }
 
@@ -222,7 +223,7 @@ public class TradPlusSdk {
 
     public void setMaxDatabaseSize(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         long size = call.argument("size");
-        TPDiskManager.getInstance().setMaxDatabaseSize(size);
+        com.tradplus.ads.open.TradPlusSdk.setMaxDatabaseSize(size);
     }
 
     public void currentAreaMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -349,7 +350,7 @@ public class TradPlusSdk {
     }
 
     private String getSdkVersion() {
-        return TPDataManager.getInstance().getSdkVersion();
+        return com.tradplus.ads.open.TradPlusSdk.getSdkVersion();
     }
 
     public void sendCallBackToFlutter(final String callName, final Map<String, Object> paramsMap) {

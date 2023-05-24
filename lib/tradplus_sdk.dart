@@ -164,9 +164,11 @@ class TradplusSdk {
   }
 
   ///TradplusSDK GDPR隐私授权页面
-  Future<void>showGDPRDialog() async
+  Future<void>showGDPRDialog({String? url}) async
   {
-    TradplusSdk.channel.invokeMethod('tp_showGDPRDialog');
+    Map arguments = {};
+    arguments['gdprurl'] = url != null ? url : "";
+    TradplusSdk.channel.invokeMethod('tp_showGDPRDialog',arguments);
   }
 
   ///设置是否开启个性化推荐广告。 false 关闭 ，true 开启。SDK默认 true 开启

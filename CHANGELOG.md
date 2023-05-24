@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Depends on Android SDK v9.7.10.1 and iOS SDK v9.3.0
+
 ## 1.0.9
 
 * Depends on Android SDK v9.6.10.1 and iOS SDK v9.3.0
