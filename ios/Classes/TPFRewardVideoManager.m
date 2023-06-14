@@ -92,11 +92,11 @@
     }
     NSString *userId = extraMap[@"userId"];
     NSString *customData = extraMap[@"customData"];
+    [rewardVideo setAdUnitID:adUnitID];
     if(userId != nil)
     {
         [rewardVideo setServerSideVerificationOptionsWithUserID:userId customData:customData];
     }
-    [rewardVideo setAdUnitID:adUnitID];
     [rewardVideo loadAd];
 }
 

@@ -39,10 +39,15 @@ class _MyAppState extends State<MyApp> {
   static TPInitListener? listener;
   static TPGlobalAdImpressionListener? globalAdImpressionListener;
   String appId = TPAdConfiguration.appId;
+  int itemCount = 8;
 
   @override
   void initState() {
     super.initState();
+    if(defaultTargetPlatform == TargetPlatform.iOS)
+    {
+      itemCount = 7;
+    }
     initTPSDK();
   }
 
@@ -55,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: ListView.builder(
-            itemCount: listTitle.length,
+            itemCount: itemCount,
             itemExtent: 90,
             itemBuilder: (BuildContext context, int index) {
               return ElevatedButton(
