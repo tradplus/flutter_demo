@@ -8,6 +8,8 @@ export 'package:tradplus_sdk/tp_splash.dart';
 export 'package:tradplus_sdk/tp_offerwall.dart';
 export 'package:tradplus_sdk/tp_splash_view.dart';
 export 'package:tradplus_sdk/tp_listener.dart';
+export 'package:tradplus_sdk/tp_interactive.dart';
+export 'package:tradplus_sdk/tp_interactive_view.dart';
 
 import 'package:tradplus_sdk/tp_listener.dart';
 import 'package:flutter/services.dart';
@@ -94,17 +96,6 @@ class TradplusSdk {
   Future<bool>isCalifornia() async
   {
     return await TradplusSdk.channel.invokeMethod('tp_isCalifornia');
-  }
-
-  ///设置 是否是测试设备: ture 是, false 否 ，仅支持 android
-  Future<void>setTestDevice(bool testDevice,{String? testModeId}) async
-  {
-    Map arguments = {};
-    arguments['testDevice'] = testDevice;
-    if(testModeId != null) {
-      arguments['testModeId'] = testModeId;
-    }
-    TradplusSdk.channel.invokeMethod('tp_setTestDevice',arguments);
   }
 
   ///设置 GDPR等级 是否允许数据上报: ture 设备数据允许上报, false 设备数据不允许上报

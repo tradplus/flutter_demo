@@ -25,6 +25,8 @@ import com.tradplus.flutter.offerwall.TPOfferWallManager;
 import com.tradplus.flutter.reward.TPRewardManager;
 import com.tradplus.flutter.splash.TPSplashManager;
 import com.tradplus.flutter.splash.TPSplashViewFactory;
+import com.tradplus.flutter.interactive.TPInteractiveManager;
+import com.tradplus.flutter.interactive.TPInterActiveViewFactory;
 import com.tradplus.meditaiton.utils.ImportSDKUtil;
 
 import java.util.HashMap;
@@ -71,6 +73,8 @@ public class TradPlusSdk {
                         TPBannerManager.getInstance().onMethodCall(call, result);
                     } else if (call.method.startsWith("splash_")) {
                         TPSplashManager.getInstance().onMethodCall(call, result);
+                    } else if (call.method.startsWith("interactive_")) {
+                        TPInteractiveManager.getInstance().onMethodCall(call, result);
                     } else if (call.method.equals("tp_version")) {
                         result.success(getSdkVersion());
                     } else if (call.method.equals("tp_init")) {
@@ -105,9 +109,7 @@ public class TradPlusSdk {
                         result.success(isFirstShowGDPR());
                     } else if (call.method.equals("tp_setCustomMap")) {
                         setSegmentMap(call, result);
-                    } else if (call.method.equals("tp_setTestDevice")) {
-                        setTestDevice(call, result);
-                    } else if (call.method.equals("tp_setMaxDatabaseSize")) {
+                    }else if (call.method.equals("tp_setMaxDatabaseSize")) {
                         setMaxDatabaseSize(call, result);
                     } else if (call.method.equals("tp_clearCache")) {
                         clearCache(call, result);
@@ -137,6 +139,7 @@ public class TradPlusSdk {
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_native_view", new TPNativeViewFactory(flutterPluginBinding.getBinaryMessenger()));
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_banner_view", new TPBannerViewFactory(flutterPluginBinding.getBinaryMessenger()));
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_splash_view", new TPSplashViewFactory(flutterPluginBinding.getBinaryMessenger()));
+        flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_interactive_view", new TPInterActiveViewFactory(flutterPluginBinding.getBinaryMessenger()));
     }
 
     private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -158,12 +161,6 @@ public class TradPlusSdk {
         if (settingMap != null) {
             com.tradplus.ads.open.TradPlusSdk.setSettingDataParam(settingMap);
         }
-    }
-
-    private void setTestDevice(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        boolean isTestDevice = call.argument("testDevice");
-        String testModeId = call.argument("testModeId");
-        TestDeviceUtil.getInstance().setNeedTestDevice(isTestDevice, testModeId);
     }
 
     public void showGDPRDialog(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {

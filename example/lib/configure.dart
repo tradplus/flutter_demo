@@ -13,6 +13,7 @@ class AdConfiguration
   String splashAdUnitId = "";
   String bannerAdUnitId = "";
   String offerwallAdUnitId = "";
+  String interActiveAdUnitId = "";
 
   bool isAutoLoad = true;
   bool adCustomMap = true;
@@ -22,6 +23,7 @@ class AdConfiguration
   String interstitialSceneId = "";
   String rewardVideoSceneId = "";
   String nativeSceneId = "";
+  String interActiveSceneId = "";
 
   String showInfo ="";
 
@@ -55,10 +57,12 @@ class AdConfiguration
       splashAdUnitId = "D9118E91DD06DF6D322369455CAED618";
       bannerAdUnitId = "A24091715B4FCD50C0F2039A5AF7C4BB";
       offerwallAdUnitId = "0704BA87BDE496D391E5174CDD6B5E08";
+      interActiveAdUnitId = "EA55BF39C860B46B2E92B48F4C521368";
       bannerSceneId = "bannerSceneId";
       interstitialSceneId = "interstitialSceneId";//测试
       rewardVideoSceneId = "rewardVideoSceneId";//测试
       nativeSceneId = "nativeSceneId";//测试
+      interActiveSceneId = "112233";
     }
   }
 }

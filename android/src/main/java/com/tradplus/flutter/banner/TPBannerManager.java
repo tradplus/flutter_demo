@@ -140,7 +140,12 @@ public class TPBannerManager {
     }
 
     private boolean isReady(String adUnitId){
-        return AdCacheManager.getInstance().getReadyAdNum(adUnitId) > 0;
+        TPBanner tpBanner = mTPBanners.get(adUnitId);
+        if(tpBanner != null) {
+            return tpBanner.isReady();
+        }
+
+        return false;
     }
 
     private boolean isReadyByBanner(String adUnitId){

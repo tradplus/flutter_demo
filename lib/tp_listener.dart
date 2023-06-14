@@ -6,6 +6,10 @@ final TPListenerManager = TPListenerCenter();
 
 class TPListenerCenter
 {
+
+  TPInterActiveAdListener? interActiveAdListener;
+  final Map interActiveAdListenerMap = {};
+
   TPNativeAdListener? nativeAdListener;
   final Map nativeAdListenerMap = {};
 
@@ -63,6 +67,10 @@ class TPListenerCenter
       {
         offerwallCallBack(call);
       }
+      else if(method.startsWith("interactive_"))
+      {
+        interActiveCallBack(call);
+      }
       else{
         print("unkown method");
       }
@@ -113,7 +121,7 @@ class TPListenerCenter
     }
     if(callBackListener == null)
     {
-      print("not any rewardVideoAdListener");
+      print("not any offerwallAdListener");
       return;
     }
     TPOfferWallManager.callback(callBackListener,adUnitId, method, arguments);
@@ -139,7 +147,7 @@ class TPListenerCenter
     }
     if(callBackListener == null)
     {
-      print("not any rewardVideoAdListener");
+      print("not any splashAdListener");
       return;
     }
     TPSplashManager.callback(callBackListener,adUnitId, method, arguments);
@@ -165,10 +173,36 @@ class TPListenerCenter
     }
     if(callBackListener == null)
     {
-      print("not any rewardVideoAdListener");
+      print("not any bannerAdListener");
       return;
     }
     TPBannerManager.callback(callBackListener,adUnitId, method, arguments);
+  }
+
+  interActiveCallBack(MethodCall call)
+  {
+    String method = call.method;
+    var arguments = call.arguments;
+    String adUnitId = "";
+    if(arguments.containsKey("adUnitID"))
+    {
+      adUnitId = arguments["adUnitID"];
+    }
+    TPInterActiveAdListener? callBackListener;
+    if(adUnitId.isNotEmpty && interActiveAdListenerMap.containsKey(adUnitId))
+    {
+      callBackListener = interActiveAdListenerMap[adUnitId];
+    }
+    else
+    {
+      callBackListener = interActiveAdListener;
+    }
+    if(callBackListener == null)
+    {
+      print("not anyinterActiveAdListener");
+      return;
+    }
+    TPInteractiveManager.callback(callBackListener,adUnitId, method, arguments);
   }
 
   rewardVideoCallBack(MethodCall call)

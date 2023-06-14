@@ -11,6 +11,7 @@ import 'offerwall.dart';
 import 'privacy.dart';
 import 'other.dart';
 import 'splash_iOS.dart';
+import 'interactive.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,8 @@ class _MyAppState extends State<MyApp> {
     "开屏",
     "积分墙",
     "隐私设置",
-    "测试设置"
+    "测试设置",
+     "互动"
   ];
   static TPInitListener? listener;
   static TPGlobalAdImpressionListener? globalAdImpressionListener;
@@ -54,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: ListView.builder(
             itemCount: listTitle.length,
-            itemExtent: 80,
+            itemExtent: 90,
             itemBuilder: (BuildContext context, int index) {
               return ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.white70),
@@ -103,6 +105,14 @@ class _MyAppState extends State<MyApp> {
                     case 7:
                       {
                         widget = OtherWidget();
+                        break;
+                      }
+                    case 8:
+                      {
+                        if (defaultTargetPlatform == TargetPlatform.android) {
+                          widget = InterActiveWidget();
+                        }
+                        widget = InterActiveWidget();
                         break;
                       }
                   }
@@ -178,7 +188,6 @@ class _MyAppState extends State<MyApp> {
         "sub_channel": "tp_sub_channel"
       };
       TPSDKManager.setCustomMap(customMap);
-      TPSDKManager.setTestDevice(TPAdConfiguration.testDevice);
     }
 
     TPSDKManager.checkCurrentArea();
