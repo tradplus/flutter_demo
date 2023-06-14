@@ -39,14 +39,14 @@ class _MyAppState extends State<MyApp> {
   static TPInitListener? listener;
   static TPGlobalAdImpressionListener? globalAdImpressionListener;
   String appId = TPAdConfiguration.appId;
-  int itemCount = 8;
+  int itemCount = 9;
 
   @override
   void initState() {
     super.initState();
     if(defaultTargetPlatform == TargetPlatform.iOS)
     {
-      itemCount = 7;
+      itemCount = 8;
     }
     initTPSDK();
   }

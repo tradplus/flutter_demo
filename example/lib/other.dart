@@ -15,13 +15,9 @@ class OtherWidget extends StatefulWidget
 
 class OtherWidgetState extends State<OtherWidget>
 {
-  int itemCount = 3;
+  int itemCount = 2;
   void initState() {
     super.initState();
-    if(defaultTargetPlatform == TargetPlatform.iOS)
-    {
-      itemCount = 2;
-    }
   }
   @override
   Widget build(BuildContext context) {
@@ -91,25 +87,6 @@ class OtherWidgetState extends State<OtherWidget>
                     ))),
           ];
         }
-      case 2:
-      {
-        bool testDevice = TPAdConfiguration.testDevice;
-        return[
-          Text("是否测试设备 $testDevice"),
-          Container(
-            margin: const EdgeInsets.only(left: 50),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
-                onPressed: (){
-                  setTestDevice();
-                },
-                child: const Text("设置",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
-          ),
-        ];
-      }
     }
     return null;
   }
@@ -128,11 +105,6 @@ class OtherWidgetState extends State<OtherWidget>
   setAdCustomMap() async
   {
     TPAdConfiguration.adCustomMap = !TPAdConfiguration.adCustomMap;
-    setState((){});
-  }
-  setTestDevice() async
-  {
-    TPAdConfiguration.testDevice = !TPAdConfiguration.testDevice;
     setState((){});
   }
 }
