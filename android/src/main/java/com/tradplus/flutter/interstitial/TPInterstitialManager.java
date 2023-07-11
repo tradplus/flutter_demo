@@ -51,7 +51,7 @@ public class TPInterstitialManager {
         TPInterstitial tpInterstitial = getOrCreateInterstitial(adUnitId, params);
 
         if ("interstitial_load".equals(call.method)) {
-            tpInterstitial.loadAd();
+            tpInterstitial.loadAd(getMaxWaitTime(params));
 
         } else if ("interstitial_entryAdScenario".equals(call.method)) {
             tpInterstitial.entryAdScenario(call.argument("sceneId"));
@@ -71,6 +71,18 @@ public class TPInterstitialManager {
 
         }
 
+    }
+
+    private float getMaxWaitTime(Map<String, Object> params){
+        try {
+            if(params.containsKey("maxWaitTime")) {
+                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            }
+        }catch (Throwable throwable){
+            return 0;
+        }
+
+        return 0;
     }
 
     private TPInterstitial getOrCreateInterstitial(String adUnitId, Map<String, Object> params) {
@@ -100,6 +112,11 @@ public class TPInterstitialManager {
 
             if ( params.containsKey("customMap")) {
                 SegmentUtils.initPlacementCustomMap(adUnitId, (Map<String, String>) params.get("customMap"));
+            }
+
+            if(params.containsKey("openAutoLoadCallback")) {
+                boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
+                tpInterstitial.setAutoLoadCallback(openAutoLoadCallback);
             }
         }
 

@@ -51,7 +51,10 @@ public class TPRewardManager {
         TPReward tpReward = getOrCreateReward(adUnitId, params);
 
         if ("rewardVideo_load".equals(call.method)) {
-            tpReward.loadAd();
+            float time = getMaxWaitTime(params);
+            Log.e("TradPlusLog", "time = "+time);
+
+            tpReward.loadAd(time);
 
         } else if ("rewardVideo_entryAdScenario".equals(call.method)) {
             tpReward.entryAdScenario(call.argument("sceneId"));
@@ -72,11 +75,25 @@ public class TPRewardManager {
 
     }
 
+    private float getMaxWaitTime(Map<String, Object> params){
+        try {
+            if(params.containsKey("maxWaitTime")) {
+                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            }
+        }catch (Throwable throwable){
+            return 0;
+        }
+
+        return 0;
+    }
+
     private TPReward getOrCreateReward(String adUnitId, Map<String, Object> params) {
 
         TPReward tpReward = mTPReward.get(adUnitId);
         if (tpReward == null) {
             tpReward = new TPReward(TradPlusSdk.getInstance().getActivity(), adUnitId);
+
+
             mTPReward.put(adUnitId, tpReward);
             tpReward.setAdListener(new TPRewardManager.TPRewardAdListener(adUnitId));
             tpReward.setAllAdLoadListener(new TPRewardManager.TPRewardAllAdListener(adUnitId));
@@ -100,6 +117,12 @@ public class TPRewardManager {
             if (params != null && params.containsKey("userId")) {
                 temp.put("user_id", params.get("userId"));
             }
+
+            if(params.containsKey("openAutoLoadCallback")) {
+                boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
+                tpReward.setAutoLoadCallback(openAutoLoadCallback);
+            }
+
 
             Log.v("TradPlus","map params temp = "+temp);
             tpReward.setCustomParams(temp);

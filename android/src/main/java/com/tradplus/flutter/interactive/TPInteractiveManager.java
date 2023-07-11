@@ -59,7 +59,7 @@ public class TPInteractiveManager {
         TPInterActive tpInterActive = getOrCreateInteractive(adUnitId, params);
 
         if ("interactive_load".equals(call.method)) {
-            tpInterActive.loadAd();
+            tpInterActive.loadAd(getMaxWaitTime(params));
         } else if ("interactive_ready".equals(call.method)) {
             boolean isReady = tpInterActive.isReady();
             result.success(isReady);
@@ -70,6 +70,18 @@ public class TPInteractiveManager {
             Log.e("TradPlusLog", "unknown method");
         }
 
+    }
+
+    private float getMaxWaitTime(Map<String, Object> params){
+        try {
+            if(params.containsKey("maxWaitTime")) {
+                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            }
+        }catch (Throwable throwable){
+            return 0;
+        }
+
+        return 0;
     }
 
     private TPInterActive getOrCreateInteractive(String adUnitId, Map<String, Object> params) {
@@ -96,6 +108,11 @@ public class TPInteractiveManager {
 
             if (params.containsKey("customMap")) {
                 SegmentUtils.initPlacementCustomMap(adUnitId, (Map<String, String>) params.get("customMap"));
+            }
+
+            if(params.containsKey("openAutoLoadCallback")) {
+                boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
+                tpInterActive.setAutoLoadCallback(openAutoLoadCallback);
             }
         }
         return tpInterActive;

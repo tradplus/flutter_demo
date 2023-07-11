@@ -58,7 +58,7 @@ public class TPNativeManager {
         TPNative tpNative = getOrCreateNative(adUnitId, params);
 
         if ("native_load".equals(call.method)) {
-            tpNative.loadAd();
+            tpNative.loadAd(getMaxWaitTime(params));
 
         } else if ("native_ready".equals(call.method)) {
             boolean isReady = tpNative.isReady();
@@ -74,6 +74,18 @@ public class TPNativeManager {
             Log.e("TradPlusLog", "unknown method");
         }
 
+    }
+
+    private float getMaxWaitTime(Map<String, Object> params){
+        try {
+            if(params.containsKey("maxWaitTime")) {
+                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            }
+        }catch (Throwable throwable){
+            return 0;
+        }
+
+        return 0;
     }
 
     private TPNative getOrCreateNative(String adUnitId, Map<String, Object> params) {
@@ -114,6 +126,11 @@ public class TPNativeManager {
             }
             if (params.containsKey("customMap")) {
                 SegmentUtils.initPlacementCustomMap(adUnitId, (Map<String, String>) params.get("customMap"));
+            }
+
+            if(params.containsKey("openAutoLoadCallback")) {
+                boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
+                tpNative.setAutoLoadCallback(openAutoLoadCallback);
             }
         }
         return tpNative;

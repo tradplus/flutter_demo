@@ -58,7 +58,7 @@ public class TPBannerManager {
 
         if ("banner_load".equals(call.method)) {
             String sceneId = (String) params.get("sceneId");
-            tpBanner.loadAd(adUnitId, sceneId);
+            tpBanner.loadAd(adUnitId, sceneId,getMaxWaitTime(params));
 
         } else if ("banner_entryAdScenario".equals(call.method)) {
             tpBanner.entryAdScenario(call.argument("sceneId"));
@@ -71,6 +71,18 @@ public class TPBannerManager {
             Log.e("TradPlusLog", "unknown method");
         }
 
+    }
+
+    private float getMaxWaitTime(Map<String, Object> params){
+        try {
+            if(params.containsKey("maxWaitTime")) {
+                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            }
+        }catch (Throwable throwable){
+            return 0;
+        }
+
+        return 0;
     }
 
     private TPBanner getOrCreateBanner(String adUnitId, Map<String, Object> params) {
@@ -99,6 +111,12 @@ public class TPBannerManager {
 
             if (params.containsKey("customMap")) {
                 SegmentUtils.initPlacementCustomMap(adUnitId, (Map<String, String>) params.get("customMap"));
+            }
+
+            if(params.containsKey("openAutoLoadCallback")) {
+                boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
+                Log.v("TradPlus","map params temp1 = "+openAutoLoadCallback);
+                tpBanner.setAutoLoadCallback(openAutoLoadCallback);
             }
         }
 
