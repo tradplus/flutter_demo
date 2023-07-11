@@ -7,8 +7,12 @@ class TPInterstitial
 {
   ///构建ExtraMap：isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
   Map createInterstitialExtraMap(
-      {Map? customMap,Map? localParams}
-      )
+      {
+        Map? customMap,
+        Map? localParams,
+        bool openAutoLoadCallback = false,
+        double maxWaitTime = 0,
+      })
   {
     Map extraMap = {};
     if(localParams != null)
@@ -20,6 +24,8 @@ class TPInterstitial
     {
       extraMap['customMap'] = customMap;
     }
+    extraMap['openAutoLoadCallback'] = openAutoLoadCallback;
+    extraMap['maxWaitTime'] = maxWaitTime;
     return extraMap;
   }
 

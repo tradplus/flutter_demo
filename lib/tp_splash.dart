@@ -7,6 +7,8 @@ class TPSplash {
   Map createSplashExtraMap({
     Map? customMap, //流量分组Map
     Map? localParams, //客户设置特殊参数数据
+    bool openAutoLoadCallback = false,
+    double maxWaitTime = 0,
   }) {
     Map extraMap = {};
     if (localParams != null) {
@@ -15,6 +17,8 @@ class TPSplash {
     if (customMap != null) {
       extraMap['customMap'] = customMap;
     }
+    extraMap['openAutoLoadCallback'] = openAutoLoadCallback;
+    extraMap['maxWaitTime'] = maxWaitTime;
     return extraMap;
   }
 
