@@ -44,10 +44,15 @@
     self.splash.dicCustomValue = dic;
 }
 
-- (void)loadAd
+- (void)loadAdWithMaxWaitTime:(NSTimeInterval)maxWaitTime
 {
     MSLogTrace(@"%s", __PRETTY_FUNCTION__);
-    [self.splash loadAdWithWindow:[MsCommon getTopWindow] bottomView:nil];
+    [self.splash loadAdWithWindow:[MsCommon getTopWindow] bottomView:nil maxWaitTime:maxWaitTime];
+}
+
+- (void)openAutoLoadCallback
+{
+    [self.splash openAutoLoadCallback];
 }
 
 - (void)showAd

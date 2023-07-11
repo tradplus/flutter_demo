@@ -63,11 +63,17 @@
     MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
 }
 
-- (void)loadAdWithSceneId:(nullable NSString *)sceneId
+- (void)loadAdWithSceneId:(nullable NSString *)sceneId maxWaitTime:(NSTimeInterval)maxWaitTime
 {
     MSLogTrace(@"%s sceneId:%@", __PRETTY_FUNCTION__,sceneId);
     self.sceneId = sceneId;
-    [self.banner loadAdWithSceneId:sceneId];
+    [self.banner loadAdWithSceneId:sceneId maxWaitTime:maxWaitTime];
+}
+
+- (void)openAutoLoadCallback
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    [self.banner openAutoLoadCallback];
 }
 
 - (void)entryAdScenario:(nullable NSString *)sceneId

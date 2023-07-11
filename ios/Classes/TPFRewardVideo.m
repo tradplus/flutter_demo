@@ -57,10 +57,17 @@
     [self.rewarded setServerSideVerificationOptionsWithUserID:userID customData:customData];
 }
 
-- (void)loadAd
+- (void)loadAdWithMaxWaitTime:(NSTimeInterval)maxWaitTime
 {
     MSLogTrace(@"%s ", __PRETTY_FUNCTION__);
-    [self.rewarded loadAd];
+    [self.rewarded loadAdWithMaxWaitTime:maxWaitTime];
+}
+
+
+- (void)openAutoLoadCallback
+{
+    MSLogTrace(@"%s ", __PRETTY_FUNCTION__);
+    [self.rewarded openAutoLoadCallback];
 }
 
 - (void)showAdWithSceneId:(nullable NSString *)sceneId

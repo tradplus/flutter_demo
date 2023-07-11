@@ -74,16 +74,18 @@
         self.bannerAds[adUnitID] = banner;
     }
     NSDictionary *extraMap = call.arguments[@"extraMap"];
-    CGFloat height = [extraMap[@"height"] floatValue];
-    CGFloat width = [extraMap[@"width"] floatValue];
-    if(height > 0 && width > 0)
-    {
-        [banner setBannerSize:CGSizeMake(width, height)];
-    }
-    NSInteger contentMode = [extraMap[@"contentMode"] integerValue];
-    [banner setBannerContentMode:contentMode];
+    CGFloat maxWaitTime = 0;
+    NSString *sceneId = nil;
     if(extraMap != nil)
     {
+        CGFloat height = [extraMap[@"height"] floatValue];
+        CGFloat width = [extraMap[@"width"] floatValue];
+        if(height > 0 && width > 0)
+        {
+            [banner setBannerSize:CGSizeMake(width, height)];
+        }
+        NSInteger contentMode = [extraMap[@"contentMode"] integerValue];
+        [banner setBannerContentMode:contentMode];
         id customMap = extraMap[@"customMap"];
         if(customMap != nil && [customMap isKindOfClass:[NSDictionary class]])
         {
@@ -94,10 +96,16 @@
         {
             [banner setLocalParams:localParams];
         }
+        BOOL openAutoLoadCallback = [extraMap[@"openAutoLoadCallback"] boolValue];
+        if(openAutoLoadCallback)
+        {
+            [banner openAutoLoadCallback];
+        }
+        maxWaitTime = [extraMap[@"maxWaitTime"] floatValue];
+        sceneId = extraMap[@"sceneId"];
     }
     [banner setAdUnitID:adUnitID];
-    NSString *sceneId = extraMap[@"sceneId"];
-    [banner loadAdWithSceneId:sceneId];
+    [banner loadAdWithSceneId:sceneId maxWaitTime:maxWaitTime];
 }
 
 - (void)isAdReadyWithAdUnitID:(NSString *)adUnitID result:(FlutterResult)result

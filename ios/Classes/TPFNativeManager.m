@@ -78,19 +78,21 @@
         self.nativeAds[adUnitID] = native;
     }
     NSDictionary *extraMap = call.arguments[@"extraMap"];
-    CGFloat templateWidth = [extraMap[@"templateWidth"] floatValue];
-    CGFloat templateHeight = [extraMap[@"templateHeight"] floatValue];
-    if(templateWidth == 0)
-    {
-        templateWidth = 320;
-    }
-    if(templateHeight == 0)
-    {
-        templateHeight = 250;
-    }
-    [native setTemplateRenderSize:CGSizeMake(templateWidth, templateHeight)];
+    NSInteger loadCount = 0;
+    CGFloat maxWaitTime = 0;
     if(extraMap != nil)
     {
+        CGFloat templateWidth = [extraMap[@"templateWidth"] floatValue];
+        CGFloat templateHeight = [extraMap[@"templateHeight"] floatValue];
+        if(templateWidth == 0)
+        {
+            templateWidth = 320;
+        }
+        if(templateHeight == 0)
+        {
+            templateHeight = 250;
+        }
+        [native setTemplateRenderSize:CGSizeMake(templateWidth, templateHeight)];
         id customMap = extraMap[@"customMap"];
         if(customMap != nil && [customMap isKindOfClass:[NSDictionary class]])
         {
@@ -101,16 +103,22 @@
         {
             [native setLocalParams:localParams];
         }
+        BOOL openAutoLoadCallback = [extraMap[@"openAutoLoadCallback"] boolValue];
+        if(openAutoLoadCallback)
+        {
+            [native openAutoLoadCallback];
+        }
+        loadCount = [extraMap[@"loadCount"] integerValue];
+        maxWaitTime = [extraMap[@"maxWaitTime"] floatValue];
     }
     [native setAdUnitID:adUnitID];
-    NSInteger loadCount = [extraMap[@"loadCount"] integerValue];
     if(loadCount > 0)
     {
-        [native loadAds:loadCount];
+        [native loadAds:loadCount maxWaitTime:maxWaitTime];
     }
     else
     {
-        [native loadAd];
+        [native loadAdWithMaxWaitTime:maxWaitTime];
     }
 }
 
