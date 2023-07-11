@@ -15,7 +15,9 @@ class TPBanner
         Map? localParams,//客户设置特殊参数数据
         //仅iOS支持 居中模式
         // 0 = 顶部水平居中；1 = 垂直居中并水平居中； 2 = 底边水平居中；其他 = 0
-        int contentMode = 0
+        int contentMode = 0,
+        bool openAutoLoadCallback = false,
+        double maxWaitTime = 0,
    }) {
     Map extraMap = {};
     extraMap['height'] = height;
@@ -32,6 +34,8 @@ class TPBanner
     {
       extraMap['sceneId'] = sceneId;
     }
+    extraMap['openAutoLoadCallback'] = openAutoLoadCallback;
+    extraMap['maxWaitTime'] = maxWaitTime;
     return extraMap;
   }
 

@@ -12,6 +12,8 @@ class TPRewardVideo
         String? customData,//服务器奖励验证参数
         Map? localParams,//客户设置特殊参数数据
         Map? customMap,//流量分组Map
+        bool openAutoLoadCallback = false,
+        double maxWaitTime = 0,
    }) {
 
     Map extraMap = {};
@@ -33,6 +35,8 @@ class TPRewardVideo
     {
       extraMap['customMap'] = customMap;
     }
+    extraMap['openAutoLoadCallback'] = openAutoLoadCallback;
+    extraMap['maxWaitTime'] = maxWaitTime;
     return extraMap;
   }
 

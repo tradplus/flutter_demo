@@ -94,6 +94,7 @@
         self.offerwallAds[adUnitID] = offerwall;
     }
     NSDictionary *extraMap = call.arguments[@"extraMap"];
+    CGFloat maxWaitTime = 0;
     if(extraMap != nil)
     {
         id customMap = extraMap[@"customMap"];
@@ -106,9 +107,15 @@
         {
             [offerwall setLocalParams:localParams];
         }
+        BOOL openAutoLoadCallback = [extraMap[@"openAutoLoadCallback"] boolValue];
+        if(openAutoLoadCallback)
+        {
+            [offerwall openAutoLoadCallback];
+        }
+        maxWaitTime = [extraMap[@"maxWaitTime"] floatValue];
     }
     [offerwall setAdUnitID:adUnitID];
-    [offerwall loadAd];
+    [offerwall loadAdWithMaxWaitTime:maxWaitTime];
 }
 
 - (void)isAdReadyWithAdUnitID:(NSString *)adUnitID result:(FlutterResult)result

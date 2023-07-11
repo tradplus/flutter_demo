@@ -50,10 +50,16 @@
     MSLogTrace(@"%s dic:%@", __PRETTY_FUNCTION__,dic);
 }
 
-- (void)loadAd
+- (void)loadAdWithMaxWaitTime:(NSTimeInterval)maxWaitTime
 {
     MSLogTrace(@"%s ", __PRETTY_FUNCTION__);
-    [self.offerwall loadAd];
+    [self.offerwall loadAdWithMaxWaitTime:maxWaitTime];
+}
+
+- (void)openAutoLoadCallback
+{
+    MSLogTrace(@"%s ", __PRETTY_FUNCTION__);
+    [self.offerwall openAutoLoadCallback];
 }
 
 - (void)showAdWithSceneId:(nullable NSString *)sceneId

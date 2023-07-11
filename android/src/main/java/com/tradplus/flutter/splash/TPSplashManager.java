@@ -53,7 +53,7 @@ public class TPSplashManager  {
         TPSplash tpSplash = getOrCreateSplash(adUnitId, params);
 
         if ("splash_load".equals(call.method)) {
-            tpSplash.loadAd(null);
+            tpSplash.loadAd(null,getMaxWaitTime(params));
 
         }  else if ("splash_ready".equals(call.method)) {
             boolean isReady = tpSplash.isReady();
@@ -69,6 +69,18 @@ public class TPSplashManager  {
             Log.e("TradPlusLog", "unknown method");
         }
 
+    }
+
+    private float getMaxWaitTime(Map<String, Object> params){
+        try {
+            if(params.containsKey("maxWaitTime")) {
+                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            }
+        }catch (Throwable throwable){
+            return 0;
+        }
+
+        return 0;
     }
 
     private TPSplash getOrCreateSplash(String adUnitId, Map<String, Object> params) {
@@ -97,6 +109,11 @@ public class TPSplashManager  {
 
             if (params.containsKey("customMap")) {
                 SegmentUtils.initPlacementCustomMap(adUnitId, (Map<String, String>) params.get("customMap"));
+            }
+
+            if(params.containsKey("openAutoLoadCallback")) {
+                boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
+                tpSplash.setAutoLoadCallback(openAutoLoadCallback);
             }
         }
 
