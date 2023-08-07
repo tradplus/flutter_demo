@@ -81,48 +81,48 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
     //TradPlus
-    implementation 'com.tradplusad:tradplus:9.9.0.1'
+    implementation 'com.tradplusad:tradplus:10.0.1.1'
     // Admob
-    implementation 'com.google.android.gms:play-services-ads:22.1.0'
-    implementation 'com.tradplusad:tradplus-googlex:2.9.9.0.1'
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
+    implementation 'com.tradplusad:tradplus-googlex:2.10.0.1.1'
     // Meta
-    implementation 'com.facebook.android:audience-network-sdk:6.14.0'
-    implementation 'com.tradplusad:tradplus-facebook:1.9.9.0.1'
+    implementation 'com.facebook.android:audience-network-sdk:6.15.0'
+    implementation 'com.tradplusad:tradplus-facebook:1.10.0.1.1'
     // Applovin
     implementation 'com.applovin:applovin-sdk:11.10.1'
-    implementation 'com.tradplusad:tradplus-applovin:9.9.9.0.1'
+    implementation 'com.tradplusad:tradplus-applovin:9.10.0.1.1'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     // Pangle
-    implementation 'com.tradplusad:tradplus-pangle:19.9.9.0.1'
+    implementation 'com.tradplusad:tradplus-pangle:19.10.0.1.1'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
-    implementation 'com.pangle.global:ads-sdk:5.2.0.7'
+    implementation 'com.pangle.global:ads-sdk:5.3.0.4'
     // UnityAds
-    implementation 'com.tradplusad:tradplus-unity:5.9.9.0.1'
+    implementation 'com.tradplusad:tradplus-unity:5.10.0.1.1'
     implementation 'com.unity3d.ads:unity-ads:4.6.1'
     // Cross Promotion
-    implementation 'com.tradplusad:tradplus-crosspromotion:27.9.9.0.1'
+    implementation 'com.tradplusad:tradplus-crosspromotion:27.10.0.1.1'
     // Mintegral
-    implementation 'com.tradplusad:tradplus-mintegralx_overseas:18.9.9.0.1'
+    implementation 'com.tradplusad:tradplus-mintegralx_overseas:18.10.0.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.mbridge.msdk.oversea:reward:16.4.61'
-    implementation 'com.mbridge.msdk.oversea:mbsplash:16.4.61'
-    implementation 'com.mbridge.msdk.oversea:mbbanner:16.4.61'
-    implementation 'com.mbridge.msdk.oversea:mbnative:16.4.61'
-    implementation 'com.mbridge.msdk.oversea:mbnativeadvanced:16.4.61'
-    implementation 'com.mbridge.msdk.oversea:newinterstitial:16.4.61'
-    implementation 'com.mbridge.msdk.oversea:mbbid:16.4.61'
+    implementation 'com.mbridge.msdk.oversea:reward:16.4.81'
+    implementation 'com.mbridge.msdk.oversea:mbsplash:16.4.81'
+    implementation 'com.mbridge.msdk.oversea:mbbanner:16.4.81'
+    implementation 'com.mbridge.msdk.oversea:mbnative:16.4.81'
+    implementation 'com.mbridge.msdk.oversea:mbnativeadvanced:16.4.81'
+    implementation 'com.mbridge.msdk.oversea:newinterstitial:16.4.81'
+    implementation 'com.mbridge.msdk.oversea:mbbid:16.4.81'
     // Vungle
-    implementation 'com.tradplusad:tradplus-vunglex:7.9.9.0.1'
+    implementation 'com.tradplusad:tradplus-vunglex:7.10.0.1.1'
     implementation 'com.vungle:publisher-sdk-android:6.12.1'
     implementation 'com.google.android.gms:play-services-basement:17.5.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     // Adx
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.tradplusad:tp_exchange:40.9.9.0.1'
+    implementation 'com.tradplusad:tp_exchange:40.10.0.1.1'
     implementation 'com.tradplusad:om-sdk:1.4.4'
 
     // zMaticoo adapter
-    implementation "com.tradplusad:tradplus-zmaticoo:55.9.9.0.1"
+    implementation "com.tradplusad:tradplus-zmaticoo:55.10.0.1.1"
     // zMaticoo SDK
     implementation 'io.github.maticooads:maticoo-android-sdk:1.3.3'
 }

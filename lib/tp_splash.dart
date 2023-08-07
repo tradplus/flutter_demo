@@ -32,6 +32,17 @@ class TPSplash {
     TradplusSdk.channel.invokeMethod('splash_load', arguments);
   }
 
+  ///进入广告场景：adUnitId 广告位ID ,sceneId 从Tradplus后台获取到到场景ID
+  Future<void> entrySplashAdScenario(String adUnitId,{String? sceneId}) async{
+    Map arguments = {};
+    arguments['adUnitID'] = adUnitId;
+    if(sceneId != null)
+    {
+      arguments['sceneId'] = sceneId;
+    }
+    TradplusSdk.channel.invokeMethod('splash_entryAdScenario', arguments);
+  }
+
   ///广告是否ready：adUnitId 广告位ID
   Future<bool> splashAdReady(String adUnitId) async {
     return await TradplusSdk.channel
@@ -39,10 +50,14 @@ class TPSplash {
   }
 
   ///展示广告：adUnitId 广告位ID ,className 用户自定义模版名称  此接口仅支持iOS
-  Future<void> showSplashAd(String adUnitId,{String className = ""}) async {
+  Future<void> showSplashAd(String adUnitId,{String className = "",String? sceneId}) async {
     Map arguments = {};
     arguments['adUnitID'] = adUnitId;
     arguments['className'] = className;
+    if(sceneId != null)
+    {
+      arguments['sceneId'] = sceneId;
+    }
     TradplusSdk.channel.invokeMethod('splash_show', arguments);
   }
 

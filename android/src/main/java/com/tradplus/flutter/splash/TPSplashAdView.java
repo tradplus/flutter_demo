@@ -51,7 +51,7 @@ public class TPSplashAdView implements PlatformView {
 
             viewGroup.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
             Log.i("TPSplashAdView", "adUnitId1 = " + adUnitId + " adSceneId1 = " + adSceneId);
-            boolean isSuccess = TPSplashManager.getInstance().renderView(adUnitId, viewGroup, adSceneId,adRender);
+            boolean isSuccess = TPSplashManager.getInstance().renderView(adUnitId, viewGroup,adRender);
             if(!isSuccess){
                 Log.v("TradPlusLog", "Splash render failed");
 
