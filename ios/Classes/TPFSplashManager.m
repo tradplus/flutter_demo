@@ -53,6 +53,24 @@
     {
         [self setCustomAdInfoWithAdUnitID:adUnitID methodCall:call];
     }
+    else if([@"splash_entryAdScenario" isEqualToString:call.method])
+    {
+        [self entryAdScenarioWithAdUnitID:adUnitID methodCall:call];
+    }
+}
+
+- (void)entryAdScenarioWithAdUnitID:(NSString *)adUnitID methodCall:(FlutterMethodCall*)call
+{
+    TPFSplash *splash = [self getSplashWithAdUnitID:adUnitID];
+    NSString *sceneId = call.arguments[@"sceneId"];
+    if(splash != nil)
+    {
+        [splash entryAdScenario:sceneId];
+    }
+    else
+    {
+        MSLogInfo(@"splash adUnitID:%@ not initialize",adUnitID);
+    }
 }
 
 - (TPFSplash *)getSplashWithAdUnitID:(NSString *)adUnitID
@@ -119,7 +137,8 @@
     if(splash != nil)
     {
         NSString *className = call.arguments[@"className"];
-        [splash showAdWithClassName:className];
+        NSString *sceneId = call.arguments[@"sceneId"];
+        [splash showAdWithClassName:className sceneId:sceneId];
     }
     else
     {

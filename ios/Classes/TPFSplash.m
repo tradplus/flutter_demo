@@ -61,7 +61,7 @@
     [self.splash show];
 }
 
-- (void)showAdWithClassName:(NSString *)className
+- (void)showAdWithClassName:(NSString *)className sceneId:(NSString *)sceneId
 {
     MSLogTrace(@"%s", __PRETTY_FUNCTION__);
     if(className != nil
@@ -71,17 +71,23 @@
         Class class = NSClassFromString(className);
         if(class != nil)
         {
-            [self.splash showWithRenderingViewClass:class];
+            [self.splash showWithRenderingViewClass:class sceneId:sceneId];
             return;
         }
     }
-    [self.splash show];
+    [self.splash showWithSceneId:sceneId];
 }
 
 - (BOOL)isAdReady
 {
     MSLogTrace(@"%s", __PRETTY_FUNCTION__);
     return self.splash.isAdReady;
+}
+
+- (void)entryAdScenario:(NSString *)sceneId
+{
+    MSLogTrace(@"%s", __PRETTY_FUNCTION__);
+    [self.splash entryAdScenario:sceneId];
 }
 
 - (void)setCustomAdInfo:(NSDictionary *)customAdInfo

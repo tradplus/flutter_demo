@@ -19,8 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCustomMap:(NSDictionary *)dic;
 - (void)setLocalParams:(NSDictionary *)dic;
 - (void)showAd;
-- (void)showAdWithClassName:(NSString *)className;
+- (void)showAdWithClassName:(NSString *)className sceneId:(NSString *)sceneId;
 - (void)setCustomAdInfo:(NSDictionary *)customAdInfo;
+- (void)entryAdScenario:(NSString *)sceneId;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -80,10 +80,15 @@
     {
         CGFloat height = [extraMap[@"height"] floatValue];
         CGFloat width = [extraMap[@"width"] floatValue];
-        if(height > 0 && width > 0)
+        if(height == 0)
         {
-            [banner setBannerSize:CGSizeMake(width, height)];
+            height = 50;
         }
+        if(width == 0)
+        {
+            width = [UIScreen mainScreen].bounds.size.width;
+        }
+        [banner setBannerSize:CGSizeMake(width, height)];
         NSInteger contentMode = [extraMap[@"contentMode"] integerValue];
         [banner setBannerContentMode:contentMode];
         id customMap = extraMap[@"customMap"];
