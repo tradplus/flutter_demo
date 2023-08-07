@@ -32,55 +32,61 @@ Tradplus SDK Flutter project.
 
      s.dependency 'TradPlusAdSDK', '9.6.0'
      s.dependency 'TradPlusAdSDK/TPCrossAdapter', '9.6.0'
-     # #Meta
+     #Meta
      s.dependency 'TradPlusAdSDK/FacebookAdapter', '9.6.0'
      s.dependency 'FBAudienceNetwork','6.12.0'
-     # #Admob
-     # s.dependency 'TradPlusAdSDK/AdMobAdapter', '9.6.0'
-     # s.dependency 'Google-Mobile-Ads-SDK','10.6.0'
-     # #UnityAds
-     # s.dependency 'TradPlusAdSDK/UnityAdapter', '9.6.0'
-     # s.dependency 'UnityAds','4.7.1'
-     # #AppLovin
-     # s.dependency 'TradPlusAdSDK/AppLovinAdapter', '9.6.0'
-     # s.dependency 'AppLovinSDK','11.10.1'
-     # #Tapjoy
-     # s.dependency 'TradPlusAdSDK/TapjoyAdapter', '9.6.0'
-     # s.dependency 'TapjoySDK','13.0.1'
-     # #Vungle
-     # s.dependency 'TradPlusAdSDK/VungleAdapter', '9.6.0'
-     # s.dependency 'VungleAds', '7.0.1'
-     # #IronSource
-     # s.dependency 'TradPlusAdSDK/IronSourceAdapter', '9.6.0'
-     # s.dependency 'IronSourceSDK','7.3.1.0'
-     # #AdColony
-     # s.dependency 'TradPlusAdSDK/AdColonyAdapter', '9.6.0'
-     # s.dependency 'AdColony','4.9.0'
-     # #InMobi
-     # s.dependency 'TradPlusAdSDK/InMobiAdapter', '9.6.0'
-     # s.dependency 'InMobiSDK/Core' ,'10.1.4'
-     # #Mintegral
-     # s.dependency 'TradPlusAdSDK/MintegralAdapter', '9.6.0'
-     # s.dependency 'MintegralAdSDK' ,'7.3.8'
-     # s.dependency 'MintegralAdSDK/All','7.3.8'
+     #Admob
+     s.dependency 'TradPlusAdSDK/AdMobAdapter', '9.6.0'
+     s.dependency 'Google-Mobile-Ads-SDK','10.6.0'
+     #UnityAds
+     s.dependency 'TradPlusAdSDK/UnityAdapter', '9.6.0'
+     s.dependency 'UnityAds','4.7.1'
+     #AppLovin
+     s.dependency 'TradPlusAdSDK/AppLovinAdapter', '9.6.0'
+     s.dependency 'AppLovinSDK','11.10.1'
+     #Tapjoy
+     s.dependency 'TradPlusAdSDK/TapjoyAdapter', '9.6.0'
+     s.dependency 'TapjoySDK','13.0.1'
+     #Vungle
+     s.dependency 'TradPlusAdSDK/VungleAdapter', '9.6.0'
+     s.dependency 'VungleAds', '7.0.1'
+     #IronSource
+     s.dependency 'TradPlusAdSDK/IronSourceAdapter', '9.6.0'
+     s.dependency 'IronSourceSDK','7.3.1.0'
+     #AdColony
+     s.dependency 'TradPlusAdSDK/AdColonyAdapter', '9.6.0'
+     s.dependency 'AdColony','4.9.0'
+     #InMobi
+     s.dependency 'TradPlusAdSDK/InMobiAdapter', '9.6.0'
+     s.dependency 'InMobiSDK/Core' ,'10.1.4'
+     #Mintegral
+     s.dependency 'TradPlusAdSDK/MintegralAdapter', '9.6.0'
+     s.dependency 'MintegralAdSDK' ,'7.3.8'
+     s.dependency 'MintegralAdSDK/All','7.3.8'
+     #Smaato
+     s.dependency 'TradPlusAdSDK/SmaatoAdapter', '9.6.0'
+     s.dependency 'smaato-ios-sdk', '22.1.3'
+     #Baidu
+     s.dependency 'TradPlusAdSDK/BaiduAdapter', '9.6.0'
+     s.dependency 'BaiduMobAdSDK','5.300'
+     #Tencent Ads
+     s.dependency 'TradPlusAdSDK/GDTMobAdapter', '9.6.0'
+     s.dependency 'GDTMobSDK', '4.14.31'
+     #Pangle
+     s.dependency 'TradPlusAdSDK/PangleAdapter', '9.6.0'
+     s.dependency 'Ads-Global', '5.2.1.1'
+     #穿山甲
+     s.dependency 'TradPlusAdSDK/CSJAdapter', '9.6.0'
+     s.dependency 'Ads-CN', '5.3.0.4'
      # #KuaiShou
      # s.dependency 'TradPlusAdSDK/KuaiShouAdapter', '9.6.0'
      # s.dependency 'KSAdSDK', '3.3.47'
      # #Sigmob
      # s.dependency 'TradPlusAdSDK/SigmobAdapter', '9.6.0'
      # s.dependency 'SigmobAd-iOS', '4.9.1'
-     # #Tencent Ads
-     # s.dependency 'TradPlusAdSDK/GDTMobAdapter', '9.6.0'
-     # s.dependency 'GDTMobSDK', '4.14.31'
-     # #Pangle
-     # s.dependency 'TradPlusAdSDK/PangleAdapter', '9.6.0'
-     # s.dependency 'Ads-Global', '5.2.1.1'
      # #YouDao
      # s.dependency 'TradPlusAdSDK/YouDaoAdapter', '9.6.0'
      # s.dependency 'YDADSDK', '2.16.22'
-     # #Smaato
-     # s.dependency 'TradPlusAdSDK/SmaatoAdapter', '9.6.0'
-     # s.dependency 'smaato-ios-sdk', '22.1.3'
      # #Maio
      # s.dependency 'TradPlusAdSDK/MaioAdapter', '9.6.0'
      # s.dependency 'MaioSDK', '1.6.3'
@@ -108,9 +114,6 @@ Tradplus SDK Flutter project.
      # #Ogury
      # s.dependency 'TradPlusAdSDK/OguryAdapter', '9.6.0'
      # s.dependency 'OgurySdk', '4.1.2'
-     # #Baidu
-     # s.dependency 'TradPlusAdSDK/BaiduAdapter', '9.6.0'
-     # s.dependency 'BaiduMobAdSDK','5.300'
      # #Verve
      # s.dependency 'TradPlusAdSDK/VerveAdapter', '9.6.0'
      # s.dependency 'HyBid','2.18.1'
@@ -121,9 +124,6 @@ Tradplus SDK Flutter project.
      # s.dependency 'TradPlusAdSDK/HeliumAdapter', '9.6.0'
      # s.dependency 'ChartboostMediationSDK','4.3.0'
 	 # s.dependency 'ChartboostMediationAdapterChartboost','4.9.3.0.0'
-     # #穿山甲
-     # s.dependency 'TradPlusAdSDK/CSJAdapter', '9.6.0'
-     # s.dependency 'Ads-CN', '5.3.0.4'
      # #Bigo
      # s.dependency 'TradPlusAdSDK/BigoAdapter', '9.6.0'
      # s.dependency 'BigoADS','2.2.0'
