@@ -160,7 +160,8 @@
     if(appId != nil && [appId isKindOfClass:[NSString class]])
     {
         [TradPlus initSDK:appId completionBlock:^(NSError * _Nonnull error) {
-            [TradplusSdkPlugin callbackWithEventName:@"tp_initFinish" adUnitID:nil adInfo:nil error:nil exp:@{@"success":@(error != nil)}];
+            BOOL success = (error != nil);
+            [TradplusSdkPlugin callbackWithEventName:@"tp_initFinish" adUnitID:nil adInfo:nil error:nil exp:@{@"success":@(success)}];
         }];
     }
     else
