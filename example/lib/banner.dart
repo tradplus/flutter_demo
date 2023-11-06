@@ -20,7 +20,6 @@ class BannerWidgetState extends State<BannerWidget> {
   bool useDef = true;
   String useDefText = "模版：默认";
   String infoString = "";
-  String bgColorStr = "";
   String sceneId = TPAdConfiguration.bannerSceneId;
   GlobalKey<PartRefreshWidgetState> globalKey = new GlobalKey();
 
@@ -149,58 +148,6 @@ class BannerWidgetState extends State<BannerWidget> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
-                    onPressed: () {
-                      bgColorStr = "";
-                      infoString = "背景色设置为：无";
-                      globalKey.currentState?.update();
-                    },
-                    child: const Text("背景：无",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ))),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
-                    onPressed: () {
-                      bgColorStr = "#FFFFFF";
-                      infoString = "背景色设置为：白色";
-                      globalKey.currentState?.update();
-                    },
-                    child: const Text("背景：白色",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ))),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
-                    onPressed: () {
-                      infoString = "背景色设置为：黑色";
-                      bgColorStr = "#000000";
-                      globalKey.currentState?.update();
-                    },
-                    child: const Text("背景：黑色",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ))),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
-                    onPressed: () {
-                      infoString = "背景色设置为：红色";
-                      bgColorStr = "#FF0000";
-                      globalKey.currentState?.update();
-                    },
-                    child: const Text("背景：红色",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ))),
-              ],
-            ),
-          ),
           PartRefreshWidget(globalKey, () {
             ///创建需要局部刷新的widget
             return Text(
@@ -259,7 +206,6 @@ class BannerWidgetState extends State<BannerWidget> {
       localParams: localParams,
       closeAutoDestroy: true,
       sceneId: sceneId,
-      backgroundColor: bgColorStr
     );
     TPBannerManager.loadBannerAd(unitId, extraMap: extraMap);
     String time = DateTime
