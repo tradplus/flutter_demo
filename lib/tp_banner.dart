@@ -7,21 +7,26 @@ class TPBanner
 {
   ///构建ExtraMap：height 高度，width 宽度，customMap 流量分组等自定义数据，sceneId 场景ID
   ///contentMode 居中模式 仅iOS支持 0 = 顶部水平居中；1 = 垂直居中并水平居中； 2 = 底边水平居中；其他 = 0
+  ///closeAutoDestroy 是否关闭自动destroy 仅安卓支持
+  ///backgroundColor 背景色 例:#FFFFFF
   Map createBannerExtraMap({
         double height = 0,//高度
         double width = 0,//宽度
         Map? customMap,//流量分组Map
         String? sceneId,//场景ID
         Map? localParams,//客户设置特殊参数数据
+        bool? closeAutoDestroy = false,//是否关闭自动destroy（仅安卓支持）
         //仅iOS支持 居中模式
         // 0 = 顶部水平居中；1 = 垂直居中并水平居中； 2 = 底边水平居中；其他 = 0
         int contentMode = 0,
         bool openAutoLoadCallback = false,
         double maxWaitTime = 0,
+        String? backgroundColor,//背景色 例:#FFFFFF
    }) {
     Map extraMap = {};
     extraMap['height'] = height;
     extraMap['width'] = width;
+    extraMap['closeAutoDestroy'] = closeAutoDestroy;
     extraMap['contentMode'] = contentMode;
     if(localParams != null) {
       extraMap['localParams'] = localParams;
@@ -33,6 +38,10 @@ class TPBanner
     if(sceneId != null)
     {
       extraMap['sceneId'] = sceneId;
+    }
+    if(backgroundColor != null && backgroundColor.length > 0)
+    {
+      extraMap['backgroundColor'] = backgroundColor;
     }
     extraMap['openAutoLoadCallback'] = openAutoLoadCallback;
     extraMap['maxWaitTime'] = maxWaitTime;

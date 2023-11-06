@@ -29,7 +29,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -37,16 +37,16 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 23
     }
 }
 
-def TRADPLUS_VERSION = "10.0.1.1"
+def TRADPLUS_VERSION = "10.5.0.1"
 
 dependencies {
     //TradPlus
     compileOnly "com.tradplusad:tradplus:${TRADPLUS_VERSION}"
     //TradPlus 测试工具
-    compileOnly 'com.tradplusad:tradplus-tool:1.0.7'
+    compileOnly 'com.tradplusad:tradplus-tool:1.0.8'
 
 }
