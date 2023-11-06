@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAdUnitID:(NSString * _Nonnull)adUnitID;
 - (void)loadAdWithSceneId:(nullable NSString *)sceneId maxWaitTime:(NSTimeInterval)maxWaitTime;
 - (void)openAutoLoadCallback;
+- (void)setBackgroundColorStr:(NSString *)colorStr;
 - (void)setCustomMap:(NSDictionary *)dic;
 - (void)setLocalParams:(NSDictionary *)dic;
 - (void)entryAdScenario:(nullable NSString *)sceneId;

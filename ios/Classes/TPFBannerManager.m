@@ -101,6 +101,11 @@
         {
             [banner setLocalParams:localParams];
         }
+        id backgroundColorStr = extraMap[@"backgroundColor"];
+        if(backgroundColorStr != nil && [backgroundColorStr isKindOfClass:[NSString class]])
+        {
+            [banner setBackgroundColorStr:backgroundColorStr];
+        }
         BOOL openAutoLoadCallback = [extraMap[@"openAutoLoadCallback"] boolValue];
         if(openAutoLoadCallback)
         {
