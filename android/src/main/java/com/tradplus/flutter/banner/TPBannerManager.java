@@ -1,5 +1,6 @@
 package com.tradplus.flutter.banner;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -58,7 +59,7 @@ public class TPBannerManager {
 
         if ("banner_load".equals(call.method)) {
             String sceneId = (String) params.get("sceneId");
-            tpBanner.loadAd(adUnitId, sceneId,getMaxWaitTime(params));
+            tpBanner.loadAd(adUnitId, sceneId, getMaxWaitTime(params));
 
         } else if ("banner_entryAdScenario".equals(call.method)) {
             tpBanner.entryAdScenario(call.argument("sceneId"));
@@ -67,18 +68,18 @@ public class TPBannerManager {
         } else if ("banner_setCustomAdInfo".equals(call.method)) {
             tpBanner.setCustomShowData(call.argument("customAdInfo"));
 
-        }else {
+        } else {
             Log.e("TradPlusLog", "unknown method");
         }
 
     }
 
-    private float getMaxWaitTime(Map<String, Object> params){
+    private float getMaxWaitTime(Map<String, Object> params) {
         try {
-            if(params.containsKey("maxWaitTime")) {
-                return  new Double((double) params.get("maxWaitTime")).floatValue();
+            if (params.containsKey("maxWaitTime")) {
+                return new Double((double) params.get("maxWaitTime")).floatValue();
             }
-        }catch (Throwable throwable){
+        } catch (Throwable throwable) {
             return 0;
         }
 
@@ -100,12 +101,12 @@ public class TPBannerManager {
 
         }
 
-        LogUtil.ownShow("map params = "+params);
-        if(params != null) {
+        LogUtil.ownShow("map params = " + params);
+        if (params != null) {
             if (params.containsKey("localParams")) {
                 HashMap<String, Object> temp = new HashMap<>();
                 temp = (HashMap<String, Object>) params.get("localParams");
-                Log.v("TradPlus","map params temp = "+temp);
+                Log.v("TradPlus", "map params temp = " + temp);
                 tpBanner.setCustomParams(temp);
             }
 
@@ -113,27 +114,44 @@ public class TPBannerManager {
                 SegmentUtils.initPlacementCustomMap(adUnitId, (Map<String, String>) params.get("customMap"));
             }
 
-            if(params.containsKey("openAutoLoadCallback")) {
+            if (params.containsKey("openAutoLoadCallback")) {
                 boolean openAutoLoadCallback = (boolean) params.get("openAutoLoadCallback");
-                Log.v("TradPlus","map params temp1 = "+openAutoLoadCallback);
+                Log.v("TradPlus", "map params temp1 = " + openAutoLoadCallback);
                 tpBanner.setAutoLoadCallback(openAutoLoadCallback);
             }
-        }
 
+            if (params.containsKey("closeAutoDestroy")) {
+                boolean closeAutoDestroy = (boolean) params.get("closeAutoDestroy");
+                Log.v("TradPlus", "map params temp closeAutoDestroy = " + closeAutoDestroy);
+                tpBanner.setAutoDestroy(closeAutoDestroy);
+            }
+
+            if (params.containsKey("backgroundColor")) {
+                try {
+                    String backgroundColor = (String) params.get("backgroundColor");
+                    Log.v("TradPlus", "map params temp backgroundColor = " + backgroundColor);
+                    tpBanner.setBackgroundColor(Color.parseColor(backgroundColor));
+                } catch (Throwable throwable) {
+
+                }
+
+
+            }
+        }
 
 
         return tpBanner;
     }
 
-    public boolean renderView(String adUnitId, ViewGroup viewContainer, String adSceneId,TPNativeAdRender tpNativeAdRender) {
+    public boolean renderView(String adUnitId, ViewGroup viewContainer, String adSceneId, TPNativeAdRender tpNativeAdRender) {
         TPBanner tpBanner = mTPBanners.get(adUnitId);
 
-        if(tpBanner == null){
+        if (tpBanner == null) {
             Log.v("TradPlusLog", "TPBanner is null");
             return false;
         }
 
-        if(viewContainer == null){
+        if (viewContainer == null) {
             Log.v("TradPlusLog", "viewContainer is null");
             return false;
         }
@@ -142,12 +160,12 @@ public class TPBannerManager {
             ((ViewGroup) tpBanner.getParent()).removeView(tpBanner);
         }
 
-        if(tpNativeAdRender != null){
+        if (tpNativeAdRender != null) {
             tpBanner.setNativeAdRender(tpNativeAdRender);
         }
 
         viewContainer.addView(tpBanner);
-        if(isReady(adUnitId)) {
+        if (isReady(adUnitId)) {
             tpBanner.showAd(adSceneId);
         }
 
@@ -157,35 +175,35 @@ public class TPBannerManager {
         return true;
     }
 
-    private boolean isReady(String adUnitId){
+    private boolean isReady(String adUnitId) {
         TPBanner tpBanner = mTPBanners.get(adUnitId);
-        if(tpBanner != null) {
+        if (tpBanner != null) {
             return tpBanner.isReady();
         }
 
         return false;
     }
 
-    private boolean isReadyByBanner(String adUnitId){
+    private boolean isReadyByBanner(String adUnitId) {
         boolean isReadyNum = AdCacheManager.getInstance().getReadyAdNum(adUnitId) > 0;
         TPBanner tpBanner = mTPBanners.get(adUnitId);
         boolean isShown = false;
 
-        if(tpBanner == null){
+        if (tpBanner == null) {
             isShown = false;
-        }else{
-            if(tpBanner.getChildCount() > 0){
+        } else {
+            if (tpBanner.getChildCount() > 0) {
                 isShown = true;
             }
         }
 
-        if(isOpenRefresh(adUnitId) && (isShown || isReadyNum) ){
+        if (isOpenRefresh(adUnitId) && (isShown || isReadyNum)) {
             return true;
         }
         return isReadyNum;
     }
 
-    private boolean isOpenRefresh(String adUnitId){
+    private boolean isOpenRefresh(String adUnitId) {
         long refreshTime = 0;
         ConfigResponse configResponse = ConfigLoadManager.getInstance().getLocalConfigResponse(adUnitId);
         if (configResponse != null) {
