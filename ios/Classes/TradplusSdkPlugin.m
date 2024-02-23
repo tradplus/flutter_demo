@@ -93,7 +93,10 @@ static FlutterMethodChannel *channel;
     {
         [arguments addEntriesFromDictionary:exp];
     }
-    [channel invokeMethod:name arguments:arguments];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [channel invokeMethod:name arguments:arguments];
+    });
+    
 }
 
 + (void)callbackWithEventName:(NSString *)name adUnitID:(NSString *)adUnitID adInfo:(NSDictionary *)adInfo error:(NSError *)error

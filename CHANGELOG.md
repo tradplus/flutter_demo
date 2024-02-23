@@ -1,3 +1,7 @@
+## 1.1.5
+
+Optimize iOS initialization callback
+
 ## 1.1.4
 
 Depends on Android SDK v10.5.0.1 and iOS SDK v9.8.0
