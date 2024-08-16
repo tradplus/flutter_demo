@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'tradplus_sdk'
-  s.version          = '1.1.4'
+  s.version          = '1.1.6'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 Tradplus SDK Flutter project.
@@ -16,7 +16,7 @@ Tradplus SDK Flutter project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '10.0'
+  s.platform = :ios, '12.0'
   
   s.frameworks = 'NetworkExtension','DeviceCheck'
 
@@ -30,106 +30,112 @@ Tradplus SDK Flutter project.
   
   s.resources = ['TradPlusFrameworks/**/*.bundle',"Assets/**/*"]
 
-    s.dependency 'TradPlusAdSDK', '9.8.0'
-    s.dependency 'TradPlusAdSDK/TPCrossAdapter', '9.8.0'
-    #Meta
-    s.dependency 'TradPlusAdSDK/FacebookAdapter', '9.8.0'
-    s.dependency 'FBAudienceNetwork','6.14.0'
-    #Admob
-    s.dependency 'TradPlusAdSDK/AdMobAdapter', '9.8.0'
-    s.dependency 'Google-Mobile-Ads-SDK','10.9.0'
-    #UnityAds
-    s.dependency 'TradPlusAdSDK/UnityAdapter', '9.8.0'
-    s.dependency 'UnityAds','4.8.0'
-    #AppLovin
-    s.dependency 'TradPlusAdSDK/AppLovinAdapter', '9.8.0'
-    s.dependency 'AppLovinSDK','11.11.2'
-    #Tapjoy
-    s.dependency 'TradPlusAdSDK/TapjoyAdapter', '9.8.0'
-    s.dependency 'TapjoySDK','13.1.2'
-    #Liftoff
-    s.dependency 'TradPlusAdSDK/VungleAdapter', '9.8.0'
-    s.dependency 'VungleAds', '7.0.1'
-    #IronSource
-    s.dependency 'TradPlusAdSDK/IronSourceAdapter', '9.8.0'
-    s.dependency 'IronSourceSDK','7.4.0.0'
-    #AdColony
-    s.dependency 'TradPlusAdSDK/AdColonyAdapter', '9.8.0'
-    s.dependency 'AdColony','4.9.0'
-    #InMobi
-    s.dependency 'TradPlusAdSDK/InMobiAdapter', '9.8.0'
-    s.dependency 'InMobiSDK/Core' ,'10.1.4'
-    #Mintegral
-    s.dependency 'TradPlusAdSDK/MintegralAdapter', '9.8.0'
-    s.dependency 'MintegralAdSDK' ,'7.4.2'
-    s.dependency 'MintegralAdSDK/All','7.4.2'
-    #腾讯
-    s.dependency 'TradPlusAdSDK/GDTMobAdapter', '9.8.0'
-    s.dependency 'GDTMobSDK', '4.14.40'
-    #Pangle
-    s.dependency 'TradPlusAdSDK/PangleAdapter', '9.8.0'
-    s.dependency 'Ads-Global', '5.4.0.8'
-    #穿山甲
-    s.dependency 'TradPlusAdSDK/CSJAdapter', '9.8.0'
-    s.dependency 'Ads-CN', '5.5.0.6'
+#     s.dependency 'TradPlusAdSDK', '12.0.0'
+#     s.dependency 'TradPlusAdSDK/TPCrossAdapter', '12.0.0'
+#     #Meta
+#     s.dependency 'TradPlusAdSDK/FacebookAdapter', '12.0.0'
+#     s.dependency 'FBAudienceNetwork','6.15.1'
+#     #GoogleAds
+#     s.dependency 'TradPlusAdSDK/AdMobAdapter', '12.0.0'
+#     s.dependency 'Google-Mobile-Ads-SDK','11.7.0'
+#     #UnityAds
+#     s.dependency 'TradPlusAdSDK/UnityAdapter', '12.0.0'
+#     s.dependency 'UnityAds','4.12.1'
+#     #AppLovin
+#     s.dependency 'TradPlusAdSDK/AppLovinAdapter', '12.0.0'
+#     s.dependency 'AppLovinSDK','12.6.0'
+#     #Liftoff
+#     s.dependency 'TradPlusAdSDK/VungleAdapter', '12.0.0'
+#     s.dependency 'VungleAds', '7.4.0'
+#     #IronSource
+#     s.dependency 'TradPlusAdSDK/IronSourceAdapter', '12.0.0'
+#     s.dependency 'IronSourceSDK','8.2.0'
+#     #InMobi
+#     s.dependency 'TradPlusAdSDK/InMobiAdapter', '12.0.0'
+#     s.dependency 'InMobiSDK' ,'10.7.5'
+#     #Mintegral
+#     s.dependency 'TradPlusAdSDK/MintegralAdapter', '12.0.0'
+#     s.dependency 'MintegralAdSDK' ,'7.6.9'
+#     s.dependency 'MintegralAdSDK/All','7.6.9'
 #     #KuaiShou
-#     s.dependency 'TradPlusAdSDK/KuaiShouAdapter', '9.8.0'
-#     s.dependency 'KSAdSDK', '3.3.51.1'
+#     s.dependency 'TradPlusAdSDK/KuaiShouAdapter', '12.0.0'
+#     s.dependency 'KSAdSDK', '3.3.66.3'
 #     #Sigmob
-#     s.dependency 'TradPlusAdSDK/SigmobAdapter', '9.8.0'
-#     s.dependency 'SigmobAd-iOS', '4.9.3'
-#     #YouDao
-#     s.dependency 'TradPlusAdSDK/YouDaoAdapter', '9.8.0'
-#     s.dependency 'YDADSDK', '2.16.25'
+#     s.dependency 'TradPlusAdSDK/SigmobAdapter', '12.0.0'
+#     s.dependency 'SigmobAd-iOS', '4.15.0'
+#     #Tencent Ads
+#     s.dependency 'TradPlusAdSDK/GDTMobAdapter', '12.0.0'
+#     s.dependency 'GDTMobSDK', '4.14.90'
+#     #Pangle
+#     s.dependency 'TradPlusAdSDK/PangleAdapter', '12.0.0'
+#     s.dependency 'Ads-Global', '6.1.0.6'
 #     #Smaato
-#     s.dependency 'TradPlusAdSDK/SmaatoAdapter', '9.8.0'
-#     s.dependency 'smaato-ios-sdk', '22.3.0'
+#     s.dependency 'TradPlusAdSDK/SmaatoAdapter', '12.0.0'
+#     s.dependency 'smaato-ios-sdk', '22.8.4'
 #     #Maio
-#     s.dependency 'TradPlusAdSDK/MaioAdapter', '9.8.0'
-#     s.dependency 'MaioSDK', '1.6.3'
+#     s.dependency 'TradPlusAdSDK/MaioAdapter', '12.0.0'
+#     s.dependency 'MaioSDK-v2', '2.1.5'
 #     #MyTarget
-#     s.dependency 'TradPlusAdSDK/MyTargetAdapter', '9.8.0'
-#     s.dependency 'myTargetSDK', '5.19.0'
-#     #Kidoz
-#     s.dependency 'TradPlusAdSDK/KidozAdapter', '9.8.0'
-#     s.dependency 'TradPlusKidozSDK','8.9.3'
-#     #Klevin
-#     s.dependency 'TradPlusAdSDK/KlevinAdapter', '9.8.0'
-#     s.dependency 'KlevinAdSDK','2.11.0.215'
-#     #Start.io
-#     s.dependency 'TradPlusAdSDK/StartAppAdapter',  '9.8.0'
-#     s.dependency 'StartAppSDK','4.10.0'
+#     s.dependency 'TradPlusAdSDK/MyTargetAdapter', '12.0.0'
+#     s.dependency 'myTargetSDK', '5.21.5'
 #     #Chartboost
-#     s.dependency 'TradPlusAdSDK/ChartboostAdapter', '9.8.0'
-#     s.dependency 'ChartboostSDK','9.4.0'
+#     s.dependency 'TradPlusAdSDK/ChartboostAdapter', '12.0.0'
+#     s.dependency 'ChartboostSDK','9.7.0'
 #     #Fyber
-#     s.dependency 'TradPlusAdSDK/FyberAdapter', '9.8.0'
-#     s.dependency 'Fyber_Marketplace_SDK','8.2.4'
-#     #SuperAwesome
-#     s.dependency 'TradPlusAdSDK/SuperAwesomeAdapter', '9.8.0'
-#     s.dependency 'SuperAwesome','9.0.1'
+#     s.dependency 'TradPlusAdSDK/FyberAdapter', '12.0.0'
+#     s.dependency 'Fyber_Marketplace_SDK','8.3.1'
 #     #Ogury
-#     s.dependency 'TradPlusAdSDK/OguryAdapter', '9.8.0'
-#     s.dependency 'OgurySdk', '4.2.0'
+#     s.dependency 'TradPlusAdSDK/OguryAdapter', '12.0.0'
+#     s.dependency 'OgurySdk', '4.4.0'
 #     #Baidu
-#     s.dependency 'TradPlusAdSDK/BaiduAdapter', '9.8.0'
-#     s.dependency 'BaiduMobAdSDK','5.313'
+#     s.dependency 'TradPlusAdSDK/BaiduAdapter', '12.0.0'
+#     s.dependency 'BaiduMobAdSDK','5.360'
 #     #Verve
-#     s.dependency 'TradPlusAdSDK/VerveAdapter', '9.8.0'
-#     s.dependency 'HyBid','2.19.0'
+#     s.dependency 'TradPlusAdSDK/VerveAdapter', '12.0.0'
+#     s.dependency 'HyBid','3.0.3'
 #     #Yandex
-#     s.dependency 'TradPlusAdSDK/YandexAdapter', '9.8.0'
-#     s.dependency 'YandexMobileAds','5.9.1'
+#     s.dependency 'TradPlusAdSDK/YandexAdapter', '12.0.0'
+#     s.dependency 'YandexMobileAds','7.1.1'
 #     #Helium
-#     s.dependency 'TradPlusAdSDK/HeliumAdapter', '9.8.0'
-#     s.dependency 'ChartboostMediationSDK','4.4.0'
-#     s.dependency 'ChartboostMediationAdapterChartboost','4.9.4.0.0'
+#     s.dependency 'TradPlusAdSDK/HeliumAdapter', '12.0.0'
+#     s.dependency 'ChartboostMediationSDK','4.9.0.1'
+#     s.dependency 'ChartboostMediationAdapterChartboost','4.9.7.0.0'
+#     #CSJ
+#     s.dependency 'TradPlusAdSDK/CSJAdapter', '12.0.0'
+#     s.dependency 'Ads-CN', '6.2.1.6'
 #     #Bigo
-#     s.dependency 'TradPlusAdSDK/BigoAdapter', '9.8.0'
-#     s.dependency 'BigoADS','4.0.2'
-#     #ZMaticoo
-#     s.dependency 'TradPlusAdSDK/TPZMaticooAdapter', '9.8.0'
-#     s.dependency 'zMaticoo','1.2.3'
+#     s.dependency 'TradPlusAdSDK/BigoAdapter', '12.0.0'
+#     s.dependency 'BigoADS','4.3.0'
+#     #zMaticoo
+#     s.dependency 'TradPlusAdSDK/TPZMaticooAdapter', '12.0.0'
+#     s.dependency 'zMaticoo','1.4.0'
+#     #Beizi
+#     s.dependency 'TradPlusAdSDK/BeiziAdapter', '12.0.0'
+#     s.dependency 'BeiZiSDK-iOS/BeiZiSDK-iOS','4.90.4.8'
+#     #Amazon
+#     s.dependency 'TradPlusAdSDK/AmazonAdapter', '12.0.0'
+#     s.dependency 'AmazonPublisherServicesSDK','4.9.7'
+#     #TanX
+#     s.dependency 'TradPlusAdSDK/TanxAdapter', '12.0.0'
+#     s.dependency 'TradPlusTanXSDK','3.5.3'
+#     #KwaiAds
+#     s.dependency 'TradPlusAdSDK/KwaiAdsAdapter', '12.0.0'
+#     s.dependency 'TradPlusKwaiAdsSDK','1.0.8'
+#     #Tapjoy
+#     s.dependency 'TradPlusAdSDK/TapjoyAdapter', '12.0.0'
+#     s.dependency 'TapjoySDK','13.4.0'
+#     #AdColony
+#     s.dependency 'TradPlusAdSDK/AdColonyAdapter', '12.0.0'
+#     s.dependency 'AdColony','4.9.0'
+#      #Start.io
+#     s.dependency 'TradPlusAdSDK/StartAppAdapter',  '12.0.0'
+#     s.dependency 'StartAppSDK','4.10.0'
+#      #Kidoz
+#     s.dependency 'TradPlusAdSDK/KidozAdapter', '12.0.0'
+#     s.dependency 'TradPlusKidozSDK','8.9.3'
+#     #SuperAwesome
+#     s.dependency 'TradPlusAdSDK/SuperAwesomeAdapter', '12.0.0'
+#     s.dependency 'SuperAwesome','9.0.1'
 
   s.pod_target_xcconfig = { 'VALID_ARCHS' => 'x86_64 arm64' }
 end
