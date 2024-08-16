@@ -6,15 +6,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.tradplus.ads.base.Const;
 import com.tradplus.ads.base.bean.TPAdInfo;
-import com.tradplus.ads.base.common.TPDataManager;
-import com.tradplus.ads.base.common.TPDiskManager;
 import com.tradplus.ads.base.common.TPPrivacyManager;
 import com.tradplus.ads.base.common.TPTaskManager;
 import com.tradplus.ads.base.util.SegmentUtils;
-import com.tradplus.ads.base.util.TestDeviceUtil;
-import com.tradplus.ads.core.AdCacheManager;
 import com.tradplus.ads.core.GlobalImpressionManager;
 import com.tradplus.flutter.banner.TPBannerManager;
 import com.tradplus.flutter.banner.TPBannerViewFactory;
@@ -28,6 +23,8 @@ import com.tradplus.flutter.splash.TPSplashViewFactory;
 import com.tradplus.flutter.interactive.TPInteractiveManager;
 import com.tradplus.flutter.interactive.TPInterActiveViewFactory;
 import com.tradplus.meditaiton.utils.ImportSDKUtil;
+import com.tradplus.flutter.TPUtils;
+import com.tradplus.flutter.UID2Manager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,6 +124,10 @@ public class TradPlusSdk {
                         setSettingDataParam(call, result);
                     }else if (call.method.equals("tp_openTradPlusTool")) {
                         openTradPlusTool(call, result);
+                    }else if (call.method.equals("uid2_start")) {
+                        UID2Manager.getInstance().onMethodCall(call, result);
+                    }else if (call.method.equals("uid2_reset")) {
+                        UID2Manager.getInstance().onMethodCall(call, result);
                     } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
@@ -386,7 +387,6 @@ public class TradPlusSdk {
         }catch (Throwable throwable){
             throwable.printStackTrace();
         }
-
 
     }
 }

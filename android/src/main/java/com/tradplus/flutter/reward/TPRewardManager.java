@@ -15,6 +15,7 @@ import com.tradplus.ads.open.reward.RewardAdListener;
 import com.tradplus.ads.open.reward.TPReward;
 import com.tradplus.flutter.TPUtils;
 import com.tradplus.flutter.TradPlusSdk;
+import com.tradplus.ads.base.common.TPTaskManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,9 +96,9 @@ public class TPRewardManager {
 
 
             mTPReward.put(adUnitId, tpReward);
-            tpReward.setAdListener(new TPRewardManager.TPRewardAdListener(adUnitId));
-            tpReward.setAllAdLoadListener(new TPRewardManager.TPRewardAllAdListener(adUnitId));
-            tpReward.setDownloadListener(new TPRewardManager.TPRewardDownloadListener(adUnitId));
+            tpReward.setAdListener(new TPRewardAdListener(adUnitId));
+            tpReward.setAllAdLoadListener(new TPRewardAllAdListener(adUnitId));
+            tpReward.setDownloadListener(new TPRewardDownloadListener(adUnitId));
             tpReward.setRewardAdExListener(new TPRewardExdListener(adUnitId));
             Log.v("TradPlus", "createReward adUnitId:" + adUnitId);
 
@@ -341,9 +342,14 @@ public class TPRewardManager {
         @Override
         public void onAdIsLoading(String s) {
             Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
-            final Map<String, Object> paramsMap = new HashMap<>();
-            paramsMap.put("adUnitID", mAdUnitId);
-            TradPlusSdk.getInstance().sendCallBackToFlutter("rewardVideo_isLoading", paramsMap);
+            TPTaskManager.getInstance().runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    final Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("adUnitID", mAdUnitId);
+                    TradPlusSdk.getInstance().sendCallBackToFlutter("rewardVideo_isLoading", paramsMap);
+                }
+            });
         }
     }
     private class TPRewardAdListener implements RewardAdListener {

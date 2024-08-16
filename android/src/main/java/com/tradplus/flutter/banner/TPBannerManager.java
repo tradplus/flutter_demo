@@ -20,6 +20,7 @@ import com.tradplus.ads.open.banner.TPBanner;
 import com.tradplus.ads.open.nativead.TPNativeAdRender;
 import com.tradplus.flutter.TPUtils;
 import com.tradplus.flutter.TradPlusSdk;
+import com.tradplus.ads.base.common.TPTaskManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -92,9 +93,9 @@ public class TPBannerManager {
             tpBanner = new TPBanner(TradPlusSdk.getInstance().getActivity());
             mTPBanners.put(adUnitId, tpBanner);
             tpBanner.closeAutoShow();
-            tpBanner.setAdListener(new TPBannerManager.TPBannerAdListener(adUnitId));
-            tpBanner.setAllAdLoadListener(new TPBannerManager.TPBannerAllAdListener(adUnitId));
-            tpBanner.setDownloadListener(new TPBannerManager.TPBannerDownloadListener(adUnitId));
+            tpBanner.setAdListener(new TPBannerAdListener(adUnitId));
+            tpBanner.setAllAdLoadListener(new TPBannerAllAdListener(adUnitId));
+            tpBanner.setDownloadListener(new TPBannerDownloadListener(adUnitId));
             Log.v("TradPlus", "createBanner adUnitId:" + adUnitId);
 
             // 只需要设置一次的在这里设置
@@ -379,9 +380,15 @@ public class TPBannerManager {
         @Override
         public void onAdIsLoading(String s) {
             Log.v("TradPlusSdk", "onAdIsLoading unitid=" + mAdUnitId + "=======================");
-            final Map<String, Object> paramsMap = new HashMap<>();
-            paramsMap.put("adUnitID", mAdUnitId);
-            TradPlusSdk.getInstance().sendCallBackToFlutter("banner_isLoading", paramsMap);
+            TPTaskManager.getInstance().runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    final Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("adUnitID", mAdUnitId);
+                    TradPlusSdk.getInstance().sendCallBackToFlutter("banner_isLoading", paramsMap);
+                }
+            });
+
         }
     }
 
