@@ -1,4 +1,4 @@
-package android.src.main.java.com.tradplus.flutter.interactive;
+package com.tradplus.flutter.interactive;
 
 import  android.text.TextUtils;
 import android.util.Log;

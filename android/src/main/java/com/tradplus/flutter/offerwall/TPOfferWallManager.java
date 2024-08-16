@@ -102,8 +102,8 @@ public class TPOfferWallManager {
         if (tpOfferWall == null) {
             tpOfferWall = new TPOfferWall(TradPlusSdk.getInstance().getActivity(), adUnitId);
             mTPOfferWall.put(adUnitId, tpOfferWall);
-            tpOfferWall.setAdListener(new TPOfferWallAdListener(adUnitId));
-            tpOfferWall.setAllAdLoadListener(new TPOfferWallAllAdListener(adUnitId));
+            tpOfferWall.setAdListener(new TPOfferWallManager.TPOfferWallAdListener(adUnitId));
+            tpOfferWall.setAllAdLoadListener(new TPOfferWallManager.TPOfferWallAllAdListener(adUnitId));
             tpOfferWall.setOffWallBalanceListener(new TPOfferWallBalanceAdListener(adUnitId));
             Log.v("TradPlus", "createOfferWall adUnitId:" + adUnitId);
 
