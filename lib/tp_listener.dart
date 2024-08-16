@@ -1,12 +1,9 @@
-
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 import 'package:flutter/services.dart';
 
-final TPListenerManager = TPListenerCenter();
+final tpListenerManager = TPListenerCenter();
 
-class TPListenerCenter
-{
-
+class TPListenerCenter {
   TPInterActiveAdListener? interActiveAdListener;
   final Map interActiveAdListenerMap = {};
 
@@ -30,257 +27,211 @@ class TPListenerCenter
 
   TPInitListener? initListener;
 
+  TTDUID2Listener? uid2Listener;
+
   TPGlobalAdImpressionListener? globalAdImpressionListener;
 
   TPListenerCenter() {
-    TradplusSdk.channel.setMethodCallHandler((MethodCall call) async{
+    TradplusSdk.channel.setMethodCallHandler((MethodCall call) async {
       String method = call.method;
-      if(method == 'tp_globalAdImpression')
-      {
+      if (method == 'tp_globalAdImpression') {
         globalAdImpressionCallBack(call);
-      }
-      else if(method.startsWith("tp_"))//SDK相关
-      {
+      } else if (method.startsWith("uid2_")) {
+        uid2CallBack(call);
+      } else if (method.startsWith("tp_")) {//SDK相关
         tpCallBack(call);
-      }
-      else if(method.startsWith("native_"))
-      {
+      } else if (method.startsWith("native_")) {
         nativeCallBack(call);
-      }
-      else if(method.startsWith("interstitial_"))
-      {
+      } else if (method.startsWith("interstitial_")) {
         interstitialCallBack(call);
-      }
-      else if(method.startsWith("rewardVideo_"))
-      {
+      } else if (method.startsWith("rewardVideo_")) {
         rewardVideoCallBack(call);
-      }
-      else if(method.startsWith("banner_"))
-      {
+      } else if (method.startsWith("banner_")) {
         bannerCallBack(call);
-      }
-      else if(method.startsWith("splash_"))
-      {
+      } else if (method.startsWith("splash_")) {
         splashCallBack(call);
-      }
-      else if(method.startsWith("offerwall_"))
-      {
+      } else if (method.startsWith("offerwall_")) {
         offerwallCallBack(call);
-      }
-      else if(method.startsWith("interactive_"))
-      {
+      } else if (method.startsWith("interactive_")) {
         interActiveCallBack(call);
-      }
-      else{
+      } else {
         print("unkown method");
       }
     });
   }
 
-  globalAdImpressionCallBack(MethodCall call)
-  {
+  globalAdImpressionCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
-    if(globalAdImpressionListener == null)
-    {
+    if (globalAdImpressionListener == null) {
       print("not set globalAdImpressionListener");
       return;
     }
-    TPSDKManager.globalAdImpressionCallback(globalAdImpressionListener!, method, arguments);
+    tpSDKManager.globalAdImpressionCallback(
+        globalAdImpressionListener!, method, arguments);
   }
 
-  tpCallBack(MethodCall call)
-  {
+  tpCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
-    if(initListener == null)
-    {
+    if (initListener == null) {
       print("not set initListener");
       return;
     }
-    TPSDKManager.callback(initListener!, method, arguments);
+    tpSDKManager.callback(initListener!, method, arguments);
   }
 
-  offerwallCallBack(MethodCall call)
-  {
+  uid2CallBack(MethodCall call) {
+    String method = call.method;
+    var arguments = call.arguments;
+    if (uid2Listener == null) {
+      print("not set initListener");
+      return;
+    }
+    ttdUID2Manager.callback(uid2Listener!, method, arguments);
+  }
+
+  offerwallCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPOfferwallAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && offerwallAdListenerMap.containsKey(adUnitId))
-    {
+    if (adUnitId.isNotEmpty && offerwallAdListenerMap.containsKey(adUnitId)) {
       callBackListener = offerwallAdListenerMap[adUnitId];
-    }
-    else
-    {
+    } else {
       callBackListener = offerwallAdListener;
     }
-    if(callBackListener == null)
-    {
+    if (callBackListener == null) {
       print("not any offerwallAdListener");
       return;
     }
-    TPOfferWallManager.callback(callBackListener,adUnitId, method, arguments);
+    tpOfferWallManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
-  splashCallBack(MethodCall call)
-  {
+  splashCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPSplashAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && splashAdListenerMap.containsKey(adUnitId))
-    {
+    if (adUnitId.isNotEmpty && splashAdListenerMap.containsKey(adUnitId)) {
       callBackListener = splashAdListenerMap[adUnitId];
-    }
-    else
-    {
+    } else {
       callBackListener = splashAdListener;
     }
-    if(callBackListener == null)
-    {
+    if (callBackListener == null) {
       print("not any splashAdListener");
       return;
     }
-    TPSplashManager.callback(callBackListener,adUnitId, method, arguments);
+    tpSplashManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
-  bannerCallBack(MethodCall call)
-  {
+  bannerCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPBannerAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && bannerAdListenerMap.containsKey(adUnitId))
-    {
+    if (adUnitId.isNotEmpty && bannerAdListenerMap.containsKey(adUnitId)) {
       callBackListener = bannerAdListenerMap[adUnitId];
-    }
-    else
-    {
+    } else {
       callBackListener = bannerAdListener;
     }
-    if(callBackListener == null)
-    {
+    if (callBackListener == null) {
       print("not any bannerAdListener");
       return;
     }
-    TPBannerManager.callback(callBackListener,adUnitId, method, arguments);
+    tpBannerManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
-  interActiveCallBack(MethodCall call)
-  {
+  interActiveCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPInterActiveAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && interActiveAdListenerMap.containsKey(adUnitId))
-    {
+    if (adUnitId.isNotEmpty && interActiveAdListenerMap.containsKey(adUnitId)) {
       callBackListener = interActiveAdListenerMap[adUnitId];
-    }
-    else
-    {
+    } else {
       callBackListener = interActiveAdListener;
     }
-    if(callBackListener == null)
-    {
+    if (callBackListener == null) {
       print("not anyinterActiveAdListener");
       return;
     }
-    TPInteractiveManager.callback(callBackListener,adUnitId, method, arguments);
+    tpInteractiveManager.callback(
+        callBackListener, adUnitId, method, arguments);
   }
 
-  rewardVideoCallBack(MethodCall call)
-  {
+  rewardVideoCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPRewardVideoAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && rewardVideoAdListenerMap.containsKey(adUnitId))
-    {
+    if (adUnitId.isNotEmpty && rewardVideoAdListenerMap.containsKey(adUnitId)) {
       callBackListener = rewardVideoAdListenerMap[adUnitId];
-    }
-    else
-    {
+    } else {
       callBackListener = rewardVideoAdListener;
     }
-    if(callBackListener == null)
-    {
+    if (callBackListener == null) {
       print("not any rewardVideoAdListener");
       return;
     }
-    TPRewardVideoManager.callback(callBackListener,adUnitId, method, arguments);
+    tpRewardVideoManager.callback(
+        callBackListener, adUnitId, method, arguments);
   }
 
-  interstitialCallBack(MethodCall call)
-  {
+  interstitialCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPInterstitialAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && interstitialAdListenerMap.containsKey(adUnitId))
-    {
+    if (adUnitId.isNotEmpty &&
+        interstitialAdListenerMap.containsKey(adUnitId)) {
       callBackListener = interstitialAdListenerMap[adUnitId];
-    }
-    else
-    {
+    } else {
       callBackListener = interstitialAdListener;
     }
-    if(callBackListener == null)
-    {
+    if (callBackListener == null) {
       print("not any interstitialAdListener");
       return;
     }
-    TPInterstitialManager.callback(callBackListener,adUnitId, method, arguments);
+    tpInterstitialManager.callback(
+        callBackListener, adUnitId, method, arguments);
   }
 
-  nativeCallBack(MethodCall call)
-  {
+  nativeCallBack(MethodCall call) {
     String method = call.method;
     var arguments = call.arguments;
     String adUnitId = "";
-    if(arguments.containsKey("adUnitID"))
-    {
+    if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
     }
     TPNativeAdListener? callBackListener;
-    if(adUnitId.isNotEmpty && nativeAdListenerMap.containsKey(adUnitId))
-    {
-       callBackListener = nativeAdListenerMap[adUnitId];
+    if (adUnitId.isNotEmpty && nativeAdListenerMap.containsKey(adUnitId)) {
+      callBackListener = nativeAdListenerMap[adUnitId];
+    } else {
+      callBackListener = nativeAdListener;
     }
-    else
-    {
-        callBackListener = nativeAdListener;
+    if (callBackListener == null) {
+      print("not any nativeAdListener");
+      return;
     }
-    if(callBackListener == null)
-    {
-        print("not any nativeAdListener");
-        return;
-    }
-    TPNativeManager.callback(callBackListener,adUnitId, method, arguments);
+    tpNativeManager.callback(callBackListener, adUnitId, method, arguments);
   }
-
 }

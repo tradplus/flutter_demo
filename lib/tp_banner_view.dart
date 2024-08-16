@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TPBannerViewWidget extends StatefulWidget {
-  TPBannerViewWidget(this.adUnitId,{Key? key,this.className = ""});
+  TPBannerViewWidget(this.adUnitId, {Key? key, this.className = ""});
 
-  String adUnitId;
+  final String adUnitId;
   final String? className;
 
   @override
@@ -23,7 +23,7 @@ class TPBannerViewWidgetState extends State<TPBannerViewWidget> {
         viewType: 'tp_banner_view',
         creationParams: <String, dynamic>{
           "adUnitId": widget.adUnitId,
-          "layoutName":widget.className
+          "layoutName": widget.className
         },
         creationParamsCodec: const StandardMessageCodec(),
       );
@@ -33,7 +33,7 @@ class TPBannerViewWidgetState extends State<TPBannerViewWidget> {
         viewType: 'tp_banner_view',
         creationParams: {
           "adUnitId": widget.adUnitId,
-          "className":widget.className
+          "className": widget.className
         },
         creationParamsCodec: const StandardMessageCodec(),
       );

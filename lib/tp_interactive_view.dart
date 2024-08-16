@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TPInterActiveViewWidget extends StatefulWidget {
-  TPInterActiveViewWidget(this.adUnitId,{Key? key});
+  TPInterActiveViewWidget(this.adUnitId, {Key? key});
 
-  String adUnitId;
+  final String adUnitId;
 
   @override
   State<StatefulWidget> createState() {
