@@ -15,7 +15,7 @@ export 'package:tradplus_sdk/ttd_uid2.dart';
 import 'package:tradplus_sdk/tp_listener.dart';
 import 'package:flutter/services.dart';
 
-final tpSDKManager = TradplusSdk();
+final TPSDKManager = TradplusSdk();
 
 class TradplusSdk {
   static MethodChannel channel = const MethodChannel('tradplus_sdk');
@@ -55,12 +55,12 @@ class TradplusSdk {
 
   ///设置初始化监听
   setInitListener(TPInitListener listener) {
-    tpListenerManager.initListener = listener;
+    TPListenerManager.initListener = listener;
   }
 
   setGlobalAdImpressionListener(TPGlobalAdImpressionListener listener) {
     TradplusSdk.channel.invokeMethod('tp_addGlobalAdImpressionListener');
-    tpListenerManager.globalAdImpressionListener = listener;
+    TPListenerManager.globalAdImpressionListener = listener;
   }
 
   ///获取 TradplusSDK 版本号

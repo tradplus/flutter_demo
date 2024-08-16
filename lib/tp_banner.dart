@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpBannerManager = TPBanner();
+final TPBannerManager = TPBanner();
 
 class TPBanner {
   ///构建ExtraMap：height 高度，width 宽度，customMap 流量分组等自定义数据，sceneId 场景ID
@@ -80,9 +80,9 @@ class TPBanner {
   ///设置广告Listener：adUnitId 设置后只返回指定广告位相关回调（可选）
   setBannerListener(TPBannerAdListener listener, {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.bannerAdListenerMap[adUnitId] = listener;
+      TPListenerManager.bannerAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.bannerAdListener = listener;
+      TPListenerManager.bannerAdListener = listener;
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpSplashManager = TPSplash();
+final TPSplashManager = TPSplash();
 
 class TPSplash {
   ///构建ExtraMap： customMap 流量分组等自定义数据
@@ -71,9 +71,9 @@ class TPSplash {
   ///设置广告Listener：adUnitId 设置后只返回指定广告位相关回调（可选）
   setSplashListener(TPSplashAdListener listener, {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.splashAdListenerMap[adUnitId] = listener;
+      TPListenerManager.splashAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.splashAdListener = listener;
+      TPListenerManager.splashAdListener = listener;
     }
   }
 

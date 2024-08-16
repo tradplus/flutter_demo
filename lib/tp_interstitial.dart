@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpInterstitialManager = TPInterstitial();
+final TPInterstitialManager = TPInterstitial();
 
 class TPInterstitial {
   ///构建ExtraMap：isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
@@ -72,9 +72,9 @@ class TPInterstitial {
   setInterstitialListener(TPInterstitialAdListener listener,
       {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.interstitialAdListenerMap[adUnitId] = listener;
+      TPListenerManager.interstitialAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.interstitialAdListener = listener;
+      TPListenerManager.interstitialAdListener = listener;
     }
   }
 

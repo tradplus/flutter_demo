@@ -1,7 +1,7 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 import 'package:flutter/services.dart';
 
-final tpListenerManager = TPListenerCenter();
+final TPListenerManager = TPListenerCenter();
 
 class TPListenerCenter {
   TPInterActiveAdListener? interActiveAdListener;
@@ -67,7 +67,7 @@ class TPListenerCenter {
       print("not set globalAdImpressionListener");
       return;
     }
-    tpSDKManager.globalAdImpressionCallback(
+    TPSDKManager.globalAdImpressionCallback(
         globalAdImpressionListener!, method, arguments);
   }
 
@@ -78,7 +78,7 @@ class TPListenerCenter {
       print("not set initListener");
       return;
     }
-    tpSDKManager.callback(initListener!, method, arguments);
+    TPSDKManager.callback(initListener!, method, arguments);
   }
 
   uid2CallBack(MethodCall call) {
@@ -108,7 +108,7 @@ class TPListenerCenter {
       print("not any offerwallAdListener");
       return;
     }
-    tpOfferWallManager.callback(callBackListener, adUnitId, method, arguments);
+    TPOfferWallManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
   splashCallBack(MethodCall call) {
@@ -128,7 +128,7 @@ class TPListenerCenter {
       print("not any splashAdListener");
       return;
     }
-    tpSplashManager.callback(callBackListener, adUnitId, method, arguments);
+    TPSplashManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
   bannerCallBack(MethodCall call) {
@@ -148,7 +148,7 @@ class TPListenerCenter {
       print("not any bannerAdListener");
       return;
     }
-    tpBannerManager.callback(callBackListener, adUnitId, method, arguments);
+    TPBannerManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
   interActiveCallBack(MethodCall call) {
@@ -168,7 +168,7 @@ class TPListenerCenter {
       print("not anyinterActiveAdListener");
       return;
     }
-    tpInteractiveManager.callback(
+    TPInteractiveManager.callback(
         callBackListener, adUnitId, method, arguments);
   }
 
@@ -189,7 +189,7 @@ class TPListenerCenter {
       print("not any rewardVideoAdListener");
       return;
     }
-    tpRewardVideoManager.callback(
+    TPRewardVideoManager.callback(
         callBackListener, adUnitId, method, arguments);
   }
 
@@ -211,7 +211,7 @@ class TPListenerCenter {
       print("not any interstitialAdListener");
       return;
     }
-    tpInterstitialManager.callback(
+    TPInterstitialManager.callback(
         callBackListener, adUnitId, method, arguments);
   }
 
@@ -232,6 +232,6 @@ class TPListenerCenter {
       print("not any nativeAdListener");
       return;
     }
-    tpNativeManager.callback(callBackListener, adUnitId, method, arguments);
+    TPNativeManager.callback(callBackListener, adUnitId, method, arguments);
   }
 }

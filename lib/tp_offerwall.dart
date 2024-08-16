@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpOfferWallManager = TPOfferwall();
+final TPOfferWallManager = TPOfferwall();
 
 class TPOfferwall {
   ///构建ExtraMap，isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
@@ -99,9 +99,9 @@ class TPOfferwall {
   ///设置广告Listener：adUnitId 设置后只返回指定广告位相关回调（可选）
   setOfferwallListener(TPOfferwallAdListener listener, {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.offerwallAdListenerMap[adUnitId] = listener;
+      TPListenerManager.offerwallAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.offerwallAdListener = listener;
+      TPListenerManager.offerwallAdListener = listener;
     }
   }
 

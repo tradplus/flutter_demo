@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpInteractiveManager = TPInterActive();
+final TPInteractiveManager = TPInterActive();
 
 class TPInterActive {
   Map createInterActiveExtraMap({
@@ -57,9 +57,9 @@ class TPInterActive {
   setInterActiveAdListener(TPInterActiveAdListener listener,
       {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.interActiveAdListenerMap[adUnitId] = listener;
+      TPListenerManager.interActiveAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.interActiveAdListener = listener;
+      TPListenerManager.interActiveAdListener = listener;
     }
   }
 

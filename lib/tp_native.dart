@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpNativeManager = TPNative();
+final TPNativeManager = TPNative();
 
 class TPNative {
   ///自定义模版参数
@@ -94,9 +94,9 @@ class TPNative {
   ///设置广告Listener：adUnitId 设置后只返回指定广告位相关回调（可选）
   setNativeAdListener(TPNativeAdListener listener, {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.nativeAdListenerMap[adUnitId] = listener;
+      TPListenerManager.nativeAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.nativeAdListener = listener;
+      TPListenerManager.nativeAdListener = listener;
     }
   }
 

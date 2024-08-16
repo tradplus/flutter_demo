@@ -83,7 +83,7 @@ class TTDUID2Manager {
   }
 
   setInitListener(TTDUID2Listener listener) {
-    tpListenerManager.uid2Listener = listener;
+    TPListenerManager.uid2Listener = listener;
   }
 
   callback(TTDUID2Listener listener, String method, Map arguments) {

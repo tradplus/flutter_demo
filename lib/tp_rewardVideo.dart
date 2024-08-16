@@ -1,6 +1,6 @@
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 
-final tpRewardVideoManager = TPRewardVideo();
+final TPRewardVideoManager = TPRewardVideo();
 
 class TPRewardVideo {
   ///构建ExtraMap：isAutoLoad 是否开启自动记载 默认开启, customMap 流量分组等自定义数据
@@ -83,9 +83,9 @@ class TPRewardVideo {
   setRewardVideoListener(TPRewardVideoAdListener listener,
       {String adUnitId = ""}) {
     if (adUnitId.isNotEmpty) {
-      tpListenerManager.rewardVideoAdListenerMap[adUnitId] = listener;
+      TPListenerManager.rewardVideoAdListenerMap[adUnitId] = listener;
     } else {
-      tpListenerManager.rewardVideoAdListener = listener;
+      TPListenerManager.rewardVideoAdListener = listener;
     }
   }
 
