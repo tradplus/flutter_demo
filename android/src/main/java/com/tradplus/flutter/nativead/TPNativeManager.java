@@ -1,4 +1,4 @@
-package android.src.main.java.com.tradplus.flutter.nativead;
+package com.tradplus.flutter.nativead;
 
 import android.util.Log;
 import android.view.ViewGroup;
