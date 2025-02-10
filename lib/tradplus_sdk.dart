@@ -11,7 +11,6 @@ export 'package:tradplus_sdk/tp_listener.dart';
 export 'package:tradplus_sdk/tp_interactive.dart';
 export 'package:tradplus_sdk/tp_interactive_view.dart';
 export 'package:tradplus_sdk/ttd_uid2.dart';
-
 import 'package:tradplus_sdk/tp_listener.dart';
 import 'package:flutter/services.dart';
 
@@ -30,6 +29,11 @@ class TradplusSdk {
   ///TradplusSDK 获取地区api
   Future<void> checkCurrentArea() async {
     TradplusSdk.channel.invokeMethod('tp_checkCurrentArea');
+  }
+
+  ///设置指定广告平台展示频限次数 可配合TPPlatformLimit 使用
+  Future<void> setPlatformLimit(List<Map> list) async {
+    TradplusSdk.channel.invokeMethod('tp_setPlatformLimit', list);
   }
 
   ///TradplusSDK 初始化 传入 appId
@@ -140,13 +144,6 @@ class TradplusSdk {
         .invokeMethod('tp_getCOPPAIsAgeRestrictedUser');
   }
 
-  ///TradplusSDK GDPR隐私授权页面
-  Future<void> showGDPRDialog({String? url}) async {
-    Map arguments = {};
-    arguments['gdprurl'] = url ?? "";
-    TradplusSdk.channel.invokeMethod('tp_showGDPRDialog', arguments);
-  }
-
   ///设置是否开启个性化推荐广告。 false 关闭 ，true 开启。SDK默认 true 开启
   Future<void> setOpenPersonalizedAd(bool open) async {
     Map arguments = {};
@@ -168,18 +165,6 @@ class TradplusSdk {
     arguments['appId'] = appId;
     return await TradplusSdk.channel
         .invokeMethod('tp_openTradPlusTool', arguments);
-  }
-
-  ///设置是否第一次show GDPR弹框, 仅支持 android
-  Future<void> setFirstShowGDPR(bool first) async {
-    Map arguments = {};
-    arguments['first'] = first;
-    TradplusSdk.channel.invokeMethod('tp_setFirstShowGDPR', arguments);
-  }
-
-  ///获取是否是第一次show GDPR弹框 true 是，false 否,仅支持 android
-  Future<bool> isFirstShowGDPR() async {
-    return await TradplusSdk.channel.invokeMethod('tp_isFirstShowGDPR');
   }
 
   ///清理指定广告位下的广告缓存，一般使用场景：用于切换用户后清除激励视频的缓存广告
@@ -212,18 +197,6 @@ class TradplusSdk {
         success = arguments["success"];
       }
       listener.initFinish!(success);
-    } else if (method == 'tp_dialogClosed') {
-      int level = 0;
-      if (arguments.containsKey("level")) {
-        level = arguments["level"];
-      }
-      listener.dialogClosed!(level);
-    } else if (method == 'tp_gdpr_success') {
-      String msg = arguments["msg"];
-      listener.gdprSuccess!(msg);
-    } else if (method == 'tp_gdpr_failed') {
-      String msg = arguments["msg"];
-      listener.gdprFailed!(msg);
     } else if (method == 'tp_currentarea_success') {
       bool isEu = arguments["iseu"];
       bool isCn = arguments["iscn"];
@@ -237,19 +210,10 @@ class TradplusSdk {
 
 class TPInitListener {
   final Function(bool success)? initFinish;
-  //iOS level固定为0，只做为关闭回调
-  final Function(int level)? dialogClosed;
-  //android 支持
-  final Function(String msg)? gdprSuccess;
-  //android 支持
-  final Function(String msg)? gdprFailed;
   final Function(bool isEu, bool isCn, bool isCa)? currentAreaSuccess;
   final Function? currentAreaFailed;
   const TPInitListener({
     this.initFinish,
-    this.dialogClosed,
-    this.gdprSuccess,
-    this.gdprFailed,
     this.currentAreaSuccess,
     this.currentAreaFailed,
   });
@@ -259,4 +223,76 @@ class TPGlobalAdImpressionListener {
   final Function(Map adInfo) onGlobalAdImpression;
 
   const TPGlobalAdImpressionListener({required this.onGlobalAdImpression});
+}
+
+class TPPlatformID
+{
+  static final int Meta = 1;
+  static final int Admob = 2;
+  static final int AdColony = 4;
+  static final int UnityAds = 5;
+  static final int Tapjoy = 6;
+  static final int Liftoff = 7;
+  static final int AppLovin = 9;
+  static final int IronSource = 10;
+  static final int Chartboost = 15;
+  static final int TencentAds = 16;//优量汇
+  static final int CSJ = 17;//穿山甲
+  static final int Mintegral = 18;
+  static final int Pangle = 19;
+  static final int KuaishouAds = 20;
+  static final int Sigmob = 21;
+  static final int Inmobi = 23;
+  static final int Fyber = 24;
+  static final int YouDao = 25;
+  static final int CrossPromotion = 27;//交叉推广
+  static final int StartIO = 28;
+  static final int Helium = 30;
+  static final int Maio = 31;
+  static final int Criteo = 32;
+  static final int MyTarget = 33;
+  static final int Ogury = 34;
+  static final int AppNext = 35;
+  static final int Kidoz = 37;
+  static final int Smaato = 38;
+  static final int ADX = 40;
+  static final int HuaWei = 41;
+  static final int Baidu = 43;//百度
+  static final int Klevin = 44;//游可赢
+  static final int A4G = 45;
+  static final int Mimo = 46;//米盟
+  static final int SuperAwesome = 47;
+  static final int GoogleAdManager = 48;
+  static final int Yandex = 50;
+  static final int Verve = 53;
+  static final int ZMaticoo = 55;
+  static final int ReklamUp = 56;
+  static final int Bigo = 57;
+  static final int Beizi = 58;
+  static final int TapTap = 63;
+  static final int ONEMOB = 60;
+  static final int PremiumAds = 64;
+  static final int GreedyGame = 67;
+  static final int AlgoriX = 68;
+  static final int BeesAds = 69;
+  static final int Amazon = 70;
+  static final int MangoX = 71;
+  static final int Sailoff = 72;
+  static final int TanX = 73;//阿里妈妈
+  static final int TaurusX = 74;
+  static final int KwaiAds = 75;
+  static final int Columbus = 76;
+  static final int YSO = 77;
+  static final int VivoAds = 78;
+  static final int OppoAds = 79;
+  static final int HONOR = 80;
+}
+
+class TPPlatformLimit
+{
+  var list = <Map>[];
+  setLimit(int platform,int num)
+  {
+    list.add({"platform":platform,"num":num});
+  }
 }

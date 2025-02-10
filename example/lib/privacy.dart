@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tradplus_sdk/tradplus_sdk.dart';
 import 'log.dart';
@@ -44,7 +43,7 @@ class PrivacyWidgetState extends State<PrivacyWidget> {
         ),
       ]),
       body: ListView.builder(
-          itemCount: 10,
+          itemCount: 9,
           itemExtent: 50,
           itemBuilder: (BuildContext context, int index) {
             return Row(
@@ -166,20 +165,6 @@ class PrivacyWidgetState extends State<PrivacyWidget> {
             ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.white70),
                 onPressed: () {
-                  showGDPRDialog();
-                },
-                child: const Text("showGDPRDialog",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
-          ];
-        }
-      case 8:
-        {
-          return [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
-                onPressed: () {
                   checkCurrentArea();
                 },
                 child: const Text("地区查询",
@@ -188,7 +173,7 @@ class PrivacyWidgetState extends State<PrivacyWidget> {
                     ))),
           ];
         }
-      case 9:
+      case 8:
         {
           return [
             ElevatedButton(
@@ -247,10 +232,6 @@ class PrivacyWidgetState extends State<PrivacyWidget> {
     }
   }
 
-  showGDPRDialog() async {
-    TPSDKManager.showGDPRDialog();
-  }
-
   updateState() async {
     version = await TPSDKManager.version();
     bool isEU = await TPSDKManager.isEUTraffic();
@@ -300,15 +281,7 @@ class PrivacyWidgetState extends State<PrivacyWidget> {
 
   addListener() {
     listener = TPInitListener(
-        //iOS level固定为0，只做为关闭回调
-        dialogClosed: (int level) {
-      print("dialogClosed");
-      updateState();
-    }, gdprSuccess: (String msg) {
-      print("sdk init finish");
-    }, gdprFailed: (String msg) {
-      print("sdk init finish");
-    }, currentAreaSuccess: (bool isEu, bool isCn, bool isCa) {
+        currentAreaSuccess: (bool isEu, bool isCn, bool isCa) {
       TPAdConfiguration.showLog(
           "sdk currentAreaSuccess isEu = $isEu,isCn = $isCn, isCa = $isCa");
       //在获取到相关地域配置后设置相关隐私API（GDPR，COPPA，CCPA等） 然后初始化SDK

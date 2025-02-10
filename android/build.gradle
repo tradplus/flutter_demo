@@ -41,12 +41,12 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "12.3.0.1"
+def TRADPLUS_VERSION = "13.4.0.1"
 
 dependencies {
     //TradPlus
     compileOnly "com.tradplusad:tradplus:${TRADPLUS_VERSION}"
     compileOnly 'com.quality-ad:uid2-adapter:1.0.0'
-    compileOnly 'com.tradplusad:tradplus-tool:1.1.0'
+    compileOnly 'com.tradplusad:tradplus-tool:1.1.2'
 
 }

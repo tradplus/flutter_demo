@@ -1,3 +1,7 @@
+## 1.1.8
+
+Support user-defined incoming display frequency limit
+
 ## 1.1.7
 
 Update TPNativeManager.java file

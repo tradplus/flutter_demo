@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.tradplus.ads.base.TPPlatform;
 import com.tradplus.ads.base.bean.TPAdInfo;
 import com.tradplus.ads.base.common.TPPrivacyManager;
 import com.tradplus.ads.base.common.TPTaskManager;
@@ -26,7 +27,11 @@ import com.tradplus.meditaiton.utils.ImportSDKUtil;
 import com.tradplus.flutter.TPUtils;
 import com.tradplus.flutter.UID2Manager;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -94,8 +99,6 @@ public class TradPlusSdk {
                         setCOPPAMethonCall(call, result);
                     } else if (call.method.equals("tp_getCOPPAIsAgeRestrictedUser")) {
                         result.success(isCOPPAAgeRestrictedUser());
-                    } else if (call.method.equals("tp_showGDPRDialog")) {
-                        showGDPRDialog(call, result);
                     } else if (call.method.equals("tp_setOpenPersonalizedAd")) {
                         setOpenPersonalizedAdMethonCall(call, result);
                     } else if (call.method.equals("tp_isOpenPersonalizedAd")) {
@@ -128,6 +131,8 @@ public class TradPlusSdk {
                         UID2Manager.getInstance().onMethodCall(call, result);
                     }else if (call.method.equals("uid2_reset")) {
                         UID2Manager.getInstance().onMethodCall(call, result);
+                    }else if (call.method.equals("tp_setPlatformLimit")) {
+                        setPlatformLimit(call, result);
                     } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
@@ -164,20 +169,28 @@ public class TradPlusSdk {
         }
     }
 
-    public void showGDPRDialog(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        String url = call.argument("gdprurl");
-
-        com.tradplus.ads.open.TradPlusSdk.showUploadDataNotifyDialog(getApplicationContext(), new com.tradplus.ads.open.TradPlusSdk.TPGDPRAuthListener() {
-            @Override
-            public void onAuthResult(int level) {
-                final Map<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("level", level);
-                TradPlusSdk.getInstance().sendCallBackToFlutter("tp_dialogClosed", paramsMap);
+    private void setPlatformLimit(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        List<Map<String, Integer>> mapList = call.arguments();
+        try {
+            // 以防开发者使用错误的版本，低版本没有TPPlatform和setPlatformLimit API
+            Log.i("tradplus", "Flutter setPlatformLimit mapList: " +mapList);
+            ArrayList<TPPlatform> platforms = new ArrayList<>();
+            if (mapList != null) {
+                for (int i = 0; i < mapList.size(); i++) {
+                    Map<String, Integer> platformList = mapList.get(i);
+                    if (platformList != null && !platformList.isEmpty()) {
+                        int platform = platformList.get("platform");
+                        int num = platformList.get("num");
+                        platforms.add(new TPPlatform(String.valueOf(platform),String.valueOf(num)));
+                    }
+                }
             }
-        }, url);
+            com.tradplus.ads.open.TradPlusSdk.setPlatformLimit(platforms.isEmpty() ? null : platforms);
+        }catch (Throwable e) {
+
+        }
 
     }
-
 
     public void setGlobalImpressionListener(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         com.tradplus.ads.open.TradPlusSdk.setGlobalImpressionListener(new GlobalImpressionManager.GlobalImpressionListener() {
@@ -280,33 +293,6 @@ public class TradPlusSdk {
 
             }
         });
-        com.tradplus.ads.open.TradPlusSdk.setGDPRListener(new com.tradplus.ads.open.TradPlusSdk.TPGDPRListener() {
-            @Override
-            public void success(String s) {
-                TPTaskManager.getInstance().runOnMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Map<String, Object> paramsMap = new HashMap<>();
-                        paramsMap.put("msg", s);
-                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_gdpr_success", paramsMap);
-                    }
-                });
-            }
-
-            @Override
-            public void failed(String s) {
-                TPTaskManager.getInstance().runOnMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        final Map<String, Object> paramsMap = new HashMap<>();
-                        paramsMap.put("msg", s);
-                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_gdpr_failed", paramsMap);
-                    }
-                });
-            }
-        });
-
         com.tradplus.ads.open.TradPlusSdk.initSdk(getApplicationContext(), appId);
 
     }

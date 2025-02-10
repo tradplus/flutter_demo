@@ -140,34 +140,13 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  canShowDialog(bool isEU) async {
-    if (isEU) {
-      bool isFirst = await TPSDKManager.isFirstShowGDPR();
-      if (!isFirst) {
-        TPSDKManager.showGDPRDialog();
-      }
-    }
-  }
-
   initTPSDK() {
     listener = TPInitListener(initFinish: (bool finish) {
       TPAdConfiguration.showLog("sdk init finish");
-    }, gdprSuccess: (String msg) {
-      TPAdConfiguration.showLog("gdprSuccess : msg = $msg");
-    }, gdprFailed: (String msg) {
-      TPAdConfiguration.showLog("gdprFailed : msg = $msg");
-    }, dialogClosed: (int level) {
-      TPAdConfiguration.showLog("dialogClosed");
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        TPSDKManager.setFirstShowGDPR(true);
-      }
     }, currentAreaSuccess: (bool isEu, bool isCn, bool isCa) {
       TPAdConfiguration.showLog(
           "sdk currentAreaSuccess isEu = $isEu,isCn = $isCn, isCa = $isCa");
       //在获取到相关地域配置后设置相关隐私API（GDPR，COPPA，CCPA等） 然后初始化SDK
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        canShowDialog(isEu);
-      }
     }, currentAreaFailed: () {
       TPAdConfiguration.showLog("currentAreaFailed");
       //一般为网络问题导致查询失败 不设置相关隐私API 直接初始化SDK

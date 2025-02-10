@@ -112,6 +112,10 @@
     {
         [self openTradPlusTool];
     }
+    else if([@"tp_setPlatformLimit" isEqualToString:call.method])
+    {
+        [self setPlatformLimit:call];
+    }
 }
 
 - (void) openTradPlusTool
@@ -135,6 +139,15 @@
 #pragma clang diagnostic pop
 }
 
+- (void)setPlatformLimit:(FlutterMethodCall*)call
+{
+    id list = call.arguments;
+    if(list != nil
+       && [list isKindOfClass:[NSArray class]])
+    {
+        [[TPFrequencyLimitService sharedInstance] setPlatformLimitList:list];
+    }
+}
 
 - (void)clearCacheWithCall:(FlutterMethodCall*)call
 {
