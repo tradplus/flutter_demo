@@ -1,4 +1,4 @@
-## 1.1.8
+## 1.1.9
 
 Support user-defined incoming display frequency limit
 

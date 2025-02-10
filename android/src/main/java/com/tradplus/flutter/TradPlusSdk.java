@@ -181,7 +181,7 @@ public class TradPlusSdk {
                     if (platformList != null && !platformList.isEmpty()) {
                         int platform = platformList.get("platform");
                         int num = platformList.get("num");
-                        platforms.add(new TPPlatform(String.valueOf(platform),String.valueOf(num)));
+                        platforms.add(new TPPlatform(String.valueOf(platform),num));
                     }
                 }
             }
