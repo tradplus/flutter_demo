@@ -116,6 +116,10 @@
     {
         [self setPlatformLimit:call];
     }
+    else if([@"tp_setCustomTestID" isEqualToString:call.method])
+    {
+        [self setCustomTestID:call];
+    }
 }
 
 - (void) openTradPlusTool
@@ -146,6 +150,15 @@
        && [list isKindOfClass:[NSArray class]])
     {
         [[TPFrequencyLimitService sharedInstance] setPlatformLimitList:list];
+    }
+}
+
+- (void)setCustomTestID:(FlutterMethodCall*)call
+{
+    id customTestID = call.arguments[@"customTestID"];
+    if(customTestID != nil && [customTestID isKindOfClass:[NSString class]])
+    {
+        [TradPlus sharedInstance].customTestID = customTestID;
     }
 }
 
