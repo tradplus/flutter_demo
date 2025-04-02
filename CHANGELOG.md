@@ -1,3 +1,7 @@
+## 1.2.0
+
+Support setting custom device id
+
 ## 1.1.9
 
 Support user-defined incoming display frequency limit

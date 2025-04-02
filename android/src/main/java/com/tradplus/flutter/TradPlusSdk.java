@@ -133,6 +133,8 @@ public class TradPlusSdk {
                         UID2Manager.getInstance().onMethodCall(call, result);
                     }else if (call.method.equals("tp_setPlatformLimit")) {
                         setPlatformLimit(call, result);
+                    } else if (call.method.equals("tp_setCustomTestID")) {
+                        setCustomTestID(call, result);
                     } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
@@ -187,6 +189,19 @@ public class TradPlusSdk {
             }
             com.tradplus.ads.open.TradPlusSdk.setPlatformLimit(platforms.isEmpty() ? null : platforms);
         }catch (Throwable e) {
+
+        }
+
+    }
+
+    private void setCustomTestID(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        try{
+            String customTestID = call.argument("customTestID");
+            if (!customTestID.isEmpty()) {
+                Log.i("tradplus", "Flutter setCustomTestID: " +customTestID);
+                com.tradplus.ads.open.TradPlusSdk.setTestCustomId(customTestID);
+            }
+        }catch(Throwable e) {
 
         }
 
