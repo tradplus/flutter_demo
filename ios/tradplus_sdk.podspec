@@ -34,33 +34,42 @@ Tradplus SDK Flutter project.
   
   s.resources = ['TradPlusFrameworks/**/*.bundle',"Assets/**/*"]
 
-#     s.dependency 'TradPlusAdSDK', '13.7.0'
-#     s.dependency 'TradPlusAdSDK/TPCrossAdapter', '13.7.0'
-#     #Meta
-#     s.dependency 'TradPlusAdSDK/FacebookAdapter', '13.7.0'
-#     s.dependency 'FBAudienceNetwork','6.17.1'
-#     #GoogleAds
-#     s.dependency 'TradPlusAdSDK/AdMobAdapter', '13.7.0'
-#     s.dependency 'Google-Mobile-Ads-SDK','12.3.0'
-#     #UnityAds
-#     s.dependency 'TradPlusAdSDK/UnityAdapter', '13.7.0'
-#     s.dependency 'UnityAds','4.14.2'
-#     #AppLovin
-#     s.dependency 'TradPlusAdSDK/AppLovinAdapter', '13.7.0'
-#     s.dependency 'AppLovinSDK','13.2.0'
-#     #Liftoff
-#     s.dependency 'TradPlusAdSDK/VungleAdapter', '13.7.0'
-#     s.dependency 'VungleAds', '7.4.5'
-#     #IronSource
-#     s.dependency 'TradPlusAdSDK/IronSourceAdapter', '13.7.0'
-#     s.dependency 'IronSourceSDK','8.8.0'
-#     #InMobi
-#     s.dependency 'TradPlusAdSDK/InMobiAdapter', '13.7.0'
-#     s.dependency 'InMobiSDK' ,'10.8.2'
-#     #Mintegral
-#     s.dependency 'TradPlusAdSDK/MintegralAdapter', '13.7.0'
-#     s.dependency 'MintegralAdSDK' ,'7.7.7'
-#     s.dependency 'MintegralAdSDK/All','7.7.7'
+    s.dependency 'TradPlusAdSDK', '13.7.0'
+    s.dependency 'TradPlusAdSDK/TPCrossAdapter', '13.7.0'
+    #Meta
+    s.dependency 'TradPlusAdSDK/FacebookAdapter', '13.7.0'
+    s.dependency 'FBAudienceNetwork','6.17.1'
+    #GoogleAds
+    s.dependency 'TradPlusAdSDK/AdMobAdapter', '13.7.0'
+    s.dependency 'Google-Mobile-Ads-SDK','12.3.0'
+    #UnityAds
+    s.dependency 'TradPlusAdSDK/UnityAdapter', '13.7.0'
+    s.dependency 'UnityAds','4.14.2'
+    #AppLovin
+    s.dependency 'TradPlusAdSDK/AppLovinAdapter', '13.7.0'
+    s.dependency 'AppLovinSDK','13.2.0'
+    #Liftoff
+    s.dependency 'TradPlusAdSDK/VungleAdapter', '13.7.0'
+    s.dependency 'VungleAds', '7.4.5'
+    #IronSource
+    s.dependency 'TradPlusAdSDK/IronSourceAdapter', '13.7.0'
+    s.dependency 'IronSourceSDK','8.8.0'
+    #InMobi
+    s.dependency 'TradPlusAdSDK/InMobiAdapter', '13.7.0'
+    s.dependency 'InMobiSDK' ,'10.8.2'
+    #Mintegral
+    s.dependency 'TradPlusAdSDK/MintegralAdapter', '13.7.0'
+    s.dependency 'MintegralAdSDK' ,'7.7.7'
+    s.dependency 'MintegralAdSDK/All','7.7.7'
+    #Pangle
+    s.dependency 'TradPlusAdSDK/PangleAdapter', '13.7.0'
+    s.dependency 'Ads-Global', '7.1.0.8'
+    #CSJ
+    s.dependency 'TradPlusAdSDK/CSJAdapter', '13.7.0'
+    s.dependency 'Ads-CN', '6.7.2.0'
+    #Tapjoy
+    s.dependency 'TradPlusAdSDK/TapjoyAdapter', '13.7.0'
+    s.dependency 'TapjoySDK','13.4.0'
 #     #KuaiShou
 #     s.dependency 'TradPlusAdSDK/KuaiShouAdapter', '13.7.0'
 #     s.dependency 'KSAdSDK', '3.3.75'
@@ -70,9 +79,6 @@ Tradplus SDK Flutter project.
 #     #Tencent Ads
 #     s.dependency 'TradPlusAdSDK/GDTMobAdapter', '13.7.0'
 #     s.dependency 'GDTMobSDK', '4.15.30'
-#     #Pangle
-#     s.dependency 'TradPlusAdSDK/PangleAdapter', '13.7.0'
-#     s.dependency 'Ads-Global', '7.1.0.8'
 #     #Smaato
 #     s.dependency 'TradPlusAdSDK/SmaatoAdapter', '13.7.0'
 #     s.dependency 'smaato-ios-sdk', '22.9.3'
@@ -104,9 +110,6 @@ Tradplus SDK Flutter project.
 #     s.dependency 'TradPlusAdSDK/HeliumAdapter', '13.7.0'
 #     s.dependency 'ChartboostMediationSDK','5.1.0'
 #     s.dependency 'ChartboostMediationAdapterChartboost','5.9.8.0.0'
-#     #CSJ
-#     s.dependency 'TradPlusAdSDK/CSJAdapter', '13.7.0'
-#     s.dependency 'Ads-CN', '6.7.2.0'
 #     #Bigo
 #     s.dependency 'TradPlusAdSDK/BigoAdapter', '13.7.0'
 #     s.dependency 'BigoADS','4.7.0'
@@ -131,9 +134,6 @@ Tradplus SDK Flutter project.
 #     #TaurusX
 #     s.dependency 'TradPlusAdSDK/TaurusXAdapter', '13.7.0'
 #     s.dependency 'TaurusxAdsSDK','1.3.1'
-#     #Tapjoy
-#     s.dependency 'TradPlusAdSDK/TapjoyAdapter', '13.7.0'
-#     s.dependency 'TapjoySDK','13.4.0'
 #     #AdColony
 #     s.dependency 'TradPlusAdSDK/AdColonyAdapter', '13.7.0'
 #     s.dependency 'AdColony','4.9.0'
