@@ -1,4 +1,4 @@
-  #
+#
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `s.dependency lib lint tradplus_sdk.podspec` to validate before publishing.
 #
@@ -16,9 +16,11 @@ Tradplus SDK Flutter project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '12.0'
+  s.platform = :ios, '13.0'
   
   s.frameworks = 'NetworkExtension','DeviceCheck','CoreML'
+
+  s.static_framework = true
 
   s.pod_target_xcconfig =   {'OTHER_LDFLAGS' => ['-lObjC']}
   
@@ -27,7 +29,7 @@ Tradplus SDK Flutter project.
   s.vendored_frameworks = 'TradPlusFrameworks/**/*.framework'
 
   s.static_framework = true
-  
+
   s.vendored_libraries = ['TradPlusFrameworks/GDTMob/GDTSDK/*.a','TradPlusFrameworks/Kidoz/KidozSDK/*.a','TradPlusFrameworks/YouDao/YDSDK/*.a',]
   
   s.resources = ['TradPlusFrameworks/**/*.bundle',"Assets/**/*"]
