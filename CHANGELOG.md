@@ -1,7 +1,6 @@
 ## 1.2.1
 
-1.支持 Pangel setPAConsent设置
-2.支持设置预配置
+Depends on Android SDK v14.2.0.1 and iOS SDK v13.7.0
 
 ## 1.2.0
 
