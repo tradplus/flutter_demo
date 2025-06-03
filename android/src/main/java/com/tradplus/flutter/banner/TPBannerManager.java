@@ -93,9 +93,9 @@ public class TPBannerManager {
             tpBanner = new TPBanner(TradPlusSdk.getInstance().getActivity());
             mTPBanners.put(adUnitId, tpBanner);
             tpBanner.closeAutoShow();
-            tpBanner.setAdListener(new TPBannerAdListener(adUnitId));
-            tpBanner.setAllAdLoadListener(new TPBannerAllAdListener(adUnitId));
-            tpBanner.setDownloadListener(new TPBannerDownloadListener(adUnitId));
+            tpBanner.setAdListener(new TPBannerManager.TPBannerAdListener(adUnitId));
+            tpBanner.setAllAdLoadListener(new TPBannerManager.TPBannerAllAdListener(adUnitId));
+            tpBanner.setDownloadListener(new TPBannerManager.TPBannerDownloadListener(adUnitId));
             Log.v("TradPlus", "createBanner adUnitId:" + adUnitId);
 
             // 只需要设置一次的在这里设置

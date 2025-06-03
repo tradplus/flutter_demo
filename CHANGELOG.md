@@ -1,3 +1,8 @@
+## 1.2.1
+
+1.支持 Pangel setPAConsent设置
+2.支持设置预配置
+
 ## 1.2.0
 
 Support setting custom device id

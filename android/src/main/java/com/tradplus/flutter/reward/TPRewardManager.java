@@ -96,9 +96,9 @@ public class TPRewardManager {
 
 
             mTPReward.put(adUnitId, tpReward);
-            tpReward.setAdListener(new TPRewardAdListener(adUnitId));
-            tpReward.setAllAdLoadListener(new TPRewardAllAdListener(adUnitId));
-            tpReward.setDownloadListener(new TPRewardDownloadListener(adUnitId));
+            tpReward.setAdListener(new TPRewardManager.TPRewardAdListener(adUnitId));
+            tpReward.setAllAdLoadListener(new TPRewardManager.TPRewardAllAdListener(adUnitId));
+            tpReward.setDownloadListener(new TPRewardManager.TPRewardDownloadListener(adUnitId));
             tpReward.setRewardAdExListener(new TPRewardExdListener(adUnitId));
             Log.v("TradPlus", "createReward adUnitId:" + adUnitId);
 

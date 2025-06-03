@@ -89,8 +89,8 @@ public class TPInteractiveManager {
         if (tpInterActive == null) {
             tpInterActive = new TPInterActive(TradPlusSdk.getInstance().getActivity(), adUnitId);
             mTPInterActives.put(adUnitId, tpInterActive);
-            tpInterActive.setAdListener(new TPInterActiveAdListener(adUnitId));
-            tpInterActive.setAllAdLoadListener(new TPInterActiveAllAdListener(adUnitId));
+            tpInterActive.setAdListener(new TPInteractiveManager.TPInterActiveAdListener(adUnitId));
+            tpInterActive.setAllAdLoadListener(new TPInteractiveManager.TPInterActiveAllAdListener(adUnitId));
             Log.v("TradPlus", "createInterActive adUnitId:" + adUnitId);
         }
 

@@ -93,9 +93,9 @@ public class TPSplashManager  {
         if (tpSplash == null) {
             tpSplash = new TPSplash(TradPlusSdk.getInstance().getActivity(), adUnitId);
             mTPSplashs.put(adUnitId, tpSplash);
-            tpSplash.setAdListener(new TPSplashAdListener(adUnitId));
-            tpSplash.setAllAdLoadListener(new TPSplashAllAdListener(adUnitId));
-            tpSplash.setDownloadListener(new TPSplashDownloadListener(adUnitId));
+            tpSplash.setAdListener(new TPSplashManager.TPSplashAdListener(adUnitId));
+            tpSplash.setAllAdLoadListener(new TPSplashManager.TPSplashAllAdListener(adUnitId));
+            tpSplash.setDownloadListener(new TPSplashManager.TPSplashDownloadListener(adUnitId));
             Log.v("TradPlus", "createSplash adUnitId:" + adUnitId);
 
             // 只需要设置一次的在这里设置

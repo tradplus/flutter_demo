@@ -19,6 +19,15 @@ final TPSDKManager = TradplusSdk();
 class TradplusSdk {
   static MethodChannel channel = const MethodChannel('tradplus_sdk');
 
+  /// TPPAGPAConsentType.Consent 填充
+  /// TPPAGPAConsentType.NoConsent 不填充
+  /// 设置 Pangle 是否填充广告 （PangleSDK V7.1+）
+  Future<void> setPAConsent(int consentType) async {
+    Map arguments = {};
+    arguments['consentType'] = consentType;
+    TradplusSdk.channel.invokeMethod('tp_setPAConsent', arguments);
+  }
+
   ///TradplusSDK 设置自定义测试ID 配置后台测试模式使用
   Future<void> setCustomTestID(String customTestID) async {
     Map arguments = {};
@@ -62,6 +71,14 @@ class TradplusSdk {
     Map arguments = {};
     arguments['setting'] = settingMap;
     TradplusSdk.channel.invokeMethod('tp_setSettingDataParam', arguments);
+  }
+
+  ///设置预配置 adUnitId 广告位ID config 从TP后台导出的预配置（base64格式）
+  Future<void> setDefaultConfig(String adUnitId,String config) async {
+    Map arguments = {};
+    arguments['adUnitId'] = adUnitId;
+    arguments['config'] = config;
+    TradplusSdk.channel.invokeMethod('tp_setDefaultConfig', arguments);
   }
 
   ///设置初始化监听
@@ -230,6 +247,12 @@ class TPGlobalAdImpressionListener {
   final Function(Map adInfo) onGlobalAdImpression;
 
   const TPGlobalAdImpressionListener({required this.onGlobalAdImpression});
+}
+
+class TPPAGPAConsentType
+{
+  static final int NoConsent = 0;
+  static final int Consent = 1;
 }
 
 class TPPlatformID

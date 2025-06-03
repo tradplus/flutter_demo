@@ -109,7 +109,7 @@ public class TradPlusSdk {
                         result.success(isFirstShowGDPR());
                     } else if (call.method.equals("tp_setCustomMap")) {
                         setSegmentMap(call, result);
-                    }else if (call.method.equals("tp_setMaxDatabaseSize")) {
+                    } else if (call.method.equals("tp_setMaxDatabaseSize")) {
                         setMaxDatabaseSize(call, result);
                     } else if (call.method.equals("tp_clearCache")) {
                         clearCache(call, result);
@@ -123,18 +123,22 @@ public class TradPlusSdk {
                         setOpenDelayLoadAds(call, result);
                     } else if (call.method.equals("tp_addGlobalAdImpressionListener")) {
                         setGlobalImpressionListener(call, result);
-                    }else if (call.method.equals("tp_setSettingDataParam")) {
+                    } else if (call.method.equals("tp_setSettingDataParam")) {
                         setSettingDataParam(call, result);
-                    }else if (call.method.equals("tp_openTradPlusTool")) {
+                    } else if (call.method.equals("tp_openTradPlusTool")) {
                         openTradPlusTool(call, result);
-                    }else if (call.method.equals("uid2_start")) {
+                    } else if (call.method.equals("uid2_start")) {
                         UID2Manager.getInstance().onMethodCall(call, result);
-                    }else if (call.method.equals("uid2_reset")) {
+                    } else if (call.method.equals("uid2_reset")) {
                         UID2Manager.getInstance().onMethodCall(call, result);
-                    }else if (call.method.equals("tp_setPlatformLimit")) {
+                    } else if (call.method.equals("tp_setPlatformLimit")) {
                         setPlatformLimit(call, result);
                     } else if (call.method.equals("tp_setCustomTestID")) {
                         setCustomTestID(call, result);
+                    } else if (call.method.equals("tp_setPAConsent")) {
+                        setPAConsent(call, result);
+                    } else if (call.method.equals("tp_setDefaultConfig")) {
+                        setDefaultConfig(call, result);
                     } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
@@ -163,6 +167,7 @@ public class TradPlusSdk {
             SegmentUtils.initCustomMap(customMap);
         }
     }
+
     private void setSettingDataParam(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Map<String, Object> settingMap = call.argument("setting");
         Log.i("tradplus", "settingMap = " + settingMap);
@@ -175,7 +180,7 @@ public class TradPlusSdk {
         List<Map<String, Integer>> mapList = call.arguments();
         try {
             // 以防开发者使用错误的版本，低版本没有TPPlatform和setPlatformLimit API
-            Log.i("tradplus", "Flutter setPlatformLimit mapList: " +mapList);
+            Log.i("tradplus", "Flutter setPlatformLimit mapList: " + mapList);
             ArrayList<TPPlatform> platforms = new ArrayList<>();
             if (mapList != null) {
                 for (int i = 0; i < mapList.size(); i++) {
@@ -183,25 +188,50 @@ public class TradPlusSdk {
                     if (platformList != null && !platformList.isEmpty()) {
                         int platform = platformList.get("platform");
                         int num = platformList.get("num");
-                        platforms.add(new TPPlatform(String.valueOf(platform),num));
+                        platforms.add(new TPPlatform(String.valueOf(platform), num));
                     }
                 }
             }
             com.tradplus.ads.open.TradPlusSdk.setPlatformLimit(platforms.isEmpty() ? null : platforms);
-        }catch (Throwable e) {
+        } catch (Throwable e) {
+
+        }
+
+    }
+
+    private void setPAConsent(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        try {
+            int consentType = call.argument("consentType");
+            Log.i("tradplus", "Flutter consentType: " + consentType);
+            com.tradplus.ads.open.TradPlusSdk.setPAConsent(consentType);
+        } catch (Throwable e) {
+
+        }
+
+    }
+
+    private void setDefaultConfig(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        try {
+            String adUnitId = call.argument("adUnitId");
+            String config = call.argument("config");
+            if (!adUnitId.isEmpty() && !config.isEmpty()) {
+                Log.i("tradplus", "Flutter setDefaultConfig adUnitId: " + adUnitId + ",config:"+config);
+                com.tradplus.ads.base.config.ConfigLoadManager.getInstance().setDefaultConfig(adUnitId,config);
+            }
+        } catch (Throwable e) {
 
         }
 
     }
 
     private void setCustomTestID(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        try{
+        try {
             String customTestID = call.argument("customTestID");
             if (!customTestID.isEmpty()) {
-                Log.i("tradplus", "Flutter setCustomTestID: " +customTestID);
+                Log.i("tradplus", "Flutter setCustomTestID: " + customTestID);
                 com.tradplus.ads.open.TradPlusSdk.setTestCustomId(customTestID);
             }
-        }catch(Throwable e) {
+        } catch (Throwable e) {
 
         }
 
@@ -379,13 +409,13 @@ public class TradPlusSdk {
         return mainAtivity.getApplicationContext();
     }
 
-    public void openTradPlusTool(@NonNull MethodCall call, @NonNull MethodChannel.Result result){
+    public void openTradPlusTool(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String appid = call.argument("appId");
 
-        try{
+        try {
             ImportSDKUtil.getInstance().showTestTools(getActivity(), appid);
 
-        }catch (Throwable throwable){
+        } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
 
