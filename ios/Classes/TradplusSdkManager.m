@@ -128,6 +128,11 @@
     {
         [self setDefaultConfig:call];
     }
+    else if([@"tp_setForbidNetworkIdList" isEqualToString:call.method])
+    {
+         [self setForbidNetworkIdList:call];
+    }
+
 }
 
 - (void) openTradPlusTool
@@ -149,6 +154,21 @@
         NSLog(@"****************");
     }
 #pragma clang diagnostic pop
+}
+- (void)setForbidNetworkIdList:(FlutterMethodCall*)call
+{
+    id list = call.arguments;
+    if(list != nil
+       && [list isKindOfClass:[NSArray class]])
+    {
+        NSMutableArray<NSNumber *> *numberArray = [NSMutableArray array];
+        for (NSString *string in list) {
+            NSNumber *number = @(string.integerValue);
+            [numberArray addObject:number];
+         }
+         NSLog(@"numberArray:%@",numberArray);
+        [TradPlus setForbidNetworkIdList:numberArray];
+    }
 }
 
 - (void)setDefaultConfig:(FlutterMethodCall*)call
