@@ -52,6 +52,11 @@ class TradplusSdk {
     TradplusSdk.channel.invokeMethod('tp_setPlatformLimit', list);
   }
 
+  ///设置屏蔽指定广告平台不请求广告
+  Future<void> setForbidNetworkIdList(List<String> list) async {
+    TradplusSdk.channel.invokeMethod('tp_setForbidNetworkIdList', list);
+  }
+
   ///TradplusSDK 初始化 传入 appId
   Future<void> init(String appId) async {
     Map arguments = {};

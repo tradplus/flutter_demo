@@ -133,7 +133,9 @@ public class TradPlusSdk {
                         UID2Manager.getInstance().onMethodCall(call, result);
                     } else if (call.method.equals("tp_setPlatformLimit")) {
                         setPlatformLimit(call, result);
-                    } else if (call.method.equals("tp_setCustomTestID")) {
+                    } else if (call.method.equals("tp_setForbidNetworkIdList")) {
+                        setForbidNetworkIdList(call, result);
+                    }else if (call.method.equals("tp_setCustomTestID")) {
                         setCustomTestID(call, result);
                     } else if (call.method.equals("tp_setPAConsent")) {
                         setPAConsent(call, result);
@@ -193,6 +195,19 @@ public class TradPlusSdk {
                 }
             }
             com.tradplus.ads.open.TradPlusSdk.setPlatformLimit(platforms.isEmpty() ? null : platforms);
+        } catch (Throwable e) {
+
+        }
+
+    }
+
+    private void setForbidNetworkIdList(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        List<String> mapList = call.arguments();
+        try {
+            Log.i("tradplus", "Flutter setForbidNetworkIdList mapList: " + mapList);
+            if (mapList != null && !mapList.isEmpty()) {
+                com.tradplus.ads.open.TradPlusSdk.setForbidNetworkIdList(mapList);
+            }
         } catch (Throwable e) {
 
         }

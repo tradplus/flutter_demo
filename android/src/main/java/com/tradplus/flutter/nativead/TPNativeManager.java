@@ -146,12 +146,13 @@ public class TPNativeManager {
         }
 
         TPCustomNativeAd nativeAd = tpNative.getNativeAd();
-        nativeAd.setCustomShowData(customAdInfo);
 
         if (nativeAd == null) {
             Log.v("TradPlusLog", "TPCustom Ad is null");
             return false;
         }
+
+        nativeAd.setCustomShowData(customAdInfo);
 
         nativeAd.showAd(viewContainer, layoutId, adSceneId);
         if (viewContainer.getChildCount() <= 0) {

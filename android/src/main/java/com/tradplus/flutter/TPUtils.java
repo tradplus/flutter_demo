@@ -10,22 +10,40 @@ import com.tradplus.ads.base.common.TPURLManager;
 import com.tradplus.ads.common.serialization.JSON;
 import com.tradplus.ads.common.serialization.TypeReference;
 
+import com.tradplus.ads.common.serialization.util.ParameterizedTypeImpl;
+import java.lang.reflect.Type;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class TPUtils {
     public static HashMap<String, String> tpAdInfoToMap(TPAdInfo tpAdInfo) {
-
-        HashMap<String, String> infoMap = null;
-        try{
-            infoMap = JSON.parseObject(JSON.toJSONString(tpAdInfo), new TypeReference<HashMap<String, String>>() {});
-
-        }catch (Exception e){
-
+        try {
+            Type type = new ParameterizedTypeImpl(
+                    new Type[]{String.class, String.class},
+                    null,
+                    HashMap.class
+            );
+            return JSON.parseObject(JSON.toJSONString(tpAdInfo), type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return infoMap;
     }
+
+
+//    public static HashMap<String, String> tpAdInfoToMap(TPAdInfo tpAdInfo) {
+//
+//        HashMap<String, String> infoMap = null;
+//        try{
+//            infoMap = JSON.parseObject(JSON.toJSONString(tpAdInfo), new TypeReference<HashMap<String, String>>() {});
+//
+//        }catch (Exception e){
+//
+//        }
+//
+//        return infoMap;
+//    }
 
     public static HashMap<String, Object> tpErrorToMap(TPAdError tpAdError) {
         HashMap<String, Object> infoMap = new HashMap<>();

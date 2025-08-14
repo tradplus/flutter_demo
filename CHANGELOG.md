@@ -1,3 +1,7 @@
+## 1.2.2
+
+SDK now supports importing ad blocking platforms
+
 ## 1.2.1
 
 Depends on Android SDK v14.2.0.1 and iOS SDK v13.7.0
