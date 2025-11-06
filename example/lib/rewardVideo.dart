@@ -44,7 +44,7 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       loadAd();
                     },
@@ -53,7 +53,7 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       checkAdReady();
                     },
@@ -62,7 +62,7 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       showAd();
                     },
@@ -71,7 +71,7 @@ class RewardVideoWidgetState extends State<RewardVideoWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       entryRewardAdScenario();
                     },

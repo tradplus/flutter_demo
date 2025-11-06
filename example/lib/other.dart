@@ -62,7 +62,7 @@ class OtherWidgetState extends State<OtherWidget>
           Container(
             margin: const EdgeInsets.only(left: 50),
             child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                 onPressed: (){
                   setAdCustomMap();
                 },
@@ -77,7 +77,7 @@ class OtherWidgetState extends State<OtherWidget>
         {
           return[
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white70),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                 onPressed: (){
                   clearCache();
                 },

@@ -38,7 +38,7 @@ class SplashWidgetState extends State<SplashWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         loadAd();
                       },
@@ -47,7 +47,7 @@ class SplashWidgetState extends State<SplashWidget> {
                             color: Colors.black,
                           ))),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         checkAdReady();
                       },
@@ -56,7 +56,7 @@ class SplashWidgetState extends State<SplashWidget> {
                             color: Colors.black,
                           ))),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         showAd();
                       },
@@ -65,7 +65,7 @@ class SplashWidgetState extends State<SplashWidget> {
                             color: Colors.black,
                           ))),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         changeClassName();
                       },

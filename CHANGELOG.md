@@ -1,3 +1,7 @@
+## 1.2.3
+
+Android supports multiple channel callbacks(flutter V3.35.0)
+
 ## 1.2.2
 
 SDK now supports importing ad blocking platforms

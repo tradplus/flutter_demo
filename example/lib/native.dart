@@ -53,7 +53,7 @@ class NativeWidgetState extends State<NativeWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       loadAd();
                     },
@@ -62,7 +62,7 @@ class NativeWidgetState extends State<NativeWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       showClassname();
                     },
@@ -71,7 +71,7 @@ class NativeWidgetState extends State<NativeWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       showExtraMap();
                     },
@@ -88,7 +88,7 @@ class NativeWidgetState extends State<NativeWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       checkAdReady();
                     },
@@ -97,7 +97,7 @@ class NativeWidgetState extends State<NativeWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       entryAdScenario();
                     },
@@ -106,7 +106,7 @@ class NativeWidgetState extends State<NativeWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       loadedCount();
                     },

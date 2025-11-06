@@ -18,6 +18,7 @@ final TPSDKManager = TradplusSdk();
 
 class TradplusSdk {
   static MethodChannel channel = const MethodChannel('tradplus_sdk');
+  static EventChannel eventChannel = const EventChannel('tradplus_sdk_events');
 
   /// TPPAGPAConsentType.Consent 填充
   /// TPPAGPAConsentType.NoConsent 不填充
@@ -208,6 +209,13 @@ class TradplusSdk {
     Map arguments = {};
     arguments['isOpen'] = isOpen;
     TradplusSdk.channel.invokeMethod('tp_setOpenDelayLoadAds', arguments);
+  }
+
+  ///TradplusSDK 开启Event通道回调 防止fcm
+  Future<void> setEventChannel(bool isOpen) async {
+    Map arguments = {};
+    arguments['isOpen'] = isOpen;
+    TradplusSdk.channel.invokeMethod('tp_setEventChannel', arguments);
   }
 
   globalAdImpressionCallback(

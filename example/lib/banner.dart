@@ -52,7 +52,7 @@ class BannerWidgetState extends State<BannerWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       loadAd();
                     },
@@ -61,7 +61,7 @@ class BannerWidgetState extends State<BannerWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       checkAdReady();
                     },
@@ -70,7 +70,7 @@ class BannerWidgetState extends State<BannerWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       showAd();
                     },
@@ -79,7 +79,7 @@ class BannerWidgetState extends State<BannerWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       entryAdScenario();
                     },
@@ -96,7 +96,7 @@ class BannerWidgetState extends State<BannerWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       changeClassName();
                     },
@@ -113,7 +113,7 @@ class BannerWidgetState extends State<BannerWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       googleURLIndex = 0;
                       infoString = "google 无URL";
@@ -124,7 +124,7 @@ class BannerWidgetState extends State<BannerWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       googleURLIndex = 1;
                       infoString = "google 单URL";
@@ -135,7 +135,7 @@ class BannerWidgetState extends State<BannerWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       googleURLIndex = 2;
                       infoString = "google 多URL";

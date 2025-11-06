@@ -45,7 +45,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       loadAd();
                     },
@@ -54,7 +54,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       checkAdReady();
                     },
@@ -63,7 +63,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       showAd();
                     },
@@ -72,7 +72,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       entryOfferWallAdScenario();
                     },
@@ -89,7 +89,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       setUserId();
                     },
@@ -98,7 +98,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       getCurrencyBalance();
                     },
@@ -107,7 +107,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       spendBalance();
                     },
@@ -116,7 +116,7 @@ class OfferWallWidgetState extends State<OfferWallWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       awardBalance();
                     },

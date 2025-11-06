@@ -32,37 +32,47 @@ class TPListenerCenter {
   TPGlobalAdImpressionListener? globalAdImpressionListener;
 
   TPListenerCenter() {
+    TradplusSdk.eventChannel.receiveBroadcastStream().listen((event) {
+      // 处理来自原生的事件
+      String method = event["method"];
+      Map data = event["data"];
+      print('Received event: $method,data=$data');
+      tpMethodCall(method, data);
+    });
     TradplusSdk.channel.setMethodCallHandler((MethodCall call) async {
       String method = call.method;
-      if (method == 'tp_globalAdImpression') {
-        globalAdImpressionCallBack(call);
-      } else if (method.startsWith("uid2_")) {
-        uid2CallBack(call);
-      } else if (method.startsWith("tp_")) {//SDK相关
-        tpCallBack(call);
-      } else if (method.startsWith("native_")) {
-        nativeCallBack(call);
-      } else if (method.startsWith("interstitial_")) {
-        interstitialCallBack(call);
-      } else if (method.startsWith("rewardVideo_")) {
-        rewardVideoCallBack(call);
-      } else if (method.startsWith("banner_")) {
-        bannerCallBack(call);
-      } else if (method.startsWith("splash_")) {
-        splashCallBack(call);
-      } else if (method.startsWith("offerwall_")) {
-        offerwallCallBack(call);
-      } else if (method.startsWith("interactive_")) {
-        interActiveCallBack(call);
-      } else {
-        print("unkown method");
-      }
+      tpMethodCall(method, call.arguments);
     });
   }
 
-  globalAdImpressionCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  tpMethodCall(String method, dynamic map) {
+    if (method == 'tp_globalAdImpression') {
+      globalAdImpressionCallBack(method, map);
+    } else if (method.startsWith("uid2_")) {
+      uid2CallBack(method, map);
+    } else if (method.startsWith("tp_")) {
+      //SDK相关
+      tpCallBack(method, map);
+    } else if (method.startsWith("native_")) {
+      nativeCallBack(method, map);
+    } else if (method.startsWith("interstitial_")) {
+      interstitialCallBack(method, map);
+    } else if (method.startsWith("rewardVideo_")) {
+      rewardVideoCallBack(method, map);
+    } else if (method.startsWith("banner_")) {
+      bannerCallBack(method, map);
+    } else if (method.startsWith("splash_")) {
+      splashCallBack(method, map);
+    } else if (method.startsWith("offerwall_")) {
+      offerwallCallBack(method, map);
+    } else if (method.startsWith("interactive_")) {
+      interActiveCallBack(method, map);
+    } else {
+      print("unkown method");
+    }
+  }
+
+  globalAdImpressionCallBack(String method, dynamic arguments) {
     if (globalAdImpressionListener == null) {
       print("not set globalAdImpressionListener");
       return;
@@ -71,9 +81,7 @@ class TPListenerCenter {
         globalAdImpressionListener!, method, arguments);
   }
 
-  tpCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  tpCallBack(String method, dynamic arguments) {
     if (initListener == null) {
       print("not set initListener");
       return;
@@ -81,9 +89,7 @@ class TPListenerCenter {
     TPSDKManager.callback(initListener!, method, arguments);
   }
 
-  uid2CallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  uid2CallBack(String method, dynamic arguments) {
     if (uid2Listener == null) {
       print("not set initListener");
       return;
@@ -91,9 +97,7 @@ class TPListenerCenter {
     ttdUID2Manager.callback(uid2Listener!, method, arguments);
   }
 
-  offerwallCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  offerwallCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
@@ -111,9 +115,7 @@ class TPListenerCenter {
     TPOfferWallManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
-  splashCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  splashCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
@@ -131,9 +133,7 @@ class TPListenerCenter {
     TPSplashManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
-  bannerCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  bannerCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
@@ -151,9 +151,7 @@ class TPListenerCenter {
     TPBannerManager.callback(callBackListener, adUnitId, method, arguments);
   }
 
-  interActiveCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  interActiveCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
@@ -172,9 +170,7 @@ class TPListenerCenter {
         callBackListener, adUnitId, method, arguments);
   }
 
-  rewardVideoCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  rewardVideoCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
@@ -193,9 +189,7 @@ class TPListenerCenter {
         callBackListener, adUnitId, method, arguments);
   }
 
-  interstitialCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  interstitialCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];
@@ -215,9 +209,7 @@ class TPListenerCenter {
         callBackListener, adUnitId, method, arguments);
   }
 
-  nativeCallBack(MethodCall call) {
-    String method = call.method;
-    var arguments = call.arguments;
+  nativeCallBack(String method, dynamic arguments) {
     String adUnitId = "";
     if (arguments.containsKey("adUnitID")) {
       adUnitId = arguments["adUnitID"];

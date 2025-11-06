@@ -49,7 +49,7 @@ class InterActiveWidgetState extends State<InterActiveWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       loadAd();
                     },
@@ -58,7 +58,7 @@ class InterActiveWidgetState extends State<InterActiveWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       checkAdReady();
                     },
@@ -67,7 +67,7 @@ class InterActiveWidgetState extends State<InterActiveWidget> {
                           color: Colors.black,
                         ))),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                     onPressed: () {
                       showAd();
                     },

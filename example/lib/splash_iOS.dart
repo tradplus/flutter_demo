@@ -50,7 +50,7 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         loadAd();
                       },
@@ -59,7 +59,7 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
                             color: Colors.black,
                           ))),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         checkAdReady();
                       },
@@ -68,7 +68,7 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
                             color: Colors.black,
                           ))),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         showAd();
                       },
@@ -77,7 +77,7 @@ class SplashIOSWidgetState extends State<SplashIOSWidget> {
                             color: Colors.black,
                           ))),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
                       onPressed: () {
                         changeClassName();
                       },

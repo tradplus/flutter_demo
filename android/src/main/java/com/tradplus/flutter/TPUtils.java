@@ -31,20 +31,6 @@ public class TPUtils {
         }
     }
 
-
-//    public static HashMap<String, String> tpAdInfoToMap(TPAdInfo tpAdInfo) {
-//
-//        HashMap<String, String> infoMap = null;
-//        try{
-//            infoMap = JSON.parseObject(JSON.toJSONString(tpAdInfo), new TypeReference<HashMap<String, String>>() {});
-//
-//        }catch (Exception e){
-//
-//        }
-//
-//        return infoMap;
-//    }
-
     public static HashMap<String, Object> tpErrorToMap(TPAdError tpAdError) {
         HashMap<String, Object> infoMap = new HashMap<>();
         try{
