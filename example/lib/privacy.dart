@@ -281,9 +281,9 @@ class PrivacyWidgetState extends State<PrivacyWidget> {
 
   addListener() {
     listener = TPInitListener(
-        currentAreaSuccess: (bool isEu, bool isCn, bool isCa) {
+        currentAreaSuccess: (bool isEu, bool isCn, bool isCa, bool isBr) {
       TPAdConfiguration.showLog(
-          "sdk currentAreaSuccess isEu = $isEu,isCn = $isCn, isCa = $isCa");
+          "sdk currentAreaSuccess isEu = $isEu,isCn = $isCn, isCa = $isCa, isBr = $isBr");
       //在获取到相关地域配置后设置相关隐私API（GDPR，COPPA，CCPA等） 然后初始化SDK
     }, currentAreaFailed: () {
       TPAdConfiguration.showLog("currentAreaFailed");

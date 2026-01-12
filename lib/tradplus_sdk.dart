@@ -238,7 +238,8 @@ class TradplusSdk {
       bool isEu = arguments["iseu"];
       bool isCn = arguments["iscn"];
       bool isCa = arguments["isca"];
-      listener.currentAreaSuccess!(isEu, isCn, isCa);
+      bool isBr = arguments["isBr"];
+      listener.currentAreaSuccess!(isEu, isCn, isCa, isBr);
     } else if (method == 'tp_currentarea_failed') {
       listener.currentAreaFailed!();
     }
@@ -247,7 +248,7 @@ class TradplusSdk {
 
 class TPInitListener {
   final Function(bool success)? initFinish;
-  final Function(bool isEu, bool isCn, bool isCa)? currentAreaSuccess;
+  final Function(bool isEu, bool isCn, bool isCa, bool isBr)? currentAreaSuccess;
   final Function? currentAreaFailed;
   const TPInitListener({
     this.initFinish,

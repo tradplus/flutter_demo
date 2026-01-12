@@ -5,8 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import android.os.Handler;
-import android.os.Looper;
 
 import com.tradplus.ads.base.TPPlatform;
 import com.tradplus.ads.base.bean.TPAdInfo;
@@ -40,18 +38,12 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.EventChannel;
-
 
 /**
  * TradplusFlutterDemoPlugin
  */
 public class TradPlusSdk {
     private static TradPlusSdk sInstance;
-
-    private EventChannel.EventSink eventSink;
-    private EventChannel eventChannel;
-    private boolean isEventChannel = false;
 
     private TradPlusSdk() {
     }
@@ -66,19 +58,6 @@ public class TradPlusSdk {
     private MethodChannel channel;
 
     public void initPlugin(FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
-        eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "tradplus_sdk_events");
-        eventChannel.setStreamHandler(new EventChannel.StreamHandler() {
-            @Override
-            public void onListen(Object arguments, EventChannel.EventSink events) {
-                eventSink = events;
-            }
-
-            @Override
-            public void onCancel(Object arguments) {
-                eventSink = null;
-            }
-        });
-
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "tradplus_sdk");
         channel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
@@ -162,8 +141,6 @@ public class TradPlusSdk {
                         setPAConsent(call, result);
                     } else if (call.method.equals("tp_setDefaultConfig")) {
                         setDefaultConfig(call, result);
-                    } else if (call.method.equals("tp_setEventChannel")) {
-                        setEventChannel(call, result);
                     } else {
                         Log.e("TradPlusLog", "unknown method");
                     }
@@ -178,7 +155,6 @@ public class TradPlusSdk {
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_splash_view", new TPSplashViewFactory(flutterPluginBinding.getBinaryMessenger()));
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_interactive_view", new TPInterActiveViewFactory(flutterPluginBinding.getBinaryMessenger()));
     }
-
 
     private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String unitId = call.argument("adUnitId");
@@ -240,20 +216,9 @@ public class TradPlusSdk {
 
     private void setPAConsent(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         try {
-             int consentType = call.argument("consentType");
-             Log.i("tradplus", "Flutter consentType: " + consentType);
-             com.tradplus.ads.open.TradPlusSdk.setPAConsent(consentType);
-        } catch (Throwable e) {
-
-        }
-
-    }
-
-    private void setEventChannel(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        try {
-            boolean isOpen = call.argument("isOpen");
-            Log.i("tradplus", "Flutter setEventChannel isOpen: " + isOpen);
-            isEventChannel = isOpen;
+            int consentType = call.argument("consentType");
+            Log.i("tradplus", "Flutter consentType: " + consentType);
+            com.tradplus.ads.open.TradPlusSdk.setPAConsent(consentType);
         } catch (Throwable e) {
 
         }
@@ -266,7 +231,7 @@ public class TradPlusSdk {
             String config = call.argument("config");
             if (!adUnitId.isEmpty() && !config.isEmpty()) {
                 Log.i("tradplus", "Flutter setDefaultConfig adUnitId: " + adUnitId + ",config:"+config);
-                com.tradplus.ads.base.config.ConfigLoadManager.getInstance().setDefaultConfig(adUnitId,config);
+                com.tradplus.ads.base.config.ConfigLoadManager.getInstance().setDefaultConfig(adUnitId,config,"");
             }
         } catch (Throwable e) {
 
@@ -335,7 +300,7 @@ public class TradPlusSdk {
     public void currentAreaMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         com.tradplus.ads.open.TradPlusSdk.checkCurrentArea(getApplicationContext(), new TPPrivacyManager.OnPrivacyRegionListener() {
             @Override
-            public void onSuccess(boolean b, boolean i, boolean b1) {
+            public void onSuccess(boolean b, boolean i, boolean b1, boolean b2) {
                 TPTaskManager.getInstance().runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
@@ -343,6 +308,7 @@ public class TradPlusSdk {
                         paramsMap.put("iseu", b);
                         paramsMap.put("iscn", i);
                         paramsMap.put("isca", b1);
+                        paramsMap.put("isbr", b2);
 
                         TradPlusSdk.getInstance().sendCallBackToFlutter("tp_currentarea_success", paramsMap);
                     }
@@ -432,31 +398,10 @@ public class TradPlusSdk {
         return com.tradplus.ads.open.TradPlusSdk.getSdkVersion();
     }
 
-
     public void sendCallBackToFlutter(final String callName, final Map<String, Object> paramsMap) {
         try {
-            String json = new JSONObject(paramsMap).toString();
-            Log.i("sendCallBackToFlutter", callName+"//"+json);
-            Map<String, Object> res = new HashMap<>();
-            res.put("method", callName);
-            res.put("data", paramsMap);
-
-            new Handler(Looper.getMainLooper()).post(() -> {
-                try {
-                    //event通道
-                    if (eventSink != null && isEventChannel) {
-                        eventSink.success(res);
-                    } else {
-                        //method通道
-                        channel.invokeMethod(callName, paramsMap);
-                    }
-                } catch (Exception e) {
-                    Log.e("Tradplus", "invokeMethod failed: " + e);
-                }
-            });
-
+            channel.invokeMethod(callName, paramsMap);
         } catch (Throwable e) {
-            Log.i("sendCallBackToFlutter error","");
             e.printStackTrace();
         }
     }

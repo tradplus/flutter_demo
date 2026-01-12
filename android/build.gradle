@@ -30,6 +30,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 33
+    namespace 'com.example.tradplus_sdk'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,7 +42,7 @@ android {
     }
 }
 
-def TRADPLUS_VERSION = "14.6.0.1"
+def TRADPLUS_VERSION = "15.4.0.1"
 
 dependencies {
     //TradPlus
