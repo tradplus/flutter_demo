@@ -330,10 +330,10 @@
 
 - (void)checkCurrentArea
 {
-    [TradPlus checkCurrentArea:^(BOOL isUnknown, BOOL isCN, BOOL isCA, BOOL isEU) {
+    [TradPlus checkCurrentArea:^(BOOL isUnknown, BOOL isCN, BOOL isCA, BOOL isEU, BOOL isBR) {
         if(!isUnknown)
         {
-            [TradplusSdkPlugin callbackWithEventName:@"tp_currentarea_success" adUnitID:nil adInfo:nil error:nil exp:@{@"iscn":@(isCN),@"iseu":@(isEU),@"isca":@(isCA)}];
+            [TradplusSdkPlugin callbackWithEventName:@"tp_currentarea_success" adUnitID:nil adInfo:nil error:nil exp:@{@"iscn":@(isCN),@"iseu":@(isEU),@"isca":@(isCA),@"isbr":@(isBR)}];
         }
         else
         {
