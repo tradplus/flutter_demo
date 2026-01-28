@@ -1,3 +1,11 @@
+## 1.2.5
+
+1.Android 支持多个通道merge
+
+# 1.2.4
+
+1.双端隐私政策支持查询巴西
+
 ## 1.2.3
 
 Android supports multiple channel callbacks(flutter V3.35.0)

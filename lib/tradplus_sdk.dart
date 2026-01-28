@@ -238,7 +238,7 @@ class TradplusSdk {
       bool isEu = arguments["iseu"];
       bool isCn = arguments["iscn"];
       bool isCa = arguments["isca"];
-      bool isBr = arguments["isBr"];
+      bool isBr = arguments["isbr"];
       listener.currentAreaSuccess!(isEu, isCn, isCa, isBr);
     } else if (method == 'tp_currentarea_failed') {
       listener.currentAreaFailed!();
