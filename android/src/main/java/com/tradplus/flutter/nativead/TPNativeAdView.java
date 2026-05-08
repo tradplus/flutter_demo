@@ -25,10 +25,11 @@ import io.flutter.plugin.platform.PlatformView;
 public class TPNativeAdView implements PlatformView {
 
     ViewGroup rootView;
+    private String adUnitId;
 
     public TPNativeAdView(Context context, BinaryMessenger messenger, int viewID, Map<String, Object> args) {
         try {
-            String adUnitId = (String) args.get("adUnitId");
+            adUnitId = (String) args.get("adUnitId");
             String layoutName = (String) args.get("layoutName");
 
             String adSceneId = (String) args.get("adSceneId");
@@ -41,10 +42,10 @@ public class TPNativeAdView implements PlatformView {
             }
 
             // create containerView
-            ViewGroup viewGroup = new FrameLayout(TradPlusSdk.getInstance().getActivity());
+            ViewGroup viewGroup = new FrameLayout(context);
 
             if (!TextUtils.isEmpty(layoutName)) {
-                int layoutId = TPUtils.getLayoutIdByName(TradPlusSdk.getInstance().getActivity(), layoutName);
+                int layoutId = TPUtils.getLayoutIdByName(context, layoutName);
                 boolean isSuccess = TPNativeManager.getInstance().renderView(adUnitId, viewGroup, layoutId, adSceneId,customAdInfo);
                 if (!isSuccess) {
                     Log.v("TradPlusLog", "Native render failed");
@@ -73,7 +74,13 @@ public class TPNativeAdView implements PlatformView {
 
     @Override
     public void dispose() {
-
+        if (!TextUtils.isEmpty(adUnitId)) {
+            TPNativeManager.getInstance().releaseAd(adUnitId);
+        }
+        if (rootView != null) {
+            rootView.removeAllViews();
+            rootView = null;
+        }
     }
 
 }

@@ -134,6 +134,13 @@ public class TPOfferWallManager {
         return tpOfferWall;
     }
 
+    public void releaseAllAds() {
+        for (TPOfferWall tpOfferWall : mTPOfferWall.values()) {
+            TradPlusSdk.safeReleaseAdObject(tpOfferWall);
+        }
+        mTPOfferWall.clear();
+    }
+
 
 
     private class TPOfferWallBalanceAdListener implements OffWallBalanceListener {

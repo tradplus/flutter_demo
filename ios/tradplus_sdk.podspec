@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'tradplus_sdk'
-  s.version          = '1.2.5'
+  s.version          = '1.2.6'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 Tradplus SDK Flutter project.

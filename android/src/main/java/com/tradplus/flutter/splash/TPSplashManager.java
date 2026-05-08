@@ -150,6 +150,18 @@ public class TPSplashManager  {
         return true;
     }
 
+    public void releaseAd(String adUnitId) {
+        TPSplash tpSplash = mTPSplashs.remove(adUnitId);
+        TradPlusSdk.safeReleaseAdObject(tpSplash);
+    }
+
+    public void releaseAllAds() {
+        for (TPSplash tpSplash : mTPSplashs.values()) {
+            TradPlusSdk.safeReleaseAdObject(tpSplash);
+        }
+        mTPSplashs.clear();
+    }
+
 
     private class TPSplashDownloadListener implements DownloadListener {
         private String mAdUnitId;

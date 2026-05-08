@@ -179,6 +179,18 @@ public class TPNativeManager {
         return true;
     }
 
+    public void releaseAd(String adUnitId) {
+        TPNative tpNative = mTPNatives.remove(adUnitId);
+        TradPlusSdk.safeReleaseAdObject(tpNative);
+    }
+
+    public void releaseAllAds() {
+        for (TPNative tpNative : mTPNatives.values()) {
+            TradPlusSdk.safeReleaseAdObject(tpNative);
+        }
+        mTPNatives.clear();
+    }
+
     private class TPInterstitialDownloadListener implements DownloadListener {
         private String mAdUnitId;
 

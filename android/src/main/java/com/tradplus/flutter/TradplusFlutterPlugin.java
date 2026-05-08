@@ -21,7 +21,7 @@ public class TradplusFlutterPlugin implements FlutterPlugin, ActivityAware{
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-//    channel.setMethodCallHandler(null);
+    TradPlusSdk.getInstance().detachPlugin();
   }
 
   @Override
@@ -31,16 +31,16 @@ public class TradplusFlutterPlugin implements FlutterPlugin, ActivityAware{
 
   @Override
   public void onDetachedFromActivityForConfigChanges() {
-
+    TradPlusSdk.getInstance().setActivity(null);
   }
 
   @Override
   public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding activityPluginBinding) {
-
+    TradPlusSdk.getInstance().setActivity(activityPluginBinding.getActivity());
   }
 
   @Override
   public void onDetachedFromActivity() {
-
+    TradPlusSdk.getInstance().setActivity(null);
   }
 }

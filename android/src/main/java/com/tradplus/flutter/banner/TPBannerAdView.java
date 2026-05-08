@@ -1,5 +1,6 @@
 package com.tradplus.flutter.banner;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import com.tradplus.flutter.nativead.TPFlutterAdRender;
 import com.tradplus.flutter.nativead.TPNativeManager;
 
 import java.util.Map;
+import java.util.Objects;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.platform.PlatformView;
@@ -25,11 +27,12 @@ import io.flutter.plugin.platform.PlatformView;
 public class TPBannerAdView implements PlatformView {
 
     ViewGroup rootView;
+    private String adUnitId;
 
     public TPBannerAdView(Context context, BinaryMessenger messenger, Map<String, Object> args) {
         try {
 
-            String adUnitId = (String) args.get("adUnitId");
+            adUnitId = (String) args.get("adUnitId");
             String adSceneId = (String) args.get("adSceneId");
             String layoutName = (String) args.get("layoutName");
             Map<String, Object> extraMap = (Map<String, Object>) args.get("extraMap");
@@ -39,9 +42,8 @@ public class TPBannerAdView implements PlatformView {
                 Log.i("TPBannerAdView", "adUnitId is empty");
                 return;
             }
-
             // create containerView
-            ViewGroup viewGroup = new FrameLayout(TradPlusSdk.getInstance().getActivity());
+            ViewGroup viewGroup = new FrameLayout(context);
             Log.i("TPBannerAdView", "adUnitId1 = " + adUnitId + " adSceneId1 = " + adSceneId);
 
             TPNativeAdRenderImpl adRender = null;
@@ -73,6 +75,12 @@ public class TPBannerAdView implements PlatformView {
 
     @Override
     public void dispose() {
-
+        if (!TextUtils.isEmpty(adUnitId)) {
+            TPBannerManager.getInstance().releaseAd(adUnitId);
+        }
+        if (rootView != null) {
+            rootView.removeAllViews();
+            rootView = null;
+        }
     }
 }

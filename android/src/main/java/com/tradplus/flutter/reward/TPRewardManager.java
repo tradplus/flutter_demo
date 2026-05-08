@@ -136,6 +136,13 @@ public class TPRewardManager {
         return tpReward;
     }
 
+    public void releaseAllAds() {
+        for (TPReward tpReward : mTPReward.values()) {
+            TradPlusSdk.safeReleaseAdObject(tpReward);
+        }
+        mTPReward.clear();
+    }
+
     private class TPRewardExdListener implements RewardAdExListener {
         private String mAdUnitId;
         TPRewardExdListener(String adUnitId) {

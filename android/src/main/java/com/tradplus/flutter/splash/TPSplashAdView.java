@@ -22,11 +22,12 @@ import io.flutter.plugin.platform.PlatformView;
 public class TPSplashAdView implements PlatformView {
 
     ViewGroup rootView;
+    private String adUnitId;
 
     public TPSplashAdView(Context context, BinaryMessenger messenger, Map<String, Object> args) {
         try {
 
-            String adUnitId = (String) args.get("adUnitId");
+            adUnitId = (String) args.get("adUnitId");
             String adSceneId = (String) args.get("adSceneId");
             String layoutName = (String) args.get("layoutName");
 
@@ -40,7 +41,7 @@ public class TPSplashAdView implements PlatformView {
             }
 
             // create containerView
-            ViewGroup viewGroup = new FrameLayout(TradPlusSdk.getInstance().getActivity());
+            ViewGroup viewGroup = new FrameLayout(context);
 
             TPNativeAdRenderImpl adRender = null;
             if (!TextUtils.isEmpty(layoutName)) {
@@ -70,6 +71,12 @@ public class TPSplashAdView implements PlatformView {
 
     @Override
     public void dispose() {
-
+        if (!TextUtils.isEmpty(adUnitId)) {
+            TPSplashManager.getInstance().releaseAd(adUnitId);
+        }
+        if (rootView != null) {
+            rootView.removeAllViews();
+            rootView = null;
+        }
     }
 }

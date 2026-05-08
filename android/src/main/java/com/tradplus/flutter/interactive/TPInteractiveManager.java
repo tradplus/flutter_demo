@@ -159,6 +159,18 @@ public class TPInteractiveManager {
         return false;
     }
 
+    public void releaseAd(String adUnitId) {
+        TPInterActive tpInterActive = mTPInterActives.remove(adUnitId);
+        TradPlusSdk.safeReleaseAdObject(tpInterActive);
+    }
+
+    public void releaseAllAds() {
+        for (TPInterActive tpInterActive : mTPInterActives.values()) {
+            TradPlusSdk.safeReleaseAdObject(tpInterActive);
+        }
+        mTPInterActives.clear();
+    }
+
 
     private class TPInterActiveAllAdListener implements LoadAdEveryLayerListener {
         private String mAdUnitId;

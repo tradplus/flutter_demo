@@ -125,6 +125,13 @@ public class TPInterstitialManager {
         return tpInterstitial;
     }
 
+    public void releaseAllAds() {
+        for (TPInterstitial tpInterstitial : mTPInterstitals.values()) {
+            TradPlusSdk.safeReleaseAdObject(tpInterstitial);
+        }
+        mTPInterstitals.clear();
+    }
+
     private class TPInterstitialDownloadListener implements DownloadListener {
         private String mAdUnitId;
         TPInterstitialDownloadListener(String adUnitId) {

@@ -218,6 +218,28 @@ public class TPBannerManager {
         return true;
     }
 
+    public void releaseAd(String adUnitId) {
+        TPBanner tpBanner = mTPBanners.remove(adUnitId);
+        safeReleaseBanner(tpBanner);
+    }
+
+    public void releaseAllAds() {
+        for (TPBanner tpBanner : mTPBanners.values()) {
+            safeReleaseBanner(tpBanner);
+        }
+        mTPBanners.clear();
+    }
+
+    private void safeReleaseBanner(TPBanner tpBanner) {
+        if (tpBanner == null) {
+            return;
+        }
+        if (tpBanner.getParent() instanceof ViewGroup) {
+            ((ViewGroup) tpBanner.getParent()).removeView(tpBanner);
+        }
+        TradPlusSdk.safeReleaseAdObject(tpBanner);
+    }
+
 
     private class TPBannerDownloadListener implements DownloadListener {
         private String mAdUnitId;

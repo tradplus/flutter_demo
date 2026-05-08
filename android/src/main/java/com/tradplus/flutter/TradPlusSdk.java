@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -26,8 +27,6 @@ import com.tradplus.flutter.splash.TPSplashViewFactory;
 import com.tradplus.flutter.interactive.TPInteractiveManager;
 import com.tradplus.flutter.interactive.TPInterActiveViewFactory;
 import com.tradplus.meditaiton.utils.ImportSDKUtil;
-import com.tradplus.flutter.TPUtils;
-import com.tradplus.flutter.UID2Manager;
 
 import org.json.JSONObject;
 
@@ -42,6 +41,9 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.EventChannel;
 
+
+import java.lang.reflect.Method;
+import java.lang.ref.WeakReference;
 
 /**
  * TradplusFlutterDemoPlugin
@@ -62,6 +64,7 @@ public class TradPlusSdk {
         return sInstance;
     }
 
+    @Nullable
     private MethodChannel channel;
 
     public void initPlugin(FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
@@ -167,7 +170,7 @@ public class TradPlusSdk {
                         Log.e("TradPlusLog", "unknown method");
                     }
                 } catch (Throwable e) {
-                    e.printStackTrace();
+                    Log.e("TradPlusLog", "error calling method: " + call.method, e);
                 }
             }
         });
@@ -178,6 +181,21 @@ public class TradPlusSdk {
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_interactive_view", new TPInterActiveViewFactory(flutterPluginBinding.getBinaryMessenger()));
     }
 
+    public void detachPlugin() {
+        releaseAllAdObjects();
+        if (eventChannel != null) {
+            eventChannel.setStreamHandler(null);
+            eventChannel = null;
+        }
+        eventSink = null;
+        isEventChannel = false;
+        if (channel != null) {
+            channel.setMethodCallHandler(null);
+            channel = null;
+        }
+        clearContextReferences();
+        sInstance = null;
+    }
 
     private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String unitId = call.argument("adUnitId");
@@ -218,7 +236,7 @@ public class TradPlusSdk {
                 }
             }
             com.tradplus.ads.open.TradPlusSdk.setPlatformLimit(platforms.isEmpty() ? null : platforms);
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
 
         }
 
@@ -263,11 +281,11 @@ public class TradPlusSdk {
         try {
             String adUnitId = call.argument("adUnitId");
             String config = call.argument("config");
-            if (!adUnitId.isEmpty() && !config.isEmpty()) {
+            if (adUnitId != null && !adUnitId.isEmpty() && config != null && !config.isEmpty()) {
                 Log.i("tradplus", "Flutter setDefaultConfig adUnitId: " + adUnitId + ",config:"+config);
-                com.tradplus.ads.base.config.ConfigLoadManager.getInstance().setDefaultConfig(adUnitId,config,"");
+                com.tradplus.ads.base.config.ConfigLoadManager.getInstance().setDefaultConfig(adUnitId,config, "");
             }
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
 
         }
 
@@ -276,11 +294,11 @@ public class TradPlusSdk {
     private void setCustomTestID(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         try {
             String customTestID = call.argument("customTestID");
-            if (!customTestID.isEmpty()) {
+            if (customTestID != null && !customTestID.isEmpty()) {
                 Log.i("tradplus", "Flutter setCustomTestID: " + customTestID);
                 com.tradplus.ads.open.TradPlusSdk.setTestCustomId(customTestID);
             }
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
 
         }
 
@@ -466,18 +484,75 @@ public class TradPlusSdk {
         com.tradplus.ads.open.TradPlusSdk.setOpenDelayLoadAds(isOpen);
     }
 
-    private Activity mainAtivity;
+    private WeakReference<Activity> mainActivityRef;
+    private WeakReference<Context> mainApplicationContextRef;
 
-    public void setActivity(Activity activity) {
-        mainAtivity = activity;
+    public void setActivity(@Nullable Activity activity) {
+        if (activity == null) {
+            Log.i("TradPlusLog", "setActivity(null), release ad objects for destroyed activity");
+            releaseAllAdObjects();
+            clearContextReferences();
+            return;
+        }
+        mainApplicationContextRef = new WeakReference<>(activity.getApplicationContext());
+        mainActivityRef = new WeakReference<>(activity);
+        Log.i("TradPlusLog", "setActivity(" + activity + "), rebound context");
     }
 
+    private void clearContextReferences() {
+        if (mainActivityRef != null) {
+            mainActivityRef.clear();
+            mainActivityRef = null;
+        }
+        if (mainApplicationContextRef != null) {
+            mainApplicationContextRef.clear();
+            mainApplicationContextRef = null;
+        }
+    }
+
+    private void releaseAllAdObjects() {
+        TPBannerManager.getInstance().releaseAllAds();
+        TPNativeManager.getInstance().releaseAllAds();
+        TPSplashManager.getInstance().releaseAllAds();
+        TPInteractiveManager.getInstance().releaseAllAds();
+        TPInterstitialManager.getInstance().releaseAllAds();
+        TPRewardManager.getInstance().releaseAllAds();
+        TPOfferWallManager.getInstance().releaseAllAds();
+    }
+
+    public static void safeReleaseAdObject(@Nullable Object adObject) {
+        if (adObject == null) {
+            return;
+        }
+        invokeReleaseMethod(adObject, "destroy");
+        invokeReleaseMethod(adObject, "onDestroy");
+        invokeReleaseMethod(adObject, "release");
+    }
+
+    private static void invokeReleaseMethod(@NonNull Object target, @NonNull String methodName) {
+        try {
+            Method method = target.getClass().getMethod(methodName);
+            method.setAccessible(true);
+            method.invoke(target);
+        } catch (Throwable ignored) {
+            // Different ad objects expose different release APIs.
+        }
+    }
+
+    @Nullable
     public Activity getActivity() {
-        return mainAtivity;
+       if (mainActivityRef != null) {
+           return mainActivityRef.get();
+       }
+       return null;
     }
 
+    @Nullable
     public Context getApplicationContext() {
-        return mainAtivity.getApplicationContext();
+        if (mainApplicationContextRef != null) {
+            return mainApplicationContextRef.get();
+        }
+        return null;
     }
 
     public void openTradPlusTool(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {

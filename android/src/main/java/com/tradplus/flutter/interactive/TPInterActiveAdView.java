@@ -19,11 +19,12 @@ import io.flutter.plugin.platform.PlatformView;
 public class TPInterActiveAdView implements PlatformView {
 
     ViewGroup rootView;
+    private String adUnitId;
 
     public TPInterActiveAdView(Context context, BinaryMessenger messenger, Map<String, Object> args) {
         try {
 
-            String adUnitId = (String) args.get("adUnitId");
+            adUnitId = (String) args.get("adUnitId");
             String adSceneId = (String) args.get("adSceneId");
             Map<String, Object> customAdInfo = (Map<String, Object>) args.get("customAdInfo");
             Log.i("TPInterActiveAdView", "adUnitId = " + adUnitId + " adSceneId = " + adSceneId);
@@ -33,8 +34,8 @@ public class TPInterActiveAdView implements PlatformView {
                 return;
             }
 
-            // create containerView
-            ViewGroup viewGroup = new FrameLayout(TradPlusSdk.getInstance().getActivity());
+            // Use the provided view context to avoid depending on an Activity reference lifecycle.
+            ViewGroup viewGroup = new FrameLayout(context);
             Log.i("TPInterActiveAdView", "adUnitId1 = " + adUnitId + " adSceneId1 = " + adSceneId);
 
             boolean isSuccess = TPInteractiveManager.getInstance().renderView(adUnitId, viewGroup, adSceneId, customAdInfo);
@@ -59,6 +60,12 @@ public class TPInterActiveAdView implements PlatformView {
 
     @Override
     public void dispose() {
-
+        if (!TextUtils.isEmpty(adUnitId)) {
+            TPInteractiveManager.getInstance().releaseAd(adUnitId);
+        }
+        if (rootView != null) {
+            rootView.removeAllViews();
+            rootView = null;
+        }
     }
 }
