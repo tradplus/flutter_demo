@@ -5,9 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
-import android.os.Handler;
-import android.os.Looper;
 
 import com.tradplus.ads.base.TPPlatform;
 import com.tradplus.ads.base.bean.TPAdInfo;
@@ -16,22 +15,19 @@ import com.tradplus.ads.base.common.TPTaskManager;
 import com.tradplus.ads.base.util.SegmentUtils;
 import com.tradplus.ads.core.GlobalImpressionManager;
 import com.tradplus.flutter.banner.TPBannerManager;
-import com.tradplus.flutter.banner.TPBannerViewFactory;
 import com.tradplus.flutter.interstitial.TPInterstitialManager;
 import com.tradplus.flutter.nativead.TPNativeManager;
-import com.tradplus.flutter.nativead.TPNativeViewFactory;
 import com.tradplus.flutter.offerwall.TPOfferWallManager;
 import com.tradplus.flutter.reward.TPRewardManager;
 import com.tradplus.flutter.splash.TPSplashManager;
-import com.tradplus.flutter.splash.TPSplashViewFactory;
 import com.tradplus.flutter.interactive.TPInteractiveManager;
-import com.tradplus.flutter.interactive.TPInterActiveViewFactory;
 import com.tradplus.meditaiton.utils.ImportSDKUtil;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +35,6 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.EventChannel;
 
 
 import java.lang.reflect.Method;
@@ -50,9 +45,23 @@ import java.lang.ref.WeakReference;
  */
 public class TradPlusSdk {
     private static TradPlusSdk sInstance;
-    private EventChannel.EventSink eventSink;
-    private EventChannel eventChannel;
-    private boolean isEventChannel = false;
+
+    public interface CallbackDispatcher {
+        void sendCallback(@NonNull String callName, @NonNull Map<String, Object> params);
+    }
+
+    private final EngineOwnerRegistry<FlutterPlugin.FlutterPluginBinding> ownerRegistry =
+            new EngineOwnerRegistry<>();
+    private final IdentityHashMap<FlutterPlugin.FlutterPluginBinding, CallbackDispatcher> dispatchers =
+            new IdentityHashMap<>();
+    private final IdentityHashMap<FlutterPlugin.FlutterPluginBinding, WeakReference<Activity>> activities =
+            new IdentityHashMap<>();
+    private static final InitCallbackRegistry<CallbackDispatcher> INIT_CALLBACKS =
+            new InitCallbackRegistry<>();
+    @Nullable
+    private volatile Context applicationContext;
+    @Nullable
+    private WeakReference<Activity> mainActivityRef;
 
     private TradPlusSdk() {
     }
@@ -64,141 +73,187 @@ public class TradPlusSdk {
         return sInstance;
     }
 
-    @Nullable
-    private MethodChannel channel;
-
-    public void initPlugin(FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
-        eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "tradplus_sdk_events");
-        eventChannel.setStreamHandler(new EventChannel.StreamHandler() {
-            @Override
-            public void onListen(Object arguments, EventChannel.EventSink events) {
-                eventSink = events;
-            }
-
-            @Override
-            public void onCancel(Object arguments) {
-                eventSink = null;
-            }
-        });
-
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "tradplus_sdk");
-        channel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
-            @Override
-            public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-                try {
-                    if (call.method.startsWith("native_")) {
-                        TPNativeManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.startsWith("interstitial_")) {
-                        TPInterstitialManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.startsWith("rewardVideo_")) {
-                        TPRewardManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.startsWith("offerwall_")) {
-                        TPOfferWallManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.startsWith("banner_")) {
-                        TPBannerManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.startsWith("splash_")) {
-                        TPSplashManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.startsWith("interactive_")) {
-                        TPInteractiveManager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.equals("tp_version")) {
-                        result.success(getSdkVersion());
-                    } else if (call.method.equals("tp_init")) {
-                        initMethonCall(call, result);
-                    } else if (call.method.equals("tp_checkCurrentArea")) {
-                        currentAreaMethonCall(call, result);
-                    } else if (call.method.equals("tp_isEUTraffic")) {
-                        result.success(com.tradplus.ads.open.TradPlusSdk.isEUTraffic(getApplicationContext()));
-                    } else if (call.method.equals("tp_setGDPRDataCollection")) {
-                        setGDPRMethonCall(call, result);
-                    } else if (call.method.equals("tp_getGDPRDataCollection")) {
-                        result.success(getGDPRMethonCall());
-                    } else if (call.method.equals("tp_setLGPDConsent")) {
-                        setLGPDMethonCall(call, result);
-                    } else if (call.method.equals("tp_getLGPDConsent")) {
-                        result.success(getLGPDMethonCall());
-                    } else if (call.method.equals("tp_getCCPADoNotSell")) {
-                        result.success(isCCPADoNotSell());
-                    } else if (call.method.equals("tp_setCOPPAIsAgeRestrictedUser")) {
-                        setCOPPAMethonCall(call, result);
-                    } else if (call.method.equals("tp_getCOPPAIsAgeRestrictedUser")) {
-                        result.success(isCOPPAAgeRestrictedUser());
-                    } else if (call.method.equals("tp_setOpenPersonalizedAd")) {
-                        setOpenPersonalizedAdMethonCall(call, result);
-                    } else if (call.method.equals("tp_isOpenPersonalizedAd")) {
-                        result.success(isOpenPersonalizedAd());
-                    } else if (call.method.equals("tp_setFirstShowGDPR")) {
-                        setFirstShowGDPR(call, result);
-                    } else if (call.method.equals("tp_isFirstShowGDPR")) {
-                        result.success(isFirstShowGDPR());
-                    } else if (call.method.equals("tp_setCustomMap")) {
-                        setSegmentMap(call, result);
-                    } else if (call.method.equals("tp_setMaxDatabaseSize")) {
-                        setMaxDatabaseSize(call, result);
-                    } else if (call.method.equals("tp_clearCache")) {
-                        clearCache(call, result);
-                    } else if (call.method.equals("tp_isCalifornia")) {
-                        result.success(com.tradplus.ads.open.TradPlusSdk.isCalifornia(getApplicationContext()));
-                    } else if (call.method.equals("tp_isPrivacyUserAgree")) {
-                        result.success(com.tradplus.ads.open.TradPlusSdk.isPrivacyUserAgree());
-                    } else if (call.method.equals("tp_setPrivacyUserAgree")) {
-                        setPrivacyUserAgreeMethonCall(call, result);
-                    } else if (call.method.equals("tp_setOpenDelayLoadAds")) {
-                        setOpenDelayLoadAds(call, result);
-                    } else if (call.method.equals("tp_addGlobalAdImpressionListener")) {
-                        setGlobalImpressionListener(call, result);
-                    } else if (call.method.equals("tp_setSettingDataParam")) {
-                        setSettingDataParam(call, result);
-                    } else if (call.method.equals("tp_openTradPlusTool")) {
-                        openTradPlusTool(call, result);
-                    } else if (call.method.equals("uid2_start")) {
-                        UID2Manager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.equals("uid2_reset")) {
-                        UID2Manager.getInstance().onMethodCall(call, result);
-                    } else if (call.method.equals("tp_setPlatformLimit")) {
-                        setPlatformLimit(call, result);
-                    } else if (call.method.equals("tp_setForbidNetworkIdList")) {
-                        setForbidNetworkIdList(call, result);
-                    }else if (call.method.equals("tp_setCustomTestID")) {
-                        setCustomTestID(call, result);
-                    } else if (call.method.equals("tp_setPAConsent")) {
-                        setPAConsent(call, result);
-                    } else if (call.method.equals("tp_setDefaultConfig")) {
-                        setDefaultConfig(call, result);
-                    } else if (call.method.equals("tp_setEventChannel")) {
-                        setEventChannel(call, result);
-                    } else if (call.method.equals("tpresult_handleAdUnitId")) {
-                        tpResultHandleAdUnitId(call, result);
-                    } else if (call.method.equals("tpresult_handleMix")) {
-                        tpResultHandleMix(call, result);
-                    } else {
-                        Log.e("TradPlusLog", "unknown method");
-                    }
-                } catch (Throwable e) {
-                    Log.e("TradPlusLog", "error calling method: " + call.method, e);
-                }
-            }
-        });
-
-        flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_native_view", new TPNativeViewFactory(flutterPluginBinding.getBinaryMessenger()));
-        flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_banner_view", new TPBannerViewFactory(flutterPluginBinding.getBinaryMessenger()));
-        flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_splash_view", new TPSplashViewFactory(flutterPluginBinding.getBinaryMessenger()));
-        flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("tp_interactive_view", new TPInterActiveViewFactory(flutterPluginBinding.getBinaryMessenger()));
+    @MainThread
+    public synchronized void attachEngine(
+            @NonNull FlutterPlugin.FlutterPluginBinding binding,
+            @NonNull Context context,
+            @NonNull CallbackDispatcher dispatcher) {
+        ownerRegistry.attachEngine(binding);
+        dispatchers.put(binding, dispatcher);
+        if (applicationContext == null) {
+            applicationContext = context.getApplicationContext();
+        }
     }
 
-    public void detachPlugin() {
-        releaseAllAdObjects();
-        if (eventChannel != null) {
-            eventChannel.setStreamHandler(null);
-            eventChannel = null;
+    @MainThread
+    public synchronized void detachEngine(@NonNull FlutterPlugin.FlutterPluginBinding binding) {
+        boolean wasOwner = ownerRegistry.isOwner(binding);
+        if (wasOwner) {
+            releaseOwnerResources();
         }
-        eventSink = null;
-        isEventChannel = false;
-        if (channel != null) {
-            channel.setMethodCallHandler(null);
-            channel = null;
+        activities.remove(binding);
+        CallbackDispatcher dispatcher = dispatchers.remove(binding);
+        if (dispatcher != null) {
+            INIT_CALLBACKS.remove(dispatcher);
         }
-        clearContextReferences();
-        sInstance = null;
+        ownerRegistry.detachEngine(binding);
+        bindOwnerActivity();
+        if (ownerRegistry.isEmpty()) {
+            applicationContext = null;
+            sInstance = null;
+        }
+    }
+
+    @MainThread
+    public synchronized void attachActivity(
+            @NonNull FlutterPlugin.FlutterPluginBinding binding,
+            @NonNull Activity activity) {
+        activities.put(binding, new WeakReference<>(activity));
+        ownerRegistry.attachActivity(binding);
+        bindOwnerActivity();
+    }
+
+    @MainThread
+    public synchronized void detachActivityForConfigChanges(
+            @NonNull FlutterPlugin.FlutterPluginBinding binding) {
+        if (ownerRegistry.isOwner(binding)) {
+            releaseOwnerResources();
+        }
+        activities.remove(binding);
+        ownerRegistry.detachActivityForConfigChanges(binding);
+    }
+
+    @MainThread
+    public synchronized void detachActivity(@NonNull FlutterPlugin.FlutterPluginBinding binding) {
+        boolean wasOwner = ownerRegistry.isOwner(binding);
+        if (wasOwner) {
+            releaseOwnerResources();
+        }
+        activities.remove(binding);
+        ownerRegistry.detachActivity(binding);
+        bindOwnerActivity();
+    }
+
+    public synchronized boolean isActivityOwner(
+            @NonNull FlutterPlugin.FlutterPluginBinding binding) {
+        return ownerRegistry.isActivityOwner(binding);
+    }
+
+    public void onMethodCall(
+            @NonNull FlutterPlugin.FlutterPluginBinding binding,
+            @NonNull CallbackDispatcher caller,
+            @NonNull MethodCall call,
+            @NonNull Result result) {
+        if (requiresActivityOwner(call.method) && !isActivityOwner(binding)) {
+            result.error(
+                    "tradplus_activity_owner_required",
+                    "This operation requires the FlutterEngine that owns an attached Activity.",
+                    null);
+            return;
+        }
+
+        try {
+            if (call.method.startsWith("native_")) {
+                TPNativeManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.startsWith("interstitial_")) {
+                TPInterstitialManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.startsWith("rewardVideo_")) {
+                TPRewardManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.startsWith("offerwall_")) {
+                TPOfferWallManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.startsWith("banner_")) {
+                TPBannerManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.startsWith("splash_")) {
+                TPSplashManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.startsWith("interactive_")) {
+                TPInteractiveManager.getInstance().onMethodCall(call, result);
+            } else if (call.method.equals("tp_version")) {
+                result.success(getSdkVersion());
+            } else if (call.method.equals("tp_init")) {
+                initMethonCall(call, result, caller);
+            } else if (call.method.equals("tp_checkCurrentArea")) {
+                currentAreaMethonCall(call, result, caller);
+            } else if (call.method.equals("tp_isEUTraffic")) {
+                result.success(com.tradplus.ads.open.TradPlusSdk.isEUTraffic(getApplicationContext()));
+            } else if (call.method.equals("tp_setGDPRDataCollection")) {
+                setGDPRMethonCall(call, result);
+            } else if (call.method.equals("tp_getGDPRDataCollection")) {
+                result.success(getGDPRMethonCall());
+            } else if (call.method.equals("tp_setLGPDConsent")) {
+                setLGPDMethonCall(call, result);
+            } else if (call.method.equals("tp_getLGPDConsent")) {
+                result.success(getLGPDMethonCall());
+            } else if (call.method.equals("tp_getCCPADoNotSell")) {
+                result.success(isCCPADoNotSell());
+            } else if (call.method.equals("tp_setCOPPAIsAgeRestrictedUser")) {
+                setCOPPAMethonCall(call, result);
+            } else if (call.method.equals("tp_getCOPPAIsAgeRestrictedUser")) {
+                result.success(isCOPPAAgeRestrictedUser());
+            } else if (call.method.equals("tp_setOpenPersonalizedAd")) {
+                setOpenPersonalizedAdMethonCall(call, result);
+            } else if (call.method.equals("tp_isOpenPersonalizedAd")) {
+                result.success(isOpenPersonalizedAd());
+            } else if (call.method.equals("tp_setFirstShowGDPR")) {
+                setFirstShowGDPR(call, result);
+            } else if (call.method.equals("tp_isFirstShowGDPR")) {
+                result.success(isFirstShowGDPR());
+            } else if (call.method.equals("tp_setCustomMap")) {
+                setSegmentMap(call, result);
+            } else if (call.method.equals("tp_setMaxDatabaseSize")) {
+                setMaxDatabaseSize(call, result);
+            } else if (call.method.equals("tp_clearCache")) {
+                clearCache(call, result);
+            } else if (call.method.equals("tp_isCalifornia")) {
+                result.success(com.tradplus.ads.open.TradPlusSdk.isCalifornia(getApplicationContext()));
+            } else if (call.method.equals("tp_isPrivacyUserAgree")) {
+                result.success(com.tradplus.ads.open.TradPlusSdk.isPrivacyUserAgree());
+            } else if (call.method.equals("tp_setPrivacyUserAgree")) {
+                setPrivacyUserAgreeMethonCall(call, result);
+            } else if (call.method.equals("tp_setOpenDelayLoadAds")) {
+                setOpenDelayLoadAds(call, result);
+            } else if (call.method.equals("tp_addGlobalAdImpressionListener")) {
+                setGlobalImpressionListener(call, result);
+            } else if (call.method.equals("tp_setSettingDataParam")) {
+                setSettingDataParam(call, result);
+            } else if (call.method.equals("tp_openTradPlusTool")) {
+                openTradPlusTool(call, result);
+            } else if (call.method.equals("uid2_start") || call.method.equals("uid2_reset")) {
+                UID2Manager.getInstance().onMethodCall(call, result);
+            } else if (call.method.equals("tp_setPlatformLimit")) {
+                setPlatformLimit(call, result);
+            } else if (call.method.equals("tp_setForbidNetworkIdList")) {
+                setForbidNetworkIdList(call, result);
+            } else if (call.method.equals("tp_setCustomTestID")) {
+                setCustomTestID(call, result);
+            } else if (call.method.equals("tp_setPAConsent")) {
+                setPAConsent(call, result);
+            } else if (call.method.equals("tp_setDefaultConfig")) {
+                setDefaultConfig(call, result);
+            } else if (call.method.equals("tpresult_handleAdUnitId")) {
+                tpResultHandleAdUnitId(call, result);
+            } else if (call.method.equals("tpresult_handleMix")) {
+                tpResultHandleMix(call, result);
+            } else {
+                result.notImplemented();
+            }
+        } catch (Throwable error) {
+            Log.e("TradPlusLog", "error calling method: " + call.method, error);
+            result.error("tradplus_native_error", error.getMessage(), null);
+        }
+    }
+
+    private boolean requiresActivityOwner(@NonNull String method) {
+        return method.startsWith("native_")
+                || method.startsWith("interstitial_")
+                || method.startsWith("rewardVideo_")
+                || method.startsWith("offerwall_")
+                || method.startsWith("banner_")
+                || method.startsWith("splash_")
+                || method.startsWith("interactive_")
+                || method.equals("uid2_start")
+                || method.equals("tp_clearCache")
+                || method.equals("tp_addGlobalAdImpressionListener")
+                || method.equals("tp_openTradPlusTool");
     }
 
     private void clearCache(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -280,17 +335,6 @@ public class TradPlusSdk {
 
     }
 
-    private void setEventChannel(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        try {
-            boolean isOpen = call.argument("isOpen");
-            Log.i("tradplus", "Flutter setEventChannel isOpen: " + isOpen);
-            isEventChannel = isOpen;
-        } catch (Throwable e) {
-
-        }
-
-    }
-
     private void setDefaultConfig(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         try {
             String adUnitId = call.argument("adUnitId");
@@ -363,7 +407,10 @@ public class TradPlusSdk {
         com.tradplus.ads.open.TradPlusSdk.setMaxDatabaseSize(size);
     }
 
-    public void currentAreaMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+    public void currentAreaMethonCall(
+            @NonNull MethodCall call,
+            @NonNull MethodChannel.Result result,
+            @NonNull CallbackDispatcher caller) {
         com.tradplus.ads.open.TradPlusSdk.checkCurrentArea(getApplicationContext(), new TPPrivacyManager.OnPrivacyRegionListener() {
             @Override
             public void onSuccess(boolean b, boolean i, boolean b1, boolean b2) {
@@ -376,7 +423,7 @@ public class TradPlusSdk {
                         paramsMap.put("isca", b1);
                         paramsMap.put("isbr", b2);
 
-                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_currentarea_success", paramsMap);
+                        caller.sendCallback("tp_currentarea_success", paramsMap);
                     }
                 });
 
@@ -388,7 +435,7 @@ public class TradPlusSdk {
                     @Override
                     public void run() {
                         final Map<String, Object> paramsMap = new HashMap<>();
-                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_currentarea_failed", paramsMap);
+                        caller.sendCallback("tp_currentarea_failed", paramsMap);
                     }
                 });
 
@@ -398,30 +445,48 @@ public class TradPlusSdk {
 
     }
 
-    public void initMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+    public void initMethonCall(
+            @NonNull MethodCall call,
+            @NonNull MethodChannel.Result result,
+            @NonNull CallbackDispatcher caller) {
         String appId = call.argument("appId");
 
         if (appId == null || appId.length() <= 0) {
             Log.e("TradPlusLog", "appId is null, please check");
+            result.error("tradplus_invalid_app_id", "appId must not be empty.", null);
             return;
         }
 
-        com.tradplus.ads.open.TradPlusSdk.setTradPlusInitListener(new com.tradplus.ads.open.TradPlusSdk.TradPlusInitListener() {
-            @Override
-            public void onInitSuccess() {
-                TPTaskManager.getInstance().runOnMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Map<String, Object> paramsMap = new HashMap<>();
-                        paramsMap.put("success", true);
-                        TradPlusSdk.getInstance().sendCallBackToFlutter("tp_initFinish", paramsMap);
-                    }
-                });
+        InitCallbackRegistry.Registration registration = INIT_CALLBACKS.register(appId, caller);
+        if (registration == InitCallbackRegistry.Registration.REJECT) {
+            result.error(
+                    "tradplus_app_id_mismatch",
+                    "TradPlus initialization is already bound to another appId in this process.",
+                    null);
+            return;
+        }
 
-            }
-        });
-        com.tradplus.ads.open.TradPlusSdk.initSdk(getApplicationContext(), appId);
-
+        try {
+            com.tradplus.ads.open.TradPlusSdk.setTradPlusInitListener(new com.tradplus.ads.open.TradPlusSdk.TradPlusInitListener() {
+                @Override
+                public void onInitSuccess() {
+                    TPTaskManager.getInstance().runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Map<String, Object> paramsMap = new HashMap<>();
+                            paramsMap.put("success", true);
+                            for (CallbackDispatcher callback : INIT_CALLBACKS.complete()) {
+                                callback.sendCallback("tp_initFinish", paramsMap);
+                            }
+                        }
+                    });
+                }
+            });
+            com.tradplus.ads.open.TradPlusSdk.initSdk(getApplicationContext(), appId);
+        } catch (Throwable error) {
+            INIT_CALLBACKS.remove(caller);
+            throw error;
+        }
     }
 
     public void setCOPPAMethonCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -469,24 +534,10 @@ public class TradPlusSdk {
         try {
             String json = new JSONObject(paramsMap).toString();
             Log.i("sendCallBackToFlutter", callName+"//"+json);
-            Map<String, Object> res = new HashMap<>();
-            res.put("method", callName);
-            res.put("data", paramsMap);
-
-            new Handler(Looper.getMainLooper()).post(() -> {
-                try {
-                    //event通道
-                    if (eventSink != null && isEventChannel) {
-                        eventSink.success(res);
-                    } else {
-                        //method通道
-                        channel.invokeMethod(callName, paramsMap);
-                    }
-                } catch (Exception e) {
-                    Log.e("Tradplus", "invokeMethod failed: " + e);
-                }
-            });
-
+            CallbackDispatcher ownerDispatcher = getOwnerDispatcher();
+            if (ownerDispatcher != null) {
+                ownerDispatcher.sendCallback(callName, paramsMap);
+            }
         } catch (Throwable e) {
             Log.i("sendCallBackToFlutter error","");
             e.printStackTrace();
@@ -498,30 +549,34 @@ public class TradPlusSdk {
         com.tradplus.ads.open.TradPlusSdk.setOpenDelayLoadAds(isOpen);
     }
 
-    private WeakReference<Activity> mainActivityRef;
-    private WeakReference<Context> mainApplicationContextRef;
-
-    public void setActivity(@Nullable Activity activity) {
-        if (activity == null) {
-            Log.i("TradPlusLog", "setActivity(null), release ad objects for destroyed activity");
-            releaseAllAdObjects();
-            clearContextReferences();
-            return;
+    private synchronized void bindOwnerActivity() {
+        FlutterPlugin.FlutterPluginBinding owner = ownerRegistry.getOwner();
+        WeakReference<Activity> activityRef = owner == null ? null : activities.get(owner);
+        Activity activity = activityRef == null ? null : activityRef.get();
+        clearActivityReference();
+        if (activity != null) {
+            mainActivityRef = new WeakReference<>(activity);
+            Log.i("TradPlusLog", "bound Activity owner " + activity);
         }
-        mainApplicationContextRef = new WeakReference<>(activity.getApplicationContext());
-        mainActivityRef = new WeakReference<>(activity);
-        Log.i("TradPlusLog", "setActivity(" + activity + "), rebound context");
     }
 
-    private void clearContextReferences() {
+    private void clearActivityReference() {
         if (mainActivityRef != null) {
             mainActivityRef.clear();
             mainActivityRef = null;
         }
-        if (mainApplicationContextRef != null) {
-            mainApplicationContextRef.clear();
-            mainApplicationContextRef = null;
-        }
+    }
+
+    @Nullable
+    private synchronized CallbackDispatcher getOwnerDispatcher() {
+        FlutterPlugin.FlutterPluginBinding owner = ownerRegistry.getOwner();
+        return owner == null ? null : dispatchers.get(owner);
+    }
+
+    private void releaseOwnerResources() {
+        Log.i("TradPlusLog", "release ad objects for detached Activity owner");
+        releaseAllAdObjects();
+        clearActivityReference();
     }
 
     private void releaseAllAdObjects() {
@@ -563,10 +618,7 @@ public class TradPlusSdk {
 
     @Nullable
     public Context getApplicationContext() {
-        if (mainApplicationContextRef != null) {
-            return mainApplicationContextRef.get();
-        }
-        return null;
+        return applicationContext;
     }
 
     public void openTradPlusTool(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
