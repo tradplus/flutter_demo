@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TPInterActiveViewWidget extends StatefulWidget {
-  TPInterActiveViewWidget(this.adUnitId, {Key? key});
+  const TPInterActiveViewWidget(this.adUnitId, {Key? key}) : super(key: key);
 
   final String adUnitId;
 
@@ -14,11 +14,21 @@ class TPInterActiveViewWidget extends StatefulWidget {
 }
 
 class TPInterActiveViewWidgetState extends State<TPInterActiveViewWidget> {
+  Key _platformViewKey = UniqueKey();
+
+  @override
+  void didUpdateWidget(TPInterActiveViewWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.adUnitId != widget.adUnitId) {
+      _platformViewKey = UniqueKey();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        key: UniqueKey(),
+        key: _platformViewKey,
         viewType: 'tp_interactive_view',
         creationParams: <String, dynamic>{
           "adUnitId": widget.adUnitId,

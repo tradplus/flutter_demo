@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TPSplashViewWidget extends StatefulWidget {
-  TPSplashViewWidget(this.adUnitId, {Key? key, this.layoutName = ""});
+  const TPSplashViewWidget(this.adUnitId, {Key? key, this.layoutName = ""})
+      : super(key: key);
 
   final String adUnitId;
   final String? layoutName;
@@ -15,11 +16,22 @@ class TPSplashViewWidget extends StatefulWidget {
 }
 
 class TPSplashViewWidgetState extends State<TPSplashViewWidget> {
+  Key _platformViewKey = UniqueKey();
+
+  @override
+  void didUpdateWidget(TPSplashViewWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.adUnitId != widget.adUnitId ||
+        oldWidget.layoutName != widget.layoutName) {
+      _platformViewKey = UniqueKey();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        key: UniqueKey(),
+        key: _platformViewKey,
         viewType: 'tp_splash_view',
         creationParams: <String, dynamic>{
           "adUnitId": widget.adUnitId,

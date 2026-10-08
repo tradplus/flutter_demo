@@ -50,6 +50,7 @@ import java.lang.ref.WeakReference;
  */
 public class TradPlusSdk {
     private static TradPlusSdk sInstance;
+
     private EventChannel.EventSink eventSink;
     private EventChannel eventChannel;
     private boolean isEventChannel = false;

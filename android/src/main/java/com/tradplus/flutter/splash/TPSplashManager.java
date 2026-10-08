@@ -359,6 +359,20 @@ public class TPSplashManager  {
             paramsMap.put("adUnitID", mAdUnitId);
             paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
             TradPlusSdk.getInstance().sendCallBackToFlutter("splash_closed", paramsMap);
+            // 收到关闭回调后释放资源
+            releaseAd(mAdUnitId);
+        }
+
+        @Override
+        public void onAdShowFailed(TPAdInfo tpAdInfo, TPAdError tpAdError) {
+            Log.v("TradPlusSdk", "onAdShowFailed unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
+            paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
+            TradPlusSdk.getInstance().sendCallBackToFlutter("splash_showFailed", paramsMap);
+            // 展示失败不会有 closed，在此释放
+            releaseAd(mAdUnitId);
         }
 
         @Override

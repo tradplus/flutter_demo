@@ -24,11 +24,27 @@ class TPNativeViewWidget extends StatefulWidget {
 }
 
 class TPNativeViewWidgetState extends State<TPNativeViewWidget> {
+  Key _platformViewKey = UniqueKey();
+
+  @override
+  void didUpdateWidget(TPNativeViewWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.adUnitId != widget.adUnitId ||
+        oldWidget.className != widget.className ||
+        oldWidget.sceneId != widget.sceneId ||
+        oldWidget.width != widget.width ||
+        oldWidget.height != widget.height ||
+        !mapEquals(oldWidget.extraMap, widget.extraMap) ||
+        !mapEquals(oldWidget.customAdInfo, widget.customAdInfo)) {
+      _platformViewKey = UniqueKey();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        key: UniqueKey(),
+        key: _platformViewKey,
         viewType: 'tp_native_view',
         creationParams: <String, dynamic>{
           "adUnitId": widget.adUnitId,
@@ -43,7 +59,7 @@ class TPNativeViewWidgetState extends State<TPNativeViewWidget> {
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
-        key: UniqueKey(),
+        key: _platformViewKey,
         viewType: 'tp_native_view',
         creationParams: {
           "adUnitId": widget.adUnitId,

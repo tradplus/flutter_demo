@@ -71,9 +71,9 @@ public class TPSplashAdView implements PlatformView {
 
     @Override
     public void dispose() {
-        if (!TextUtils.isEmpty(adUnitId)) {
-            TPSplashManager.getInstance().releaseAd(adUnitId);
-        }
+//        if (!TextUtils.isEmpty(adUnitId)) {
+//            TPSplashManager.getInstance().releaseAd(adUnitId);
+//        }
         if (rootView != null) {
             rootView.removeAllViews();
             rootView = null;

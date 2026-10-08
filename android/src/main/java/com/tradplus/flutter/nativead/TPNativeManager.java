@@ -416,6 +416,16 @@ public class TPNativeManager {
         }
 
         @Override
+        public void onAdShowFailed(TPAdError tpAdError, TPAdInfo tpAdInfo) {
+            Log.v("TradPlusSdk", "onAdShowFailed unitid=" + mAdUnitId + "=======================");
+            final Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("adUnitID", mAdUnitId);
+            paramsMap.put("adError", TPUtils.tpErrorToMap(tpAdError));
+            paramsMap.put("adInfo", TPUtils.tpAdInfoToMap(tpAdInfo));
+            TradPlusSdk.getInstance().sendCallBackToFlutter("native_showFailed", paramsMap);
+        }
+
+        @Override
         public void onAdVideoStart(TPAdInfo tpAdInfo) {
             Log.v("TradPlusSdk", "onAdVideoStart unitid=" + mAdUnitId + "=======================");
             final Map<String, Object> paramsMap = new HashMap<>();
