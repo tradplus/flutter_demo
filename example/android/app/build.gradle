@@ -68,6 +68,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.mbridge.msdk.oversea:mbridge_android_sdk:17.1.71'
 
+}
 
 flutter {
     source '../..'
